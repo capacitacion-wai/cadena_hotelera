@@ -1,0 +1,428 @@
+{
+  "tecnica": {
+    "tipo": "modular",
+    "estilo": "Aplicación web en un contenedor, organizada por áreas de negocio.",
+    "capas": {
+      "frontal": [
+        {
+          "pieza": "Pantallas",
+          "tecnologia": "React + TypeScript + Vite",
+          "para_que": "Consultar ocupación, hoteles, propuestas e historial en ordenador y teléfono."
+        }
+      ],
+      "api": [
+        {
+          "pieza": "API de la aplicación",
+          "tecnologia": "Python + FastAPI",
+          "para_que": "Leer y guardar datos operativos y aplicar las reglas de reubicación."
+        }
+      ],
+      "datos": [
+        {
+          "pieza": "Datos operativos propios",
+          "tecnologia": "SQLite local en volumen persistente",
+          "para_que": "Guardar hoteles, habitaciones, reservas de ejemplo, propuestas y aprobaciones sin escribir en el proyecto demo_wai."
+        }
+      ],
+      "servicios": [
+        {
+          "pieza": "Acceso y perfiles",
+          "tecnologia": "Sesión WAI y módulo de perfilado",
+          "para_que": "Dar acceso a Dirección y Recepción, permitiendo aprobar solo a Dirección."
+        }
+      ],
+      "despliegue": [
+        {
+          "pieza": "Aplicación",
+          "tecnologia": "Contenedor en Kubernetes de WAI",
+          "para_que": "Publicar la aplicación para ordenador y teléfono."
+        }
+      ]
+    },
+    "opciones": [
+      {
+        "nombre": "Una aplicación modular en un contenedor",
+        "como": "Las pantallas, las reglas y los datos de la aplicación se despliegan juntos, separados por áreas de negocio.",
+        "a_favor": [
+          "Una sola aplicación para el equipo",
+          "Las propuestas y su historial quedan en el mismo lugar"
+        ],
+        "en_contra": [
+          "Las áreas se despliegan juntas"
+        ],
+        "elegida": true,
+        "por_que": "La cadena necesita una herramienta interna compartida y una operación de tamaño acotado."
+      },
+      {
+        "nombre": "Separar pantallas y servicios",
+        "como": "Las pantallas y los servicios se publicarían por separado.",
+        "a_favor": [
+          "Cada parte podría crecer por separado"
+        ],
+        "en_contra": [
+          "Añade despliegues y coordinación sin una necesidad actual"
+        ],
+        "elegida": false,
+        "por_que": "No aporta una ventaja necesaria para el uso interno descrito."
+      }
+    ]
+  },
+  "capas": {
+    "pantallas": [
+      {
+        "nombre": "Ocupación",
+        "para_que": "Ver la ocupación de esta noche, los hoteles y las habitaciones fuera de servicio."
+      },
+      {
+        "nombre": "Reubicaciones",
+        "para_que": "Comparar alternativas, proponer movimientos y consultar su aprobación e historial."
+      },
+      {
+        "nombre": "Accesos",
+        "para_que": "Administrar las personas y revisar el acceso de cada perfil."
+      }
+    ],
+    "reglas": [
+      {
+        "nombre": "Aprobación de reubicaciones",
+        "para_que": "Una propuesta solo cambia la reserva cuando Dirección la aprueba."
+      },
+      {
+        "nombre": "Comparación de alternativas",
+        "para_que": "Mostrar disponibilidad, distancia desde el centro de Valencia y diferencia entre la tarifa del hotel de origen y la de destino."
+      }
+    ],
+    "datos": [
+      {
+        "nombre": "Datos operativos de hoteles",
+        "para_que": "La aplicación guarda su propio inventario, reservas, propuestas e historial en su almacenamiento local."
+      },
+      {
+        "nombre": "Proyecto demo_wai",
+        "para_que": "Se identifica en la aplicación para el acceso WAI; sus datos no se consultan ni se modifican."
+      }
+    ],
+    "conexiones": [
+      {
+        "nombre": "Identidad WAI",
+        "para_que": "Reconocer a las personas que han iniciado sesión en WAI."
+      }
+    ]
+  },
+  "modulos": [
+    {
+      "id": "M-1",
+      "nombre": "Ocupación hotelera",
+      "para_que": "Revisar habitaciones, reservas, disponibilidad y alertas de sobreventa.",
+      "capacidades": [
+        "CAP-1"
+      ],
+      "pantallas": [
+        "P-1",
+        "P-2"
+      ],
+      "tablas": [
+        "hoteles",
+        "habitaciones",
+        "reservas"
+      ]
+    },
+    {
+      "id": "M-2",
+      "nombre": "Reubicaciones",
+      "para_que": "Proponer y aprobar movimientos de huéspedes, y conservar su historial.",
+      "capacidades": [
+        "CAP-2",
+        "CAP-3"
+      ],
+      "pantallas": [
+        "P-3"
+      ],
+      "tablas": [
+        "propuestas_reubicacion",
+        "historial_reubicacion"
+      ],
+      "transversales": [
+        "T-2"
+      ]
+    },
+    {
+      "id": "M-3",
+      "nombre": "Accesos",
+      "para_que": "Aplicar los permisos de Dirección y Recepción.",
+      "capacidades": [],
+      "pantallas": [
+        "P-4",
+        "P-5",
+        "P-6"
+      ],
+      "tablas": [],
+      "transversales": [
+        "T-1"
+      ],
+      "transversal": true
+    }
+  ],
+  "transversales": [
+    {
+      "id": "T-1",
+      "tipo": "acceso",
+      "modulo": "perfilado",
+      "nivel": 2,
+      "ajustes": {
+        "roles_personalizables": false,
+        "alta": "proyecto"
+      },
+      "que": "Acceso por perfil para Dirección y Recepción.",
+      "por_que": "Recepción puede proponer una reubicación, pero solo Dirección puede aprobarla.",
+      "afecta_a": "todas"
+    },
+    {
+      "id": "T-2",
+      "tipo": "auditoria",
+      "que": "Guardar cada propuesta y aprobación con la persona responsable y la fecha y hora.",
+      "por_que": "El encargo pide conocer quién propuso y quién aprobó cada movimiento.",
+      "afecta_a": [
+        "CAP-2",
+        "CAP-3"
+      ]
+    }
+  ],
+  "perfiles": [
+    {
+      "id": "direccion",
+      "nombre": "Dirección",
+      "quien": "Dirección de los hoteles",
+      "origen": "app",
+      "alcance": "todo",
+      "administra": true
+    },
+    {
+      "id": "recepcion",
+      "nombre": "Recepción",
+      "quien": "Recepción de los hoteles",
+      "origen": "app",
+      "alcance": "todo"
+    }
+  ],
+  "permisos": [
+    {
+      "perfil": "direccion",
+      "capacidad": "CAP-1",
+      "puede": [
+        "ver"
+      ]
+    },
+    {
+      "perfil": "direccion",
+      "capacidad": "CAP-2",
+      "puede": [
+        "ver",
+        "crear"
+      ]
+    },
+    {
+      "perfil": "direccion",
+      "capacidad": "CAP-3",
+      "puede": [
+        "ver",
+        "aprobar"
+      ]
+    },
+    {
+      "perfil": "recepcion",
+      "capacidad": "CAP-1",
+      "puede": [
+        "ver"
+      ]
+    },
+    {
+      "perfil": "recepcion",
+      "capacidad": "CAP-2",
+      "puede": [
+        "ver",
+        "crear"
+      ]
+    },
+    {
+      "perfil": "recepcion",
+      "capacidad": "CAP-3",
+      "puede": [
+        "ver"
+      ]
+    }
+  ],
+  "agentes": [],
+  "datos_propios": [
+    {
+      "tabla": "hoteles",
+      "para": [
+        "CAP-1",
+        "CAP-2"
+      ],
+      "campos": [
+        "id",
+        "nombre",
+        "tarifa_noche_eur",
+        "distancia_centro_valencia_km",
+        "habitaciones_totales"
+      ]
+    },
+    {
+      "tabla": "habitaciones",
+      "para": [
+        "CAP-1",
+        "CAP-2"
+      ],
+      "campos": [
+        "id",
+        "hotel_id",
+        "numero",
+        "estado"
+      ]
+    },
+    {
+      "tabla": "reservas",
+      "para": [
+        "CAP-1",
+        "CAP-2"
+      ],
+      "campos": [
+        "id",
+        "hotel_id",
+        "habitacion_id",
+        "huesped",
+        "estado",
+        "fecha"
+      ]
+    },
+    {
+      "tabla": "propuestas_reubicacion",
+      "para": [
+        "CAP-2",
+        "CAP-3"
+      ],
+      "campos": [
+        "id",
+        "reserva_id",
+        "hotel_origen_id",
+        "hotel_destino_id",
+        "motivo",
+        "estado",
+        "propuesto_por",
+        "propuesto_en",
+        "aprobado_por",
+        "aprobado_en"
+      ]
+    },
+    {
+      "tabla": "historial_reubicacion",
+      "para": [
+        "CAP-2",
+        "CAP-3"
+      ],
+      "campos": [
+        "id",
+        "propuesta_id",
+        "accion",
+        "persona",
+        "fecha_hora"
+      ]
+    }
+  ],
+  "datos_del_proyecto": [],
+  "rutas": [
+    {
+      "metodo": "GET",
+      "ruta": "/api/ocupacion",
+      "sirve_a": [
+        "CAP-1",
+        "CAP-2"
+      ],
+      "pantalla": "P-1"
+    },
+    {
+      "metodo": "GET",
+      "ruta": "/api/hoteles",
+      "sirve_a": [
+        "CAP-1",
+        "CAP-2"
+      ],
+      "pantalla": "P-1"
+    },
+    {
+      "metodo": "GET",
+      "ruta": "/api/hoteles/{hotel_id}",
+      "sirve_a": [
+        "CAP-1"
+      ],
+      "pantalla": "P-2"
+    },
+    {
+      "metodo": "GET",
+      "ruta": "/api/hoteles/{hotel_id}/habitaciones",
+      "sirve_a": [
+        "CAP-1"
+      ],
+      "pantalla": "P-2"
+    },
+    {
+      "metodo": "GET",
+      "ruta": "/api/hoteles/{hotel_id}/reservas",
+      "sirve_a": [
+        "CAP-1"
+      ],
+      "pantalla": "P-2"
+    },
+    {
+      "metodo": "GET",
+      "ruta": "/api/reubicaciones",
+      "sirve_a": [
+        "CAP-2",
+        "CAP-3"
+      ],
+      "pantalla": "P-3"
+    },
+    {
+      "metodo": "POST",
+      "ruta": "/api/reubicaciones",
+      "sirve_a": [
+        "CAP-2"
+      ],
+      "pantalla": "P-3"
+    },
+    {
+      "metodo": "POST",
+      "ruta": "/api/reubicaciones/{propuesta_id}/aprobar",
+      "sirve_a": [
+        "CAP-3"
+      ],
+      "pantalla": "P-3"
+    }
+  ],
+  "integraciones": [],
+  "decisiones": [
+    {
+      "que": "Las habitaciones, reservas, propuestas y su historial se guardan en el almacenamiento propio de la aplicación.",
+      "por_que": "La operación requiere registrar cambios y aprobaciones; el proyecto demo_wai se mantiene intacto."
+    },
+    {
+      "que": "El perfilado por función distingue a Dirección de Recepción; el perfil técnico de administración se asigna solo a Dirección.",
+      "por_que": "La regla de aprobación solo se cumple si Recepción no tiene permiso y la administración de usuarios recae en Dirección."
+    },
+    {
+      "que": "Ambos perfiles pueden consultar los datos de los cinco hoteles.",
+      "por_que": "Dirección y Recepción pidieron ver toda la información."
+    }
+  ],
+  "sello": "sha256:02d8770d1941374775307e98",
+  "aprobada": {
+    "por": "admin@wai.com",
+    "cuando": "2026-11-18T17:33:22+00:00",
+    "via": "panel",
+    "cita": "",
+    "sello": "sha256:02d8770d1941374775307e98",
+    "firma": "hmac-sha256:8b041041be072048aa2e9cb3e2c12a013c98f3f006890bcb63f4228d205a796b",
+    "contenido_blob": "3e216e342562eadd629e3e9a87cfa02e91eea65b"
+  }
+}

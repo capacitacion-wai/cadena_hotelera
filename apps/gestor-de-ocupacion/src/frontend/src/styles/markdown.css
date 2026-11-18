@@ -1,0 +1,193 @@
+/*
+ * WAI Design System — markdown styling.
+ *
+ * Copy this file verbatim into every new app at:
+ *   src/frontend/src/styles/markdown.css
+ *
+ * Wrap any <ReactMarkdown> output in a container with
+ * `className="markdown-content"` to pick up these styles.
+ */
+.markdown-content {
+  width: 100%;
+  max-width: 100%;
+  font-size: 0.925rem;
+  line-height: 1.7;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  color: inherit;
+}
+
+.markdown-content > *:first-child {
+  margin-top: 0 !important;
+}
+.markdown-content > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-content p {
+  margin: 0.5em 0;
+  line-height: 1.7;
+}
+.markdown-content p + p {
+  margin-top: 0.25em;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  font-weight: 600;
+  line-height: 1.4;
+  margin-top: 1.2em;
+  margin-bottom: 0.4em;
+}
+.markdown-content h1 { font-size: 1.5em; }
+.markdown-content h2 { font-size: 1.35em; }
+.markdown-content h3 { font-size: 1.2em; }
+.markdown-content h4 { font-size: 1.1em; }
+.markdown-content h5 { font-size: 1.05em; }
+.markdown-content h6 { font-size: 1em; }
+
+.markdown-content ul,
+.markdown-content ol {
+  margin: 0.5em 0;
+  padding-left: 1.4em;
+}
+.markdown-content li {
+  margin-bottom: 0.25em;
+  line-height: 1.6;
+}
+.markdown-content li > p {
+  margin: 0.2em 0;
+}
+
+.markdown-content a {
+  color: var(--wai-primario);
+  text-decoration: none;
+}
+/* El realce al pasar el ratón, solo donde HAY ratón: en táctil se queda pegado tras tocar. */
+@media (hover: hover) {
+  .markdown-content a:hover {
+    text-decoration: underline;
+  }
+}
+
+.markdown-content blockquote {
+  border-left: 3px solid var(--wai-primario-claro);
+  padding: 0.4em 0.8em;
+  margin: 0.6em 0;
+  color: var(--wai-texto-suave);
+  background: var(--wai-papel2);
+  border-radius: 0 4px 4px 0;
+}
+.markdown-content blockquote p {
+  margin: 0.2em 0;
+}
+
+.markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.6em 0;
+  display: block;
+  overflow-x: auto;
+  border: 1px solid var(--wai-borde);
+  border-radius: 6px;
+  font-size: 0.875em;
+}
+.markdown-content th,
+.markdown-content td {
+  border: 1px solid var(--wai-borde);
+  padding: 6px 10px;
+  text-align: left;
+  white-space: nowrap;
+}
+.markdown-content th {
+  background: var(--wai-cabecera-tabla);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+}
+.markdown-content tr:nth-child(even) {
+  background: rgba(0,0,0,0.02);
+}
+@media (hover: hover) {
+  .markdown-content tr:hover {
+    background: rgba(0,0,0,0.04);
+  }
+}
+
+.markdown-content code {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+  font-size: 0.88em;
+  background: rgba(0,0,0,0.06);
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+}
+/* color-fijo:inicio — el resaltado de código es un tema propio (Catppuccin Mocha), oscuro en
+   los dos modos: se lee igual y no tiene que seguir el tema de la app. */
+.markdown-content pre {
+  background: #1e1e2e;
+  color: #cdd6f4;
+  padding: 14px 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0.6em 0;
+  line-height: 1.5;
+}
+.markdown-content pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+  font-size: 0.85em;
+  display: block;
+  white-space: pre;
+}
+
+.markdown-content pre .hljs-keyword,
+.markdown-content pre .hljs-selector-tag { color: #cba6f7; }
+.markdown-content pre .hljs-string,
+.markdown-content pre .hljs-addition { color: #a6e3a1; }
+.markdown-content pre .hljs-number,
+.markdown-content pre .hljs-literal { color: #fab387; }
+.markdown-content pre .hljs-comment,
+.markdown-content pre .hljs-quote { color: #6c7086; font-style: italic; }
+.markdown-content pre .hljs-title,
+.markdown-content pre .hljs-section { color: #89b4fa; font-weight: 600; }
+.markdown-content pre .hljs-built_in,
+.markdown-content pre .hljs-type { color: #f9e2af; }
+.markdown-content pre .hljs-attr,
+.markdown-content pre .hljs-attribute { color: #89dceb; }
+.markdown-content pre .hljs-variable,
+.markdown-content pre .hljs-template-variable { color: #f38ba8; }
+.markdown-content pre .hljs-symbol,
+.markdown-content pre .hljs-bullet { color: #f2cdcd; }
+.markdown-content pre .hljs-meta { color: #fab387; }
+.markdown-content pre .hljs-deletion { color: #f38ba8; }
+/* color-fijo:fin */
+
+.markdown-content hr {
+  border: none;
+  height: 1px;
+  background: var(--wai-borde);
+  margin: 1em 0;
+}
+
+.markdown-content strong {
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .markdown-content {
+    font-size: 0.875rem;
+  }
+  .markdown-content pre {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+  .markdown-content table {
+    font-size: 0.8em;
+  }
+}

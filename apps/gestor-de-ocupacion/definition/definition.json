@@ -1,0 +1,7 @@
+{
+  "formato": 1,
+  "tipo": "app",
+  "encargo": "Una aplicación para gestionar la ocupación de cinco hoteles en Valencia: Gran Hotel Centro, Hotel Playa Malvarrosa, Hotel Aeropuerto, Hotel Sierra Calderona y Hotel Congresos. Muestra habitaciones, habitaciones fuera de servicio, reservas y ocupación de esta noche, y avisa cuando se venden más habitaciones de las disponibles. Permite comparar hoteles de la cadena por disponibilidad, distancia desde el centro de Valencia y diferencia de tarifa; proponer la reubicación de un huésped con motivo, que solo ejecuta Dirección al aprobarla. Registra quién propone, quién aprueba y cuándo. Datos de ejemplo: Centro 180 EUR, 0.5 km, 30 habitaciones; Playa Malvarrosa 210 EUR, 4.5 km, 24 habitaciones; Aeropuerto 120 EUR, 12 km, 40 habitaciones; Sierra Calderona 140 EUR, 45 km, 20 habitaciones; Congresos 95 EUR, 18 km, 35 habitaciones. Centro tiene 3 habitaciones fuera de servicio por una fuga y 30 vendidas; Playa está casi llena; Congresos está al 40 %. Dirección y Recepción usan la aplicación desde ordenador y teléfono. Dirección y Recepción ven todos los datos. Recepción propone y Dirección aprueba las reubicaciones.",
+  "origen": "plano",
+  "reconstruida": false
+}

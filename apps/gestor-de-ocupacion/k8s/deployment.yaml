@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-gestor-de-ocupacion
+  namespace: demo
+  labels:
+    app: demo-gestor-de-ocupacion
+    tenant: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-gestor-de-ocupacion
+  template:
+    metadata:
+      labels:
+        app: demo-gestor-de-ocupacion
+        tenant: demo
+    spec:
+      serviceAccountName: wai-app-runtime
+      imagePullSecrets:
+        - name: demo-docker-registry-secret
+      containers:
+        - name: app
+          image: IMAGE_PLACEHOLDER
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: demo-gestor-de-ocupacion-config
+          env:
+            - name: WAI_INTROSPECCION_URL
+              value: "http://demo-wai-backend.demo.svc.cluster.local:5002/backend/auth/introspeccion"
+          volumeMounts:
+            - name: app-data
+              mountPath: /app-data
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+      volumes:
+        - name: app-data
+          persistentVolumeClaim:
+            claimName: demo-wai-data-pvc-zfs

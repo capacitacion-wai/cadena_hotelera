@@ -1,0 +1,67 @@
+{
+  "resumen": "Gestión de ocupación y reubicaciones aprobadas para una cadena de hoteles.",
+  "lista": [
+    {
+      "id": "CAP-1",
+      "que": "Consultar la ocupación de esta noche, las habitaciones, las que están fuera de servicio y las reservas de cada hotel, con un aviso claro de sobreventa.",
+      "quien": "Dirección y Recepción",
+      "prioridad": "obligatoria",
+      "de_lo_pedido": [],
+      "reglas": [
+        {
+          "id": "R-2",
+          "dice": "La ocupación disponible se calcula descontando las habitaciones fuera de servicio; si las reservas superan esa disponibilidad, se muestra cuántas habitaciones están sobrevendidas.",
+          "de_lo_pedido": []
+        }
+      ]
+    },
+    {
+      "id": "CAP-2",
+      "que": "Comparar hoteles de la cadena por habitaciones disponibles, distancia desde el centro de Valencia y diferencia de tarifa, y proponer la reubicación de un huésped indicando el motivo.",
+      "quien": "Dirección y Recepción",
+      "prioridad": "obligatoria",
+      "de_lo_pedido": [],
+      "reglas": [
+        {
+          "id": "R-3",
+          "dice": "Toda propuesta de reubicación debe incluir un motivo.",
+          "de_lo_pedido": []
+        }
+      ]
+    },
+    {
+      "id": "CAP-3",
+      "que": "Revisar y aprobar propuestas de reubicación para que el cambio se ejecute, y consultar quién lo propuso, quién lo aprobó y cuándo.",
+      "quien": "Dirección; Recepción puede consultar las propuestas y su historial",
+      "prioridad": "obligatoria",
+      "de_lo_pedido": [
+        "reglas.1"
+      ],
+      "reglas": [
+        {
+          "id": "R-1",
+          "dice": "Un huésped no se mueve hasta que Dirección aprueba la propuesta.",
+          "de_lo_pedido": [
+            "reglas.1"
+          ]
+        }
+      ]
+    }
+  ],
+  "no_hace": [
+    "No gestiona pagos ni modifica los sistemas de reservas externos de los hoteles."
+  ],
+  "fuera_de_alcance": [],
+  "idioma_principal": "es",
+  "otros_idiomas": [],
+  "sello": "sha256:a10df37458afb39ba7404659",
+  "aprobada": {
+    "por": "admin@wai.com",
+    "cuando": "2026-11-18T17:33:22+00:00",
+    "via": "panel",
+    "cita": "",
+    "sello": "sha256:a10df37458afb39ba7404659",
+    "firma": "hmac-sha256:a9598d03ab5c6022357f67f59db7876f9f2a45743cc242d4fced26e653fd5696",
+    "contenido_blob": "3a72ccec5403838a1dbc39825565733f0e89c8cd"
+  }
+}

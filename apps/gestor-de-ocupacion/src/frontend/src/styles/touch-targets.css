@@ -1,0 +1,10 @@
+@media (pointer: coarse) {
+  .MuiButtonBase-root {
+    min-height: 44px;
+  }
+
+  .MuiIconButton-root,
+  .MuiPaginationItem-root {
+    min-width: 44px;
+  }
+}
