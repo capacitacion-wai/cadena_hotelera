@@ -1,0 +1,110 @@
+{
+  "GET /api/ocupacion": {
+    "hoteles": 5,
+    "vendidas": 101,
+    "fuera_servicio": 3,
+    "sobreventa": 3
+  },
+  "GET /api/hoteles": [
+    {"id": 1, "nombre": "Gran Hotel Centro", "tarifa_noche_eur": 180, "distancia_centro_valencia_km": 0.5, "habitaciones_totales": 30, "fuera_servicio": 3, "vendidas": 30, "disponibles": 27, "libres": 0, "ocupacion_porcentaje": 111.1, "motivo_fuera_servicio": "Fuga de agua"},
+    {"id": 2, "nombre": "Hotel Playa Malvarrosa", "tarifa_noche_eur": 210, "distancia_centro_valencia_km": 4.5, "habitaciones_totales": 24, "fuera_servicio": 0, "vendidas": 23, "disponibles": 24, "libres": 1, "ocupacion_porcentaje": 95.8},
+    {"id": 3, "nombre": "Hotel Aeropuerto", "tarifa_noche_eur": 120, "distancia_centro_valencia_km": 12, "habitaciones_totales": 40, "fuera_servicio": 0, "vendidas": 24, "disponibles": 40, "libres": 16, "ocupacion_porcentaje": 60},
+    {"id": 4, "nombre": "Hotel Sierra Calderona", "tarifa_noche_eur": 140, "distancia_centro_valencia_km": 45, "habitaciones_totales": 20, "fuera_servicio": 0, "vendidas": 10, "disponibles": 20, "libres": 10, "ocupacion_porcentaje": 50},
+    {"id": 5, "nombre": "Hotel Congresos", "tarifa_noche_eur": 95, "distancia_centro_valencia_km": 18, "habitaciones_totales": 35, "fuera_servicio": 0, "vendidas": 14, "disponibles": 35, "libres": 21, "ocupacion_porcentaje": 40}
+  ],
+  "GET /api/hoteles/{hotel_id}": {"id": 1, "nombre": "Gran Hotel Centro", "tarifa_noche_eur": 180, "distancia_centro_valencia_km": 0.5, "habitaciones_totales": 30, "fuera_servicio": 3, "vendidas": 30, "disponibles": 27, "libres": 0, "ocupacion_porcentaje": 111.1, "motivo_fuera_servicio": "Fuga de agua"},
+  "GET /api/hoteles/{hotel_id}/habitaciones": {
+    "items": [
+      {"id": 201, "numero": "201", "estado": "fuera_servicio", "detalle": "Fuga de agua"},
+      {"id": 202, "numero": "202", "estado": "fuera_servicio", "detalle": "Fuga de agua"},
+      {"id": 203, "numero": "203", "estado": "fuera_servicio", "detalle": "Fuga de agua"},
+      {"id": 204, "numero": "204", "estado": "ocupada"},
+      {"id": 205, "numero": "205", "estado": "libre"}
+    ],
+    "total": 30
+  },
+  "GET /api/hoteles/{hotel_id}/reservas": {
+    "items": [
+      {"id": 1, "huesped": "Amparo Vidal", "habitacion": "Pendiente", "entrada": "2026-11-18", "salida": "2026-11-19", "estado": "Confirmada"},
+      {"id": 2, "huesped": "Jordi Roca", "habitacion": "Pendiente", "entrada": "2026-11-18", "salida": "2026-11-19", "estado": "Confirmada"},
+      {"id": 3, "huesped": "Lucía Pérez", "habitacion": "Pendiente", "entrada": "2026-11-18", "salida": "2026-11-19", "estado": "Confirmada"},
+      {"id": 4, "huesped": "Nicolás Ferrer", "habitacion": "204", "entrada": "2026-11-18", "salida": "2026-11-19", "estado": "Confirmada"}
+    ],
+    "total": 30
+  },
+  "GET /api/reubicaciones": {
+    "propuestas": [
+      {"id": 1, "huesped": "Amparo Vidal", "origen": "Gran Hotel Centro", "destino": "Hotel Congresos", "tarifa_origen": 180, "tarifa_destino": 95, "diferencia_tarifa": -85, "distancia_destino_km": 18, "motivo": "Habitación fuera de servicio por una fuga de agua.", "estado": "pendiente", "propuesto_por": "Recepción", "propuesto_en": "2026-11-18T16:10:00+01:00"},
+      {"id": 2, "huesped": "Jordi Roca", "origen": "Gran Hotel Centro", "destino": "Hotel Aeropuerto", "tarifa_origen": 180, "tarifa_destino": 120, "diferencia_tarifa": -60, "distancia_destino_km": 12, "motivo": "Habitación fuera de servicio por una fuga de agua.", "estado": "pendiente", "propuesto_por": "Recepción", "propuesto_en": "2026-11-18T16:14:00+01:00"},
+      {"id": 3, "huesped": "Lucía Pérez", "origen": "Gran Hotel Centro", "destino": "Hotel Sierra Calderona", "tarifa_origen": 180, "tarifa_destino": 140, "diferencia_tarifa": -40, "distancia_destino_km": 45, "motivo": "Habitación fuera de servicio por una fuga de agua.", "estado": "pendiente", "propuesto_por": "Recepción", "propuesto_en": "2026-11-18T16:18:00+01:00"}
+    ],
+    "historial": [
+      {"id": 9, "huesped": "Sergio Martí", "origen": "Gran Hotel Centro", "destino": "Hotel Congresos", "tarifa_origen": 180, "tarifa_destino": 95, "diferencia_tarifa": -85, "distancia_destino_km": 18, "motivo": "Avería en la habitación asignada.", "estado": "aprobada", "propuesto_por": "Recepción", "propuesto_en": "2026-11-17T19:20:00+01:00", "aprobado_por": "Dirección", "aprobado_en": "2026-11-17T19:44:00+01:00"}
+    ],
+    "huespedes_por_reubicar": [
+      {"reserva_id": 1, "huesped": "Amparo Vidal", "origen_id": 1, "origen": "Gran Hotel Centro"},
+      {"reserva_id": 2, "huesped": "Jordi Roca", "origen_id": 1, "origen": "Gran Hotel Centro"},
+      {"reserva_id": 3, "huesped": "Lucía Pérez", "origen_id": 1, "origen": "Gran Hotel Centro"}
+    ],
+    "destinos": [
+      {"id": 1, "nombre": "Gran Hotel Centro", "tarifa_noche_eur": 180, "distancia_centro_valencia_km": 0.5, "habitaciones_totales": 30, "fuera_servicio": 3, "vendidas": 30, "disponibles": 27, "libres": 0, "ocupacion_porcentaje": 111.1},
+      {"id": 2, "nombre": "Hotel Playa Malvarrosa", "tarifa_noche_eur": 210, "distancia_centro_valencia_km": 4.5, "habitaciones_totales": 24, "fuera_servicio": 0, "vendidas": 23, "disponibles": 24, "libres": 1, "ocupacion_porcentaje": 95.8},
+      {"id": 3, "nombre": "Hotel Aeropuerto", "tarifa_noche_eur": 120, "distancia_centro_valencia_km": 12, "habitaciones_totales": 40, "fuera_servicio": 0, "vendidas": 24, "disponibles": 40, "libres": 16, "ocupacion_porcentaje": 60},
+      {"id": 4, "nombre": "Hotel Sierra Calderona", "tarifa_noche_eur": 140, "distancia_centro_valencia_km": 45, "habitaciones_totales": 20, "fuera_servicio": 0, "vendidas": 10, "disponibles": 20, "libres": 10, "ocupacion_porcentaje": 50},
+      {"id": 5, "nombre": "Hotel Congresos", "tarifa_noche_eur": 95, "distancia_centro_valencia_km": 18, "habitaciones_totales": 35, "fuera_servicio": 0, "vendidas": 14, "disponibles": 35, "libres": 21, "ocupacion_porcentaje": 40}
+    ]
+  },
+  "POST /api/reubicaciones": {"eco": true},
+  "POST /api/reubicaciones/{propuesta_id}/aprobar": {"eco": true},
+  "GET /api/perfilado/yo": {
+    "email": "direccion@hoteles.example",
+    "nombre": "Dirección",
+    "roles": ["admin", "direccion"],
+    "nombres_de_roles": {"admin": "Administrador", "direccion": "Dirección"},
+    "administra": true,
+    "es_dueno": true,
+    "nivel": 2,
+    "alta": "proyecto",
+    "permisos": {"CAP-1": ["ver"], "CAP-2": ["ver", "crear"], "CAP-3": ["ver", "aprobar"]},
+    "capacidades": [
+      {"id": "CAP-1", "que": "Consultar la ocupación, las habitaciones y las reservas."},
+      {"id": "CAP-2", "que": "Comparar alternativas y proponer una reubicación."},
+      {"id": "CAP-3", "que": "Aprobar propuestas y consultar el historial."}
+    ]
+  },
+  "GET /api/perfilado/roles": {
+    "nivel": 2,
+    "ajustes": {"roles_personalizables": false, "alta": "proyecto"},
+    "acciones": ["ver", "crear", "editar", "borrar", "aprobar", "exportar"],
+    "capacidades": [
+      {"id": "CAP-1", "que": "Consultar la ocupación, las habitaciones y las reservas."},
+      {"id": "CAP-2", "que": "Comparar alternativas y proponer una reubicación."},
+      {"id": "CAP-3", "que": "Aprobar propuestas y consultar el historial."}
+    ],
+    "roles": [
+      {"id": "direccion", "nombre": "Dirección", "quien": "Dirección de los hoteles", "fijo": false, "administra": false, "permisos": {"CAP-1": ["ver"], "CAP-2": ["ver", "crear"], "CAP-3": ["ver", "aprobar"]}},
+      {"id": "recepcion", "nombre": "Recepción", "quien": "Recepción de los hoteles", "fijo": false, "administra": false, "permisos": {"CAP-1": ["ver"], "CAP-2": ["ver", "crear"], "CAP-3": ["ver"]}},
+      {"id": "admin", "nombre": "Administrador", "fijo": true, "administra": true, "permisos": {"CAP-1": ["ver", "crear", "editar", "borrar", "aprobar", "exportar"], "CAP-2": ["ver", "crear", "editar", "borrar", "aprobar", "exportar"], "CAP-3": ["ver", "crear", "editar", "borrar", "aprobar", "exportar"]}}
+    ]
+  },
+  "GET /api/perfilado/usuarios": {
+    "items": [
+      {"id": 1, "email": "direccion@hoteles.example", "nombre": "Dirección", "roles": ["direccion"], "activo": true, "origen": "proyecto", "es_dueno": false},
+      {"id": 2, "email": "recepcion@hoteles.example", "nombre": "Recepción", "roles": ["recepcion"], "activo": true, "origen": "proyecto", "es_dueno": false}
+    ],
+    "total": 2,
+    "limite": 50,
+    "desplazamiento": 0
+  },
+  "GET /api/perfilado/proyecto": {
+    "disponible": true,
+    "miembros": [
+      {"email": "direccion@hoteles.example", "nombre": "Dirección", "dado_de_alta": true},
+      {"email": "recepcion@hoteles.example", "nombre": "Recepción", "dado_de_alta": true}
+    ]
+  },
+  "POST /api/perfilado/usuarios": {"eco": true},
+  "POST /api/perfilado/usuarios/desde-proyecto": {"eco": true},
+  "PATCH /api/perfilado/usuarios/{id}": {"eco": true},
+  "DELETE /api/perfilado/usuarios/{id}": {"eco": true}
+}

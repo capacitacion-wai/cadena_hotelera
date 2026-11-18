@@ -1,0 +1,127 @@
+{
+  "paquetes": [
+    {
+      "id": "base",
+      "nombre": "Noche con sobreventa",
+      "para_que": "Revisar la sobreventa del Gran Hotel Centro, las alternativas de la cadena y las propuestas de reubicación.",
+      "trae": [],
+      "interacciones": [],
+      "como_probarlo": [
+        "Abrir Ocupación de esta noche y revisar el aviso del Gran Hotel Centro.",
+        "Abrir Reubicaciones, comparar destinos y proponer un cambio con motivo.",
+        "Probar la aprobación con Dirección y comprobar quién propuso, quién aprobó y cuándo."
+      ]
+    }
+  ],
+  "escenarios": [
+    {
+      "id": "E-1",
+      "capacidad": "CAP-1",
+      "regla": "R-2",
+      "titulo": "La sobreventa destaca las habitaciones no disponibles",
+      "dado": "El Gran Hotel Centro tiene 30 habitaciones, 3 fuera de servicio y 30 vendidas.",
+      "cuando": "Dirección o Recepción abre la ocupación de esta noche.",
+      "entonces": "La pantalla muestra 27 habitaciones disponibles, 30 vendidas y un aviso de 3 por encima de la disponibilidad.",
+      "tipo": "interfaz",
+      "datos": "base",
+      "perfil": "recepcion",
+      "prueba": "tests-e2e/test_ocupacion.py::test_aviso_sobreventa",
+      "vistas": [
+        "navegador",
+        "movil"
+      ]
+    },
+    {
+      "id": "E-2",
+      "capacidad": "CAP-2",
+      "regla": "R-3",
+      "titulo": "La propuesta compara disponibilidad, distancia y tarifa",
+      "dado": "Hay hoteles de la cadena con habitaciones libres.",
+      "cuando": "Recepción prepara una reubicación para un huésped del Gran Hotel Centro.",
+      "entonces": "Puede comparar la disponibilidad, la distancia desde el centro de Valencia y la diferencia de tarifa, y debe indicar un motivo.",
+      "tipo": "interfaz",
+      "datos": "base",
+      "perfil": "recepcion",
+      "prueba": "tests-e2e/test_reubicaciones.py::test_comparar_y_proponer",
+      "vistas": [
+        "navegador",
+        "movil"
+      ]
+    },
+    {
+      "id": "E-3",
+      "capacidad": "CAP-3",
+      "regla": "R-1",
+      "titulo": "Recepción no puede aprobar una reubicación",
+      "dado": "Hay una propuesta pendiente.",
+      "cuando": "Recepción intenta aprobarla.",
+      "entonces": "La aplicación lo impide y la reserva sigue en el hotel de origen.",
+      "tipo": "api",
+      "datos": "base",
+      "perfil": "recepcion",
+      "prueba": "tests-e2e/test_reubicaciones.py::test_recepcion_no_aprueba"
+    },
+    {
+      "id": "E-4",
+      "capacidad": "CAP-3",
+      "regla": "R-1",
+      "titulo": "Dirección aprueba y queda el movimiento registrado",
+      "dado": "Hay una propuesta pendiente y Dirección tiene acceso.",
+      "cuando": "Dirección aprueba la reubicación.",
+      "entonces": "La reserva cambia al hotel de destino y el historial conserva la propuesta, la persona que la aprobó y la fecha y hora.",
+      "tipo": "api",
+      "datos": "base",
+      "perfil": "direccion",
+      "prueba": "tests-e2e/test_reubicaciones.py::test_direccion_aprueba_y_registra"
+    },
+    {
+      "id": "E-5",
+      "capacidad": "T-1",
+      "titulo": "Recepción consulta la información de todos los hoteles",
+      "dado": "Recepción tiene acceso a la aplicación.",
+      "cuando": "Abre la ocupación de esta noche.",
+      "entonces": "Puede consultar la ocupación, disponibilidad y reservas de los cinco hoteles.",
+      "tipo": "api",
+      "datos": "base",
+      "perfil": "recepcion",
+      "prueba": "tests-e2e/test_accesos.py::test_recepcion_ve_todos_los_hoteles"
+    },
+    {
+      "id": "E-6",
+      "capacidad": "T-2",
+      "titulo": "La propuesta y su aprobación conservan personas y momentos",
+      "dado": "Recepción ha propuesto una reubicación y Dirección la ha aprobado.",
+      "cuando": "Dirección o Recepción abre el historial.",
+      "entonces": "Se muestran el motivo, quién propuso, quién aprobó y las fechas y horas de cada acción.",
+      "tipo": "api",
+      "datos": "base",
+      "perfil": "direccion",
+      "prueba": "tests-e2e/test_reubicaciones.py::test_historial_auditable"
+    }
+  ],
+  "cobertura": {
+    "CAP-1": {
+      "nivel": "esencial",
+      "fuera": []
+    },
+    "CAP-2": {
+      "nivel": "esencial",
+      "fuera": []
+    },
+    "CAP-3": {
+      "nivel": "esencial",
+      "fuera": []
+    }
+  },
+  "sello": "sha256:ee98013d7c6c5d6235ef1bf8",
+  "aprobada": {
+    "por": "admin@wai.com",
+    "cuando": "2026-11-18T17:33:22+00:00",
+    "via": "panel",
+    "cita": "",
+    "sello": "sha256:ee98013d7c6c5d6235ef1bf8",
+    "ficheros_de_prueba": {},
+    "firma": "hmac-sha256:a65d9dac7ed9d66cc5708b32bcdc8845c18065a31a52a17565d3be3bfca295fa",
+    "contenido_blob": "af5b4f0861d011e56fc3fa4ad313cdeb9712dc92"
+  }
+}

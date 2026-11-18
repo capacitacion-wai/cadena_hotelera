@@ -1,0 +1,27 @@
+# --- WAI: gestionado por la plataforma (no editar) ---
+**/node_modules
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+**/.venv
+**/venv
+**/.env
+**/.env.*
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+**/.DS_Store
+.git
+.wai-git
+capturas
+definition
+definicion.json
+tests-e2e
+tests-mcp
+tests-modelo
+**/.wai-vista
+src/backend/tests
+src/frontend/dist
+# --- fin WAI ---

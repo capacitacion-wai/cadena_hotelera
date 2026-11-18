@@ -1,0 +1,29 @@
+{
+  "texto": "Una aplicación para gestionar la ocupación de nuestra cadena de cinco hoteles en Valencia: Gran Hotel Centro, Hotel\nPlaya Malvarrosa, Hotel Aeropuerto, Hotel Sierra Calderona y Hotel Congresos. De cada hotel quiero ver sus\nhabitaciones, las que están fuera de servicio, sus reservas y su ocupación de esta noche, con un aviso claro cuando un\nhotel ha vendido más habitaciones de las que tiene.\nCuando eso pase, hay que poder reubicar a un huésped en otro hotel de la cadena, viendo antes qué hoteles tienen\nsitio, a qué distancia están y qué diferencia de tarifa supone. Cada reubicación queda propuesta con su motivo y solo se\nejecuta cuando la aprueba la dirección. Todo lo que se mueve queda registrado: quién lo propuso, quién lo aprobó y\ncuándo.\nQue venga con datos de ejemplo: los cinco hoteles con sus tarifas y distancias —Centro 180 € a 0,5 km con 30\nhabitaciones; Playa Malvarrosa 210 € a 4,5 km con 24; Aeropuerto 120 € a 12 km con 40; Sierra Calderona 140 € a 45\nkm con 20; Congresos 95 € a 18 km con 35— y el Gran Hotel Centro vendido de más porque tiene tres habitaciones\nfuera de servicio por una fuga. Playa casi llena, Congresos al 40 %.",
+  "apartados": {
+    "que": "Una aplicación para gestionar la ocupación de nuestra cadena de cinco hoteles en Valencia: Gran Hotel Centro, Hotel\nPlaya Malvarrosa, Hotel Aeropuerto, Hotel Sierra Calderona y Hotel Congresos. De cada hotel quiero ver sus\nhabitaciones, las que están fuera de servicio, sus reservas y su ocupación de esta noche, con un aviso claro cuando un\nhotel ha vendido más habitaciones de las que tiene.\nCuando eso pase, hay que poder reubicar a un huésped en otro hotel de la cadena, viendo antes qué hoteles tienen\nsitio, a qué distancia están y qué diferencia de tarifa supone. Cada reubicación queda propuesta con su motivo y solo se\nejecuta cuando la aprueba la dirección. Todo lo que se mueve queda registrado: quién lo propuso, quién lo aprobó y\ncuándo.\nQue venga con datos de ejemplo: los cinco hoteles con sus tarifas y distancias —Centro 180 € a 0,5 km con 30\nhabitaciones; Playa Malvarrosa 210 € a 4,5 km con 24; Aeropuerto 120 € a 12 km con 40; Sierra Calderona 140 € a 45\nkm con 20; Congresos 95 € a 18 km con 35— y el Gran Hotel Centro vendido de más porque tiene tres habitaciones\nfuera de servicio por una fuga. Playa casi llena, Congresos al 40 %.",
+    "para_quien": [
+      {
+        "nombre": "Dirección",
+        "ve": "todo",
+        "de_fuera": false
+      },
+      {
+        "nombre": "Recepción",
+        "ve": "todo",
+        "de_fuera": false
+      }
+    ],
+    "reglas": [
+      "Nunca se mueve a un huésped sin que lo apruebe la dirección"
+    ],
+    "donde": [
+      "navegador",
+      "movil"
+    ]
+  },
+  "documento": "",
+  "cuando": "2026-11-18T17:03:11+00:00",
+  "por": "admin@wai.com",
+  "peticiones": []
+}

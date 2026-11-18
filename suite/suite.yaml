@@ -1,0 +1,15 @@
+# AI Suite: composition and wiring. Its version is the repository's (vX.Y.Z): no version key here.
+# Schema, ports and every problem code: /config/skills/wai-ai-suite/SKILL.md (load the wai-ai-suite skill).
+# Read it with the ver_suite tool and save it with guardar_suite (validates; writes this stable form).
+# Canvas positions live in layout.json: they are presentation, not part of this contract.
+suite: cadena-hotelera
+title: Cadena hotelera
+description: 'Gestionar la ocupación de nuestros cinco hoteles y resolver
+
+  el overbooking'
+project: {id: 43, name: demo_wai}
+pieces:
+  built_here:
+    - {path: apps/gestor-de-ocupacion, role: 'Una aplicación para gestionar la ocupación de nuestra cadena de cinco hoteles en Valencia: Gran Hotel Centro, Hotel', role_checked: 'p:a10df37458afb39b'}
+  external: []
+wiring: []

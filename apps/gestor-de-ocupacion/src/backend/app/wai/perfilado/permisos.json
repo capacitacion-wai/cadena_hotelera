@@ -1,0 +1,120 @@
+{
+  "formato": 1,
+  "modulo": "perfilado",
+  "nivel": 2,
+  "ajustes": {
+    "roles_personalizables": false,
+    "alta": "proyecto"
+  },
+  "acciones": [
+    "ver",
+    "crear",
+    "editar",
+    "borrar",
+    "aprobar",
+    "exportar"
+  ],
+  "alcances": [
+    "propio",
+    "equipo",
+    "todo"
+  ],
+  "capacidades": [
+    {
+      "id": "CAP-1",
+      "que": "Consultar la ocupación de esta noche, las habitaciones, las que están fuera de servicio y las reservas de cada hotel, con un aviso claro de sobreventa."
+    },
+    {
+      "id": "CAP-2",
+      "que": "Comparar hoteles de la cadena por habitaciones disponibles, distancia desde el centro de Valencia y diferencia de tarifa, y proponer la reubicación de un huésped indicando el motivo."
+    },
+    {
+      "id": "CAP-3",
+      "que": "Revisar y aprobar propuestas de reubicación para que el cambio se ejecute, y consultar quién lo propuso, quién lo aprobó y cuándo."
+    }
+  ],
+  "roles": [
+    {
+      "id": "admin",
+      "nombre": "Administrador",
+      "quien": "",
+      "fijo": true,
+      "administra": true,
+      "alcance": "todo",
+      "permisos": {
+        "*": [
+          "ver",
+          "crear",
+          "editar",
+          "borrar",
+          "aprobar",
+          "exportar"
+        ]
+      },
+      "alcances": {}
+    },
+    {
+      "id": "direccion",
+      "nombre": "Dirección",
+      "quien": "Dirección de los hoteles",
+      "fijo": false,
+      "administra": true,
+      "alcance": "todo",
+      "permisos": {
+        "CAP-1": [
+          "ver"
+        ],
+        "CAP-2": [
+          "ver",
+          "crear"
+        ],
+        "CAP-3": [
+          "ver",
+          "aprobar"
+        ]
+      },
+      "alcances": {}
+    },
+    {
+      "id": "recepcion",
+      "nombre": "Recepción",
+      "quien": "Recepción de los hoteles",
+      "fijo": false,
+      "administra": false,
+      "alcance": "todo",
+      "permisos": {
+        "CAP-1": [
+          "ver"
+        ],
+        "CAP-2": [
+          "ver",
+          "crear"
+        ],
+        "CAP-3": [
+          "ver"
+        ]
+      },
+      "alcances": {}
+    }
+  ],
+  "usuarios_de_prueba": [
+    {
+      "email": "pruebas@pruebas.wai",
+      "roles": [
+        "admin"
+      ]
+    },
+    {
+      "email": "direccion@pruebas.wai",
+      "roles": [
+        "direccion"
+      ]
+    },
+    {
+      "email": "recepcion@pruebas.wai",
+      "roles": [
+        "recepcion"
+      ]
+    }
+  ]
+}

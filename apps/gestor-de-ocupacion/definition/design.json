@@ -1,0 +1,113 @@
+{
+  "pantallas": [
+    {
+      "id": "P-0",
+      "nombre": "Iniciar sesión",
+      "ruta": "/login",
+      "publica": true,
+      "sirve_a": []
+    },
+    {
+      "id": "P-1",
+      "nombre": "Ocupación de esta noche",
+      "ruta": "/",
+      "sirve_a": [
+        "CAP-1",
+        "CAP-2"
+      ]
+    },
+    {
+      "id": "P-2",
+      "nombre": "Habitaciones y reservas del hotel",
+      "ruta": "/hoteles/:hotelId",
+      "ruta_de_ejemplo": "/hoteles/1",
+      "sirve_a": [
+        "CAP-1",
+        "CAP-2"
+      ]
+    },
+    {
+      "id": "P-3",
+      "nombre": "Propuestas e historial de reubicación",
+      "ruta": "/reubicaciones",
+      "sirve_a": [
+        "CAP-2",
+        "CAP-3"
+      ]
+    },
+    {
+      "id": "P-4",
+      "nombre": "Personas con acceso",
+      "ruta": "/perfilado/usuarios",
+      "sirve_a": [
+        "CAP-3"
+      ]
+    },
+    {
+      "id": "P-5",
+      "nombre": "Perfiles y permisos",
+      "ruta": "/perfilado/roles",
+      "sirve_a": [
+        "CAP-3"
+      ]
+    },
+    {
+      "id": "P-6",
+      "nombre": "Mi acceso",
+      "ruta": "/perfilado/mi-acceso",
+      "sirve_a": [
+        "CAP-1",
+        "CAP-2",
+        "CAP-3"
+      ]
+    }
+  ],
+  "tema": {
+    "origen": "propio",
+    "decisiones": {}
+  },
+  "vistas": [
+    "navegador",
+    "movil"
+  ],
+  "interfaz": {
+    "idiomas": [
+      "es"
+    ]
+  },
+  "prototipo": {
+    "activo": false,
+    "hecho": true,
+    "cuando": "2026-11-18T17:18:53+00:00"
+  },
+  "decisiones": [
+    {
+      "titulo": "Distancia desde Valencia",
+      "que": "P-1 y P-3 muestran la distancia de cada hotel desde el centro de Valencia.",
+      "por_que": "Es el punto de referencia que elegiste para comparar los hoteles.",
+      "origen": "persona"
+    },
+    {
+      "titulo": "Diferencia de tarifa",
+      "que": "P-3 muestra la tarifa del hotel de destino menos la tarifa del hotel de origen; un importe negativo indica una tarifa menor.",
+      "por_que": "Así se puede comparar claramente el coste de cada alternativa.",
+      "origen": "agente"
+    },
+    {
+      "titulo": "Ocupación de ejemplo",
+      "que": "P-1 usa ocupaciones de ejemplo del 60 % para Hotel Aeropuerto y del 50 % para Hotel Sierra Calderona, porque no se indicaron porcentajes para esos dos hoteles.",
+      "por_que": "Permite mostrar una vista completa de la cadena sin presentar esos porcentajes como datos proporcionados.",
+      "origen": "agente"
+    }
+  ],
+  "sello": "sha256:dade10b288140a9c9ffa260d",
+  "aprobada": {
+    "por": "admin@wai.com",
+    "cuando": "2026-11-18T17:33:22+00:00",
+    "via": "panel",
+    "cita": "",
+    "sello": "sha256:dade10b288140a9c9ffa260d",
+    "firma": "hmac-sha256:c0676d9545a1551d19c543f703e407054b93aac8177e86e011f1c9d6eb93cd01",
+    "contenido_blob": "9bc63a60f69d36efbf31c70fd9d0288c1e677544"
+  }
+}

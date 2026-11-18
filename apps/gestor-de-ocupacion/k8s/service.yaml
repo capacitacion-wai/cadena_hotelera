@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-gestor-de-ocupacion-service
+  namespace: demo
+  labels:
+    app: demo-gestor-de-ocupacion
+    tenant: demo
+spec:
+  selector:
+    app: demo-gestor-de-ocupacion
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  type: ClusterIP

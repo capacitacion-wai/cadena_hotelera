@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-gestor-de-ocupacion-config
+  namespace: demo
+  labels:
+    app: gestor-de-ocupacion
+    tenant: demo
+data:
+  APP_NAME: "gestor-de-ocupacion"
+  PROJECT_ID: "43"
+  DB_SCHEMA: "demo_wai"
+  WAI_BACKEND_URL: "http://demo-wai-backend.demo.svc.cluster.local:5002"
+  APP_DB_PATH: "/app-data/app.sqlite"
+  APP_DATABASE_URL: "sqlite+aiosqlite:////app-data/app.sqlite"
