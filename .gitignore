@@ -1,0 +1,52 @@
+# >>> WAI · lo escribe la plataforma: no edites entre estas dos marcas
+# dependencias y entornos: se instalan, no se versionan
+node_modules/
+.node_modules-incomplete/
+.venv*/
+venv/
+venv-*/
+env/
+virtualenv/
+node_modules
+.venv
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.turbo/
+dist/
+build/
+.vite/
+.nfs*
+# resultados y evidencia: la plataforma los guarda junto a la versión
+**/tests-e2e/resultados/
+**/tests-mcp/resultados/
+**/tests-modelo/resultados/
+.wai-vista/
+# datos y secretos
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+.env
+.env.*
+*.pem
+*.key
+*.p12
+# lo genera la plataforma en cada sesión
+/AGENTS.md
+/tenant_info.json
+/opencode.json
+/.opencode/
+/.opencode
+/.opencode-anterior-*/
+/agents/*/.wai-agent.json
+/agents/*/.wai-upload.json
+/.ignore
+# carpetas que se pueden pasar a git (panel «Repositorio» o el agente)
+/exports/
+/uploads/
+# <<< WAI
