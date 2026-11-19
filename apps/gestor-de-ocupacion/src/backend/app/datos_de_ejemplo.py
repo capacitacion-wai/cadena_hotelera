@@ -38,12 +38,12 @@ FILAS = {
 }
 
 
-async def _base(session: AsyncSession) -> int:
+async def _base(session: AsyncSession, *, incluir_usuarios_de_prueba: bool = True) -> int:
     from app.modules.ocupacion.models import Habitacion, Hotel, Reserva
     from app.modules.reubicaciones.models import HistorialReubicacion, PropuestaReubicacion
     from app.wai.perfilado import restaurar_usuarios_de_prueba
 
-    creados = await restaurar_usuarios_de_prueba(session)
+    creados = await restaurar_usuarios_de_prueba(session) if incluir_usuarios_de_prueba else 0
     hoy = datetime.now(ZoneInfo("Europe/Madrid")).date()
     habitaciones_fuera = {
         (fila["hotel_id"], fila["numero"]): fila["detalle"]
@@ -186,7 +186,9 @@ async def _base(session: AsyncSession) -> int:
 
 
 async def _vacio(session: AsyncSession) -> int:
-    return await _restaurar_usuarios(session)
+    from app.wai.perfilado import restaurar_usuarios_de_prueba
+
+    return await restaurar_usuarios_de_prueba(session)
 
 
 CONJUNTOS = {
@@ -195,10 +197,10 @@ CONJUNTOS = {
 }
 
 
-async def cargar_si_vacia(session: AsyncSession) -> int:
+async def cargar_si_vacia(session: AsyncSession, *, incluir_usuarios_de_prueba: bool = True) -> int:
     from app.modules.ocupacion.models import Hotel
 
     total = await session.scalar(select(func.count()).select_from(Hotel)) or 0
     if total:
         return 0
-    return await CONJUNTOS["base"][1](session)
+    return await _base(session, incluir_usuarios_de_prueba=incluir_usuarios_de_prueba)

@@ -46,6 +46,30 @@
           ]
         }
       ]
+    },
+    {
+      "id": "CAP-4",
+      "que": "Cargar desde Ocupación los datos de ejemplo de los cinco hoteles de la cadena cuando la aplicación está vacía.",
+      "quien": "Dirección",
+      "prioridad": "obligatoria",
+      "de_lo_pedido": [],
+      "reglas": [
+        {
+          "id": "R-4",
+          "dice": "Dirección puede cargar los datos de ejemplo desde Ocupación cuando no hay datos.",
+          "de_lo_pedido": []
+        },
+        {
+          "id": "R-5",
+          "dice": "La carga incluye los cinco hoteles, sus habitaciones, las habitaciones fuera de servicio y las reservas de esta noche; el Gran Hotel Centro queda con 30 habitaciones vendidas, 3 fuera de servicio y 3 habitaciones por encima de la disponibilidad.",
+          "de_lo_pedido": []
+        },
+        {
+          "id": "R-6",
+          "dice": "La opción de cargar los datos solo aparece cuando no hay datos y solo está disponible para Dirección; Recepción no puede ejecutarla.",
+          "de_lo_pedido": []
+        }
+      ]
     }
   ],
   "no_hace": [
@@ -54,14 +78,14 @@
   "fuera_de_alcance": [],
   "idioma_principal": "es",
   "otros_idiomas": [],
-  "sello": "sha256:a10df37458afb39ba7404659",
+  "sello": "sha256:1ad8f4ab0a6d9c4a0a4c222b",
   "aprobada": {
     "por": "admin@wai.com",
-    "cuando": "2026-11-18T17:33:22+00:00",
+    "cuando": "2026-11-19T07:52:01+00:00",
     "via": "panel",
     "cita": "",
-    "sello": "sha256:a10df37458afb39ba7404659",
-    "firma": "hmac-sha256:a9598d03ab5c6022357f67f59db7876f9f2a45743cc242d4fced26e653fd5696",
-    "contenido_blob": "3a72ccec5403838a1dbc39825565733f0e89c8cd"
+    "sello": "sha256:1ad8f4ab0a6d9c4a0a4c222b",
+    "firma": "hmac-sha256:2b9c82bff40a38199fc72013799a82f969968b7c311e0e7743aefd45f80fa885",
+    "contenido_blob": "bbf1a079fc0375ec6d0f0ed8bceab5efad5587b9"
   }
 }

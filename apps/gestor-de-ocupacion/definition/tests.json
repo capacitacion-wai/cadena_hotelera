@@ -11,6 +11,17 @@
         "Abrir Reubicaciones, comparar destinos y proponer un cambio con motivo.",
         "Probar la aprobación con Dirección y comprobar quién propuso, quién aprobó y cuándo."
       ]
+    },
+    {
+      "id": "vacio",
+      "nombre": "Aplicación sin datos",
+      "para_que": "Comprobar la carga de los datos de ejemplo desde Ocupación cuando la aplicación está vacía.",
+      "trae": [],
+      "interacciones": [],
+      "como_probarlo": [
+        "Abrir Ocupación como Dirección con este paquete y cargar los datos de ejemplo.",
+        "Comprobar que aparecen los cinco hoteles y la sobreventa de tres habitaciones en Gran Hotel Centro."
+      ]
     }
   ],
   "escenarios": [
@@ -97,6 +108,73 @@
       "datos": "base",
       "perfil": "direccion",
       "prueba": "tests-e2e/test_reubicaciones.py::test_historial_auditable"
+    },
+    {
+      "id": "E-7",
+      "capacidad": "CAP-4",
+      "reglas": [
+        "R-4",
+        "R-5"
+      ],
+      "titulo": "Dirección carga los datos de ejemplo desde Ocupación vacía",
+      "dado": "La aplicación no tiene datos y Dirección abre Ocupación.",
+      "cuando": "Dirección usa la opción para cargar los datos de ejemplo.",
+      "entonces": "Aparecen los cinco hoteles con sus habitaciones, habitaciones fuera de servicio y reservas de esta noche; Gran Hotel Centro tiene 30 vendidas, 3 fuera de servicio y 3 por encima de su disponibilidad.",
+      "tipo": "interfaz",
+      "datos": "vacio",
+      "perfil": "direccion",
+      "prueba": "tests-e2e/test_ocupacion.py::test_direccion_carga_datos_de_ejemplo",
+      "vistas": [
+        "navegador",
+        "movil"
+      ]
+    },
+    {
+      "id": "E-8",
+      "capacidad": "CAP-4",
+      "regla": "R-6",
+      "titulo": "La opción de cargar no aparece cuando ya hay datos",
+      "dado": "La aplicación ya contiene los datos de ejemplo.",
+      "cuando": "Dirección abre Ocupación.",
+      "entonces": "No aparece la opción para cargar los datos de ejemplo.",
+      "tipo": "interfaz",
+      "datos": "base",
+      "perfil": "direccion",
+      "prueba": "tests-e2e/test_ocupacion.py::test_boton_carga_no_aparece_si_hay_datos",
+      "vistas": [
+        "navegador",
+        "movil"
+      ]
+    },
+    {
+      "id": "E-9",
+      "capacidad": "CAP-4",
+      "regla": "R-6",
+      "titulo": "La API deniega la carga de datos de ejemplo a Recepción",
+      "dado": "La aplicación no tiene datos y Recepción tiene acceso a Ocupación.",
+      "cuando": "Recepción intenta ejecutar la carga de datos de ejemplo.",
+      "entonces": "La aplicación deniega la operación y no carga ningún dato.",
+      "tipo": "api",
+      "datos": "vacio",
+      "perfil": "recepcion",
+      "prueba": "tests-e2e/test_ocupacion.py::test_recepcion_no_puede_cargar_datos_de_ejemplo"
+    },
+    {
+      "id": "E-10",
+      "capacidad": "CAP-4",
+      "regla": "R-6",
+      "titulo": "Recepción no ve la opción para cargar los datos de ejemplo",
+      "dado": "La aplicación no tiene datos y Recepción abre Ocupación.",
+      "cuando": "Recepción consulta la pantalla.",
+      "entonces": "No aparece la opción para cargar los datos de ejemplo.",
+      "tipo": "interfaz",
+      "datos": "vacio",
+      "perfil": "recepcion",
+      "prueba": "tests-e2e/test_ocupacion.py::test_recepcion_no_ve_boton_carga_datos",
+      "vistas": [
+        "navegador",
+        "movil"
+      ]
     }
   ],
   "cobertura": {
@@ -111,17 +189,25 @@
     "CAP-3": {
       "nivel": "esencial",
       "fuera": []
+    },
+    "CAP-4": {
+      "nivel": "esencial",
+      "fuera": []
     }
   },
-  "sello": "sha256:ee98013d7c6c5d6235ef1bf8",
+  "sello": "sha256:20e6b7ce2967bcfdc03147a6",
   "aprobada": {
     "por": "admin@wai.com",
-    "cuando": "2026-11-18T17:33:22+00:00",
+    "cuando": "2026-11-19T07:52:01+00:00",
     "via": "panel",
     "cita": "",
-    "sello": "sha256:ee98013d7c6c5d6235ef1bf8",
-    "ficheros_de_prueba": {},
-    "firma": "hmac-sha256:a65d9dac7ed9d66cc5708b32bcdc8845c18065a31a52a17565d3be3bfca295fa",
-    "contenido_blob": "af5b4f0861d011e56fc3fa4ad313cdeb9712dc92"
+    "sello": "sha256:20e6b7ce2967bcfdc03147a6",
+    "ficheros_de_prueba": {
+      "tests-e2e/test_accesos.py": "5b3080c6185a22c5c0381bb7b7b3619615de79c7",
+      "tests-e2e/test_ocupacion.py": "50360300bbc19e124251bb986ed2b49c0b1230e5",
+      "tests-e2e/test_reubicaciones.py": "282bef5c6b7b35026ec1fc4d7ef1c59675a48b0d"
+    },
+    "firma": "hmac-sha256:e4892a45dcaacf209a992d1915716d36ea16612f69e1afa919c781dfac050cce",
+    "contenido_blob": "9998d6a7d01cc9b5398e19f8f2a2e4b6f31f1214"
   }
 }

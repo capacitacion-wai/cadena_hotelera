@@ -18,6 +18,15 @@ Cada persona entra con su cuenta de WAI. La aplicación reconoce su función y m
 
 ## Cómo realizar las tareas
 
+### Cargar datos de ejemplo al iniciar
+
+1. Dirección abre **Ocupación** cuando todavía no se han cargado hoteles en la aplicación.
+2. Selecciona **Cargar datos de ejemplo**. La opción solo aparece en una cadena vacía y no está disponible para Recepción.
+3. La aplicación añade los cinco hoteles, sus habitaciones, las que están fuera de servicio y las reservas de esta noche. El Gran Hotel Centro queda con 30 habitaciones vendidas, 3 fuera de servicio y una sobreventa de 3.
+4. Vuelve a revisar **Ocupación** para comprobar las cifras y abre cada hotel para consultar sus habitaciones y reservas.
+
+Estos son datos ilustrativos para que el equipo pueda empezar a revisar las pantallas. La carga no sustituye ni combina información existente; confirma los datos reales con los hoteles antes de utilizarlos para tomar decisiones operativas.
+
 ### Consultar la ocupación de esta noche
 
 1. Abre **Ocupación**. La primera fila resume los hoteles, las habitaciones vendidas, las que están fuera de servicio y la sobreventa total de la cadena.

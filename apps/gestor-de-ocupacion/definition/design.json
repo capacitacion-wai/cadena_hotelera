@@ -13,7 +13,8 @@
       "ruta": "/",
       "sirve_a": [
         "CAP-1",
-        "CAP-2"
+        "CAP-2",
+        "CAP-4"
       ]
     },
     {
@@ -100,14 +101,14 @@
       "origen": "agente"
     }
   ],
-  "sello": "sha256:dade10b288140a9c9ffa260d",
+  "sello": "sha256:a2ca05bf93c4f0cba40df647",
   "aprobada": {
     "por": "admin@wai.com",
-    "cuando": "2026-11-18T17:33:22+00:00",
+    "cuando": "2026-11-19T07:52:01+00:00",
     "via": "panel",
     "cita": "",
-    "sello": "sha256:dade10b288140a9c9ffa260d",
-    "firma": "hmac-sha256:c0676d9545a1551d19c543f703e407054b93aac8177e86e011f1c9d6eb93cd01",
-    "contenido_blob": "9bc63a60f69d36efbf31c70fd9d0288c1e677544"
+    "sello": "sha256:a2ca05bf93c4f0cba40df647",
+    "firma": "hmac-sha256:7ae72b558f526ec3a67769c80a4d6a37743947c7660246fa356c95dbd1c9e8d3",
+    "contenido_blob": "a63b6d2e032a42200fca5c282076a25949553054"
   }
 }

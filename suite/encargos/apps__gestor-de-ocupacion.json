@@ -25,5 +25,49 @@
   "documento": "",
   "cuando": "2026-11-18T17:03:11+00:00",
   "por": "admin@wai.com",
-  "peticiones": []
+  "peticiones": [
+    {
+      "cuando": "2026-11-19T07:39:45+00:00",
+      "por": "admin@wai.com",
+      "texto": "Añade una tarea para Dirección: cargar los datos de ejemplo de la cadena (los cinco hoteles con sus habitaciones, las que están fuera de servicio y las reservas de esta noche, con el Gran Hotel Centro vendido de más) desde un botón en Ocupación cuando la aplicación está vacía. Si ya hay datos, el botón no aparece.",
+      "apartados": {
+        "que": "Una aplicación para gestionar la ocupación de cinco hoteles en Valencia: Gran Hotel Centro, Hotel Playa Malvarrosa, Hotel Aeropuerto, Hotel Sierra Calderona y Hotel Congresos. Muestra habitaciones, habitaciones fuera de servicio, reservas y ocupación de esta noche, y avisa cuando se venden más habitaciones de las disponibles. Permite comparar hoteles de la cadena por disponibilidad, distancia desde el centro de Valencia y diferencia de tarifa; proponer la reubicación de un huésped con motivo, que solo ejecuta Dirección al aprobarla. Registra quién propone, quién aprueba y cuándo. Datos de ejemplo: Centro 180 EUR, 0.5 km, 30 habitaciones; Playa Malvarrosa 210 EUR, 4.5 km, 24 habitaciones; Aeropuerto 120 EUR, 12 km, 40 habitaciones; Sierra Calderona 140 EUR, 45 km, 20 habitaciones; Congresos 95 EUR, 18 km, 35 habitaciones. Centro tiene 3 habitaciones fuera de servicio por una fuga y 30 vendidas; Playa está casi llena; Congresos está al 40 %. Dirección y Recepción usan la aplicación desde ordenador y teléfono. Dirección y Recepción ven todos los datos. Recepción propone y Dirección aprueba las reubicaciones.",
+        "para_quien": [
+          {
+            "nombre": "Dirección",
+            "ve": "todo",
+            "de_fuera": false
+          },
+          {
+            "nombre": "Recepción",
+            "ve": "todo",
+            "de_fuera": false
+          }
+        ],
+        "lo_que_hace": [
+          "Consultar la ocupación de esta noche, las habitaciones, las que están fuera de servicio y las reservas de cada hotel, con un aviso claro de sobreventa.",
+          "Comparar hoteles de la cadena por habitaciones disponibles, distancia desde el centro de Valencia y diferencia de tarifa, y proponer la reubicación de un huésped indicando el motivo.",
+          "Revisar y aprobar propuestas de reubicación para que el cambio se ejecute, y consultar quién lo propuso, quién lo aprobó y cuándo."
+        ],
+        "reglas": [
+          "La ocupación disponible se calcula descontando las habitaciones fuera de servicio; si las reservas superan esa disponibilidad, se muestra cuántas habitaciones están sobrevendidas.",
+          "Toda propuesta de reubicación debe incluir un motivo.",
+          "Un huésped no se mueve hasta que Dirección aprueba la propuesta."
+        ],
+        "no_hace": [
+          "No gestiona pagos ni modifica los sistemas de reservas externos de los hoteles."
+        ],
+        "donde": [
+          "navegador",
+          "movil"
+        ],
+        "idiomas": [
+          "es"
+        ],
+        "aspecto": [
+          "propio"
+        ]
+      }
+    }
+  ]
 }

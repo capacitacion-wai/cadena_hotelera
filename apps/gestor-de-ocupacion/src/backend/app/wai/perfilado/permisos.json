@@ -31,6 +31,10 @@
     {
       "id": "CAP-3",
       "que": "Revisar y aprobar propuestas de reubicación para que el cambio se ejecute, y consultar quién lo propuso, quién lo aprobó y cuándo."
+    },
+    {
+      "id": "CAP-4",
+      "que": "Cargar desde Ocupación los datos de ejemplo de los cinco hoteles de la cadena cuando la aplicación está vacía."
     }
   ],
   "roles": [
@@ -71,6 +75,9 @@
         "CAP-3": [
           "ver",
           "aprobar"
+        ],
+        "CAP-4": [
+          "crear"
         ]
       },
       "alcances": {}

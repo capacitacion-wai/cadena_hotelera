@@ -1,1 +1,46 @@
-[]
+[
+  {
+    "id": "fb2b5768919d",
+    "cuando": "2026-11-19T07:39:45+00:00",
+    "fase": "capacidades",
+    "que": "Añade una tarea para Dirección: cargar los datos de ejemplo de la cadena (los cinco hoteles con sus habitaciones, las que están fuera de servicio y las reservas de esta noche, con el Gran Hotel Centro vendido de más) desde un botón en Ocupación cuando la aplicación está vacía. Si ya hay datos, el botón no aparece.",
+    "por_que": "",
+    "por": "admin@wai.com",
+    "pendiente_de_aplicar": false,
+    "huella_codigo_al_pedir": "sha256:a9820543f38e6e051d6c9479",
+    "detalle": [],
+    "texto": "Añade una tarea para Dirección: cargar los datos de ejemplo de la cadena (los cinco hoteles con sus habitaciones, las que están fuera de servicio y las reservas de esta noche, con el Gran Hotel Centro vendido de más) desde un botón en Ocupación cuando la aplicación está vacía. Si ya hay datos, el botón no aparece.",
+    "aplicado": {
+      "por": "plataforma",
+      "cuando": "2026-11-19T08:03:56+00:00",
+      "ejecucion": "20261119T080251Z",
+      "huella_codigo": "sha256:1e9b04b7a5aea0d4befe67b4",
+      "motivo": "verde_con_codigo_nuevo",
+      "firma": "hmac-sha256:fd0f2d41127daeb219e02f13840292c46f823fe5a1b7f4996d6a1455b205d72f"
+    }
+  },
+  {
+    "id": "d0f45a610001",
+    "cuando": "2026-11-19T07:41:40+00:00",
+    "fase": "diseno",
+    "que": "Vincular la tarea de carga de datos de ejemplo a la pantalla de Ocupación.",
+    "por_que": "La carga solicitada se inicia desde esa pantalla.",
+    "por": "agente"
+  },
+  {
+    "id": "d0f45a610002",
+    "cuando": "2026-11-19T07:41:40+00:00",
+    "fase": "arquitectura",
+    "que": "Añadir el permiso de carga para Dirección, la ruta de la acción y su módulo de Ocupación.",
+    "por_que": "La capacidad nueva requiere que la autorización y la operación protegida queden definidas.",
+    "por": "agente"
+  },
+  {
+    "id": "d0f45a610003",
+    "cuando": "2026-11-19T07:41:40+00:00",
+    "fase": "pruebas",
+    "que": "Añadir escenarios de carga, ocultación con datos existentes y denegación a Recepción.",
+    "por_que": "Cubren la capacidad nueva y sus condiciones de acceso y disponibilidad.",
+    "por": "agente"
+  }
+]

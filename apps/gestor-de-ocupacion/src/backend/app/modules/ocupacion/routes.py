@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.app_database import get_app_session
+from app.app_database import get_app_session, get_app_write_session
 from app.modules.ocupacion import service
 from app.schemas.ocupacion import HotelOut, OcupacionOut, Pagina, HabitacionOut, ReservaOut
 from app.wai.perfilado import Usuario, requiere
@@ -56,3 +56,11 @@ async def reservas(
     session: AsyncSession = Depends(get_app_session),
 ):
     return await service.listar_reservas(session, hotel_id, limit, offset)
+
+
+@router.post("/ocupacion/datos-de-ejemplo")
+async def cargar_datos_de_ejemplo(
+    _usuario: Usuario = Depends(requiere("CAP-4", "crear")),
+    session: AsyncSession = Depends(get_app_write_session),
+):
+    return await service.cargar_datos_de_ejemplo(session)
