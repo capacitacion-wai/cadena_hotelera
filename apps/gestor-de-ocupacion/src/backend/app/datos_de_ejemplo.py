@@ -45,10 +45,6 @@ async def _base(session: AsyncSession, *, incluir_usuarios_de_prueba: bool = Tru
 
     creados = await restaurar_usuarios_de_prueba(session) if incluir_usuarios_de_prueba else 0
     hoy = datetime.now(ZoneInfo("Europe/Madrid")).date()
-    habitaciones_fuera = {
-        (fila["hotel_id"], fila["numero"]): fila["detalle"]
-        for fila in FILAS["base"]["habitaciones_fuera_servicio"]
-    }
     hoteles: dict[str, Hotel] = {}
     for fila in FILAS["base"]["hoteles"]:
         hotel = Hotel(
@@ -61,6 +57,18 @@ async def _base(session: AsyncSession, *, incluir_usuarios_de_prueba: bool = Tru
         hoteles[fila["nombre"]] = hotel
     await session.flush()
 
+    habitaciones_fuera = {}
+    for fila in FILAS["base"]["hoteles"]:
+        hotel = hoteles[fila["nombre"]]
+        numero_base_original = fila["id"] * 100 + 101
+        numero_base_real = hotel.id * 100 + 101
+        for averia in FILAS["base"]["habitaciones_fuera_servicio"]:
+            if averia["hotel_id"] != fila["id"]:
+                continue
+            desplazamiento = int(averia["numero"]) - numero_base_original
+            numero_real = str(numero_base_real + desplazamiento)
+            habitaciones_fuera[(hotel.id, numero_real)] = averia["detalle"]
+
     habitaciones_por_hotel: dict[int, list[Habitacion]] = {}
     for fila in FILAS["base"]["hoteles"]:
         hotel = hoteles[fila["nombre"]]
@@ -68,7 +76,7 @@ async def _base(session: AsyncSession, *, incluir_usuarios_de_prueba: bool = Tru
         primer_numero = hotel.id * 100 + 101
         for offset in range(hotel.habitaciones_totales):
             numero = str(primer_numero + offset)
-            detalle = habitaciones_fuera.get((fila["id"], numero))
+            detalle = habitaciones_fuera.get((hotel.id, numero))
             habitacion = Habitacion(
                 hotel_id=hotel.id,
                 numero=numero,
