@@ -13,13 +13,15 @@ import HotelPage from './HotelPage'
 import ReubicacionesPage from './ReubicacionesPage'
 import { gestorApi } from '../services/gestor'
 
+const mockPerfilado = vi.hoisted(() => ({ permisos: {} as Record<string, string[]> }))
+
 vi.mock('../services/gestor', () => ({ gestorApi: {
   ocupacion: vi.fn(), hoteles: vi.fn(), hotel: vi.fn(), habitaciones: vi.fn(), reservas: vi.fn(), reubicaciones: vi.fn(),
   proponer: vi.fn(), aprobar: vi.fn(), cargarDatosEjemplo: vi.fn(),
 } }))
 
 vi.mock('../wai/perfilado', () => ({
-  useMiAcceso: () => ({ yo: { permisos: { 'CAP-3': ['ver', 'aprobar'], 'CAP-4': ['crear'] } }, error: null, cargando: false, recargar: vi.fn() }),
+  useMiAcceso: () => ({ yo: { permisos: mockPerfilado.permisos }, error: null, cargando: false, recargar: vi.fn() }),
 }))
 
 const hoteles = [
@@ -38,7 +40,10 @@ function renderWithApp(node: ReactNode, start = '/') {
 }
 
 describe('pantallas de ocupación y reubicación', () => {
-  beforeEach(() => vi.resetAllMocks())
+  beforeEach(() => {
+    vi.resetAllMocks()
+    mockPerfilado.permisos = { 'CAP-3': ['ver', 'aprobar'], 'CAP-4': ['crear'] }
+  })
   afterEach(cleanup)
 
   it('destaca el aviso cuando el centro supera su capacidad disponible', async () => {
@@ -50,6 +55,16 @@ describe('pantallas de ocupación y reubicación', () => {
     expect(await screen.findByRole('heading', { name: 'Ocupación de esta noche' })).toBeInTheDocument()
     expect(screen.getByText('Hay huéspedes por reubicar.')).toBeInTheDocument()
     expect(screen.getByText('3 por encima de capacidad')).toBeInTheDocument()
+  })
+
+  it('permite al administrador owner cargar datos de ejemplo con permiso general', async () => {
+    mockPerfilado.permisos = { '*': ['ver', 'crear'] }
+    vi.mocked(gestorApi.ocupacion).mockResolvedValue({ hoteles: 0, vendidas: 0, fuera_servicio: 0, sobreventa: 0 })
+    vi.mocked(gestorApi.hoteles).mockResolvedValue({ items: [], total: 0, limit: 50, offset: 0 })
+
+    renderWithApp(<OcupacionPage />)
+
+    expect(await screen.findByRole('button', { name: 'Cargar datos de ejemplo' })).toBeInTheDocument()
   })
 
   it('muestra las habitaciones fuera de servicio en la ficha del hotel', async () => {
