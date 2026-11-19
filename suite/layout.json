@@ -1,3 +1,6 @@
 {
-  "nodes": {}
+  "nodes": {
+    "apps/gestor-de-ocupacion": {"x": 293, "y": 14},
+    "mcp-servers/conector-del-gestor-de-ocupacion": {"x": 0, "y": 0}
+  }
 }

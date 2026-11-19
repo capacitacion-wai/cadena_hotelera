@@ -1,0 +1,66 @@
+{
+  "lista": [
+    {
+      "nombre": "get_occupancy_summary",
+      "que_hace": "Returns the current chain-wide occupancy summary, including sold rooms, rooms out of service and overbooking.",
+      "escribe": false,
+      "entrada": {},
+      "devuelve": "Object with hoteles (integer), vendidas (integer), fuera_servicio (integer) and sobreventa (integer).",
+      "sirve_a": [
+        "CAP-1"
+      ]
+    },
+    {
+      "nombre": "list_hotels",
+      "que_hace": "Lists hotels with room counts, availability, occupancy percentage, nightly rate and distance from central Valencia.",
+      "escribe": false,
+      "entrada": {
+        "limit": "Optional integer page size.",
+        "offset": "Optional integer page offset."
+      },
+      "devuelve": "Paginated object with items (hotel id, name, nightly rate, distance, total rooms, out-of-service rooms, sold rooms, available rooms, vacant rooms, occupancy percentage and optional out-of-service reason), total, limit and offset.",
+      "sirve_a": [
+        "CAP-1"
+      ]
+    },
+    {
+      "nombre": "get_relocation_options",
+      "que_hace": "Returns pending relocation proposals, relocation history, guests who need relocation and destination hotels with availability.",
+      "escribe": false,
+      "entrada": {
+        "limit": "Optional integer page size for proposals and relocation candidates.",
+        "offset": "Optional integer page offset for proposals and relocation candidates.",
+        "historial_limit": "Optional integer page size for relocation history.",
+        "historial_offset": "Optional integer page offset for relocation history."
+      },
+      "devuelve": "Object with paginated propuestas and historial (proposal details and approval state), huespedes_por_reubicar (reservation id, guest, source hotel id and name), and destinos (hotels with availability and occupancy details).",
+      "sirve_a": [
+        "CAP-2"
+      ]
+    },
+    {
+      "nombre": "propose_relocation",
+      "que_hace": "Records a relocation proposal for a reservation at a destination hotel, with a reason. It does not approve the proposal.",
+      "escribe": true,
+      "entrada": {
+        "reserva_id": "Required integer reservation id.",
+        "hotel_destino_id": "Required integer destination hotel id.",
+        "motivo": "Required string explaining the reason for the proposed relocation."
+      },
+      "devuelve": "Object with the created proposal id (integer) and its state (string).",
+      "sirve_a": [
+        "CAP-2"
+      ]
+    }
+  ],
+  "sello": "sha256:0e40239559d00d11475a3b6c",
+  "aprobada": {
+    "por": "admin@wai.com",
+    "cuando": "2026-11-19T09:54:38+00:00",
+    "via": "panel",
+    "cita": "",
+    "sello": "sha256:0e40239559d00d11475a3b6c",
+    "firma": "hmac-sha256:ada657a74fd654b99bb9724a1368b94c6e70364244d708a93594155371e07b51",
+    "contenido_blob": "b930b9ac54bfa4ccf348834c2d41f4e01bb284d2"
+  }
+}

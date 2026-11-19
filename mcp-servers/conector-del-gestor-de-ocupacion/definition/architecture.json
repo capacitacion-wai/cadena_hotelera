@@ -1,0 +1,40 @@
+{
+  "destino": {
+    "tipo": "wai_app",
+    "direccion": "",
+    "descripcion": "La aplicación WAI gestor-de-ocupacion, usando las rutas de ocupación, hoteles y reubicaciones de su API."
+  },
+  "credencial": "wai_app",
+  "llave": "",
+  "identidad": false,
+  "limites": [
+    "Reenviar la identidad WAI de quien hace la llamada para que la aplicación aplique sus permisos.",
+    "Usar solo las rutas de ocupación, hoteles y reubicaciones declaradas; no llamar a la ruta de aprobación.",
+    "No exponer las rutas administrativas de perfiles, equipos, organizaciones o usuarios."
+  ],
+  "entorno_de_pruebas": null,
+  "fuente_de_la_api": {
+    "tipo": "api_de_la_aplicacion",
+    "donde": "OpenAPI de la aplicación gestor-de-ocupacion, consultada mediante wai-agent-platform_api_de_la_aplicacion; versión de la aplicación 0.1.0."
+  },
+  "decisiones": [
+    {
+      "que": "La conexión usa credential_mode wai_app y no guarda una credencial propia.",
+      "por_que": "La plataforma reenvía la identidad de quien llama y la aplicación aplica sus permisos."
+    },
+    {
+      "que": "La escritura se limita a crear propuestas de reubicación.",
+      "por_que": "El encargo pide proponer reubicaciones; aprobarlas o ejecutarlas requiere una decisión aparte."
+    }
+  ],
+  "sello": "sha256:688083225b3b183f23b8976f",
+  "aprobada": {
+    "por": "admin@wai.com",
+    "cuando": "2026-11-19T09:54:38+00:00",
+    "via": "panel",
+    "cita": "",
+    "sello": "sha256:688083225b3b183f23b8976f",
+    "firma": "hmac-sha256:e0dc46fd7b8685bd7c2a4047cacf379f520bd7294dd1fdfb3ae7c50c4ec7450d",
+    "contenido_blob": "27added2fa12d74d8582bb3d184d1e82a47e42ec"
+  }
+}

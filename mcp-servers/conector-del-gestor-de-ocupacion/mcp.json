@@ -1,0 +1,17 @@
+{
+  "name": "conector-del-gestor-de-ocupacion",
+  "display_name": "Conector del gestor de ocupación",
+  "description": "Consulta la ocupación de los hoteles y registra propuestas de reubicación en Gestor de Ocupación.",
+  "version": "0.1.0",
+  "credential_mode": "wai_app",
+  "wai_app": "gestor-de-ocupacion",
+  "required_headers": [],
+  "configuracion": [],
+  "secretos": [],
+  "needs_identity": false,
+  "secret_args": {},
+  "skill": {
+    "nombre": "wai-mcp-builder",
+    "version": "2.11.1"
+  }
+}

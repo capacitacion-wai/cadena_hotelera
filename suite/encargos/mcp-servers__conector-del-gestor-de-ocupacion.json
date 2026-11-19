@@ -1,0 +1,16 @@
+{
+  "texto": "A la aplicación Gestor de Ocupación de esta suite, para que un empleado consulte la ocupación de los hoteles y proponga reubicaciones",
+  "apartados": {
+    "que": "A la aplicación Gestor de Ocupación de esta suite, para que un empleado consulte la ocupación de los hoteles y proponga reubicaciones",
+    "escribe": [
+      "cambiar"
+    ],
+    "como_se_entra": [
+      "wai_app"
+    ]
+  },
+  "documento": "",
+  "cuando": "2026-11-19T09:32:47+00:00",
+  "por": "admin@wai.com",
+  "peticiones": []
+}
