@@ -20,9 +20,9 @@ FILAS = {
             {"hotel_id": 1, "numero": "203", "detalle": "Fuga de agua"},
         ],
         "huespedes_sin_habitacion": [
-            {"hotel_id": 1, "huesped": "Amparo Vidal"},
-            {"hotel_id": 1, "huesped": "Jordi Roca"},
-            {"hotel_id": 1, "huesped": "Lucía Pérez"},
+            {"hotel_id": 1, "huesped": "Amparo Vidal", "reserva_id": 10001},
+            {"hotel_id": 1, "huesped": "Jordi Roca", "reserva_id": 10002},
+            {"hotel_id": 1, "huesped": "Lucía Pérez", "reserva_id": 10003},
         ],
         "propuestas_pendientes": [
             {"huesped": "Amparo Vidal", "destino": "Hotel Congresos", "motivo": "Habitación fuera de servicio por una fuga de agua."},
@@ -82,6 +82,11 @@ async def _base(session: AsyncSession, *, incluir_usuarios_de_prueba: bool = Tru
 
     reservas_por_huesped: dict[str, Reserva] = {}
     huespedes_libres = {fila["id"]: [] for fila in FILAS["base"]["hoteles"]}
+    reservas_dataset = {
+        fila["huesped"]: fila["reserva_id"]
+        for fila in FILAS["base"]["huespedes_sin_habitacion"]
+        if "reserva_id" in fila
+    }
     for fila in FILAS["base"]["huespedes_sin_habitacion"]:
         huespedes_libres.setdefault(fila["hotel_id"], []).append(fila["huesped"])
 
@@ -105,6 +110,7 @@ async def _base(session: AsyncSession, *, incluir_usuarios_de_prueba: bool = Tru
                 habitacion_id = room.id
                 huesped = f"Huésped {hotel.id}-{index + 1:02d}"
             reserva = Reserva(
+                id=reservas_dataset.get(huesped),
                 hotel_id=hotel.id,
                 habitacion_id=habitacion_id,
                 huesped=huesped,

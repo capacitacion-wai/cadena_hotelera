@@ -1,0 +1,21 @@
+{
+  "texto": "Ayuda a Dirección de la cadena hotelera a detectar cuándo un hotel ha vendido más habitaciones de las que tiene y a decidir a qué hotel reubicar a cada huésped.",
+  "apartados": {
+    "que": "Ayuda a Dirección de la cadena hotelera a detectar cuándo un hotel ha vendido más habitaciones de las que tiene y a decidir a qué hotel reubicar a cada huésped.",
+    "lo_que_hace": [
+      "Cuando le preguntan cómo va la ocupación, consulta los cinco hoteles y dice cuáles están en sobreventa y cuántas habitaciones sobran o faltan",
+      "Cuando un hotel está en sobreventa, compara los hoteles con sitio por distancia y diferencia de tarifa y propone la reubicación de cada huésped con su motivo"
+    ],
+    "con_que": [
+      "Conector del gestor de ocupación: para consultar la ocupación y registrar propuestas de reubicación"
+    ],
+    "no_hace": [
+      "No aprueba reubicaciones: solo las propone. No cambia reservas ni tarifas."
+    ],
+    "ejemplo": "¿Cómo vamos de ocupación esta noche?» → «El Gran Hotel Centro tiene 3 habitaciones vendidas de más; Congresos y Sierra Calderona tienen sitio…"
+  },
+  "documento": "",
+  "cuando": "2026-11-19T10:25:13+00:00",
+  "por": "admin@wai.com",
+  "peticiones": []
+}

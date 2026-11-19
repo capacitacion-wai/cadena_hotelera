@@ -1,6 +1,10 @@
 {
   "nodes": {
-    "apps/gestor-de-ocupacion": {"x": 293, "y": 14},
-    "mcp-servers/conector-del-gestor-de-ocupacion": {"x": 0, "y": 0}
+    "agents/analista-de-ocupacion": {"x": 0, "y": 0},
+    "apps/gestor-de-ocupacion": {"x": 330, "y": 367},
+    "mcp-servers/conector-del-gestor-de-ocupacion": {"x": 0, "y": 301}
+  },
+  "frames": {
+    "built_here": {"x": 12, "y": 12}
   }
 }
