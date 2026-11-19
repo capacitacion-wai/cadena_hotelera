@@ -3,6 +3,10 @@
 The suite has no version of its own: its version is the repository's. Every approved
 version (vX.Y.Z) adds its entry here.
 
+## v1.3.1 — 2026-11-19
+
+- agents/analista-de-ocupacion v0.0.2
+
 ## v1.3.0 — 2026-11-19
 
 - agents/analista-de-ocupacion v0.0.1
