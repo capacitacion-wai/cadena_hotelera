@@ -86,4 +86,5 @@ export const gestorApi = {
   proponer: (payload: { reserva_id: number; hotel_destino_id: number; motivo: string }) =>
     apiClient.post<{ id: number; estado: string }>('/api/reubicaciones', payload),
   aprobar: (id: number) => apiClient.post<{ estado: string }>(`/api/reubicaciones/${id}/aprobar`, {}),
+  cargarDatosEjemplo: () => apiClient.post<{ cargados: boolean }>('/api/ocupacion/datos-de-ejemplo'),
 }

@@ -123,3 +123,13 @@ async def listar_reservas(session: AsyncSession, hotel_id: int, limit: int, offs
         "estado": reserva.estado.capitalize(),
     } for reserva, numero in filas]
     return {"items": items, "total": total, "limit": limit, "offset": offset}
+
+
+async def cargar_datos_de_ejemplo(session: AsyncSession) -> dict:
+    from app import datos_de_ejemplo
+
+    filas = await datos_de_ejemplo.cargar_si_vacia(session, incluir_usuarios_de_prueba=False)
+    if not filas:
+        raise HTTPException(status_code=409, detail="La aplicación ya contiene datos.")
+    await session.commit()
+    return {"cargados": True}

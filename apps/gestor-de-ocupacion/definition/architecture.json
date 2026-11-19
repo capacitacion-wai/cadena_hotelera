@@ -113,9 +113,10 @@
     {
       "id": "M-1",
       "nombre": "Ocupación hotelera",
-      "para_que": "Revisar habitaciones, reservas, disponibilidad y alertas de sobreventa.",
+      "para_que": "Revisar habitaciones, reservas, disponibilidad y alertas de sobreventa, y cargar los datos de ejemplo cuando la aplicación está vacía.",
       "capacidades": [
-        "CAP-1"
+        "CAP-1",
+        "CAP-4"
       ],
       "pantallas": [
         "P-1",
@@ -227,6 +228,13 @@
       "puede": [
         "ver",
         "aprobar"
+      ]
+    },
+    {
+      "perfil": "direccion",
+      "capacidad": "CAP-4",
+      "puede": [
+        "crear"
       ]
     },
     {
@@ -342,6 +350,14 @@
       "pantalla": "P-1"
     },
     {
+      "metodo": "POST",
+      "ruta": "/api/ocupacion/datos-de-ejemplo",
+      "sirve_a": [
+        "CAP-4"
+      ],
+      "pantalla": "P-1"
+    },
+    {
       "metodo": "GET",
       "ruta": "/api/hoteles",
       "sirve_a": [
@@ -413,16 +429,20 @@
     {
       "que": "Ambos perfiles pueden consultar los datos de los cinco hoteles.",
       "por_que": "Dirección y Recepción pidieron ver toda la información."
+    },
+    {
+      "que": "Solo Dirección puede cargar los datos de ejemplo y la operación solo se ofrece mientras no hay datos.",
+      "por_que": "La carga debe iniciar la aplicación sin sustituir ni duplicar datos operativos existentes."
     }
   ],
-  "sello": "sha256:02d8770d1941374775307e98",
+  "sello": "sha256:e142d0c6bb01db757c492156",
   "aprobada": {
     "por": "admin@wai.com",
-    "cuando": "2026-11-18T17:33:22+00:00",
+    "cuando": "2026-11-19T07:52:01+00:00",
     "via": "panel",
     "cita": "",
-    "sello": "sha256:02d8770d1941374775307e98",
-    "firma": "hmac-sha256:8b041041be072048aa2e9cb3e2c12a013c98f3f006890bcb63f4228d205a796b",
-    "contenido_blob": "3e216e342562eadd629e3e9a87cfa02e91eea65b"
+    "sello": "sha256:e142d0c6bb01db757c492156",
+    "firma": "hmac-sha256:20c9575040876164c49b11dac5db30c7ae8bfe613991c12195f34e87f219e2c0",
+    "contenido_blob": "e4bca45ceb3dc7df523b92eece07f29154c7caa0"
   }
 }

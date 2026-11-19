@@ -4,7 +4,7 @@
 
 Aplicación modular con React 19, TypeScript, Vite y MUI en el cliente; FastAPI y SQLAlchemy asíncrono en el servicio. El almacén es SQLite local en el volumen persistente de la aplicación. No se consulta ni se modifica el PostgreSQL del proyecto `demo_wai`; `PROJECT_ID=43` solo se usa para validar el acceso WAI.
 
-Los modelos y servicios de ocupación viven en `src/backend/app/modules/ocupacion/`; propuestas, aprobaciones e historial, en `src/backend/app/modules/reubicaciones/`. `app_database.py` crea un motor SQLite separado, WAL, claves foráneas y un único escritor. Cada operación de escritura confirma dentro del servicio antes de responder. Los endpoints usan `app.wai.perfilado.requiere` para aplicar el perfil autorizado; la aprobación exige además el perfil `direccion`, incluso para quien tenga administración técnica.
+Los modelos y servicios de ocupación viven en `src/backend/app/modules/ocupacion/`; propuestas, aprobaciones e historial, en `src/backend/app/modules/reubicaciones/`. `app_database.py` crea un motor SQLite separado, WAL, claves foráneas y un único escritor. Cada operación de escritura confirma dentro del servicio antes de responder. Los endpoints usan `app.wai.perfilado.requiere` para aplicar el perfil autorizado; la carga de datos de ejemplo requiere `CAP-4/crear` y solo continúa si no existe ningún hotel, y la aprobación requiere además el perfil `direccion`, incluso para quien tenga administración técnica.
 
 El módulo de perfilado se instala y actualiza con `assets/modulos.py`; sus archivos son invariantes y no se editan a mano. Los datos de muestra y paquetes se definen en `datos_de_ejemplo.py`. `pruebas_de_serie.py` y `pruebas_router.py` son assets comunes; no se modifican. Las pruebas del usuario en `tests-e2e/` las ejecuta únicamente la plataforma.
 
@@ -15,6 +15,7 @@ El módulo de perfilado se instala y actualiza con `assets/modulos.py`; sus arch
 - `GET /api/hoteles/{hotel_id}`: resumen de un hotel.
 - `GET /api/hoteles/{hotel_id}/habitaciones`: habitaciones paginadas.
 - `GET /api/hoteles/{hotel_id}/reservas`: reservas activas de esta noche, paginadas.
+- `POST /api/ocupacion/datos-de-ejemplo`: carga una sola vez los datos de los cinco hoteles, solo con el permiso de Dirección y si aún no hay hoteles; devuelve `409` si ya existen.
 - `GET /api/reubicaciones`: propuestas pendientes, historial aprobado, huéspedes sin asignación y destinos con espacio; cada lista se pagina.
 - `POST /api/reubicaciones`: crea una propuesta con motivo; no mueve la reserva.
 - `POST /api/reubicaciones/{propuesta_id}/aprobar`: comprueba el perfil Dirección, asigna una habitación libre, mueve la reserva y registra la aprobación.

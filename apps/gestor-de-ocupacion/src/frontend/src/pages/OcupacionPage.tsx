@@ -11,14 +11,18 @@ import SectionTitle from '../components/SectionTitle'
 import KpiCard from '../components/KpiCard'
 import { formatearImporte, formatearNumero, formatearPorcentaje } from '../utils/formato'
 import { gestorApi, type Hotel, type Ocupacion } from '../services/gestor'
+import { useMiAcceso } from '../wai/perfilado'
 
 export default function OcupacionPage() {
   const { t } = useTranslation()
+  const { yo } = useMiAcceso()
   const theme = useTheme()
   const esMovil = useMediaQuery(theme.breakpoints.down('sm'))
   const [ocupacion, setOcupacion] = useState<Ocupacion | null>(null)
   const [hoteles, setHoteles] = useState<Hotel[]>([])
   const [cargando, setCargando] = useState(true)
+  const [cargandoEjemplo, setCargandoEjemplo] = useState(false)
+  const [resultadoCarga, setResultadoCarga] = useState<'success' | 'error' | null>(null)
   const [error, setError] = useState(false)
 
   const cargar = () => {
@@ -35,12 +39,46 @@ export default function OcupacionPage() {
   }
 
   useEffect(() => { cargar() }, [])
+  const puedeCargarEjemplo = !!yo?.permisos['CAP-4']?.includes('crear')
+  const sinDatos = !cargando && ocupacion?.hoteles === 0 && hoteles.length === 0
   const sobrevendidos = hoteles.filter((hotel) => hotel.vendidas > hotel.disponibles)
+
+  const cargarEjemplo = async () => {
+    setCargandoEjemplo(true)
+    setResultadoCarga(null)
+    try {
+      await gestorApi.cargarDatosEjemplo()
+      setResultadoCarga('success')
+    } catch {
+      setResultadoCarga('error')
+    } finally {
+      setCargandoEjemplo(false)
+      cargar()
+    }
+  }
 
   return (
     <Box>
       <PageHeader title={t('occupancy.title')} subtitle={t('occupancy.subtitle')} icon={<HotelOutlined />} />
       {error && <Alert severity="error" action={<Button onClick={cargar}>{t('occupancy.retry')}</Button>}>{t('occupancy.error')}</Alert>}
+      {sinDatos && (
+        <Alert
+          severity="info"
+          sx={{ mb: 3.5, alignItems: 'center' }}
+          action={puedeCargarEjemplo ? (
+            <Button color="inherit" onClick={cargarEjemplo} disabled={cargandoEjemplo}>
+              {cargandoEjemplo ? t('occupancy.loadingSample') : t('occupancy.loadSample')}
+            </Button>
+          ) : undefined}
+        >
+          {t('occupancy.empty')}
+        </Alert>
+      )}
+      {resultadoCarga && (
+        <Alert severity={resultadoCarga} sx={{ mb: 3.5 }}>
+          {t(resultadoCarga === 'success' ? 'occupancy.sampleLoaded' : 'occupancy.sampleLoadError')}
+        </Alert>
+      )}
       {cargando ? <Skeleton variant="rounded" height={96} sx={{ mb: 3.5 }} /> : sobrevendidos.map((hotel) => (
         <Alert
           key={hotel.id}

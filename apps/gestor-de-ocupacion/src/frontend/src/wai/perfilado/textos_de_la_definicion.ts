@@ -18,6 +18,7 @@ export const TEXTOS_DE_LA_DEFINICION: Record<string, Record<string, string>> = {
   "es": {
     "def_tarea_CAP-1_corto": "Ver ocupación y reservas",
     "def_tarea_CAP-2_corto": "Proponer una reubicación",
-    "def_tarea_CAP-3_corto": "Aprobar movimientos"
+    "def_tarea_CAP-3_corto": "Aprobar movimientos",
+    "def_tarea_CAP-4_corto": "Cargar datos de ejemplo"
   }
 }

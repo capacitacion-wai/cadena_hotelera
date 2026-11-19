@@ -15,11 +15,11 @@ import { gestorApi } from '../services/gestor'
 
 vi.mock('../services/gestor', () => ({ gestorApi: {
   ocupacion: vi.fn(), hoteles: vi.fn(), hotel: vi.fn(), habitaciones: vi.fn(), reservas: vi.fn(), reubicaciones: vi.fn(),
-  proponer: vi.fn(), aprobar: vi.fn(),
+  proponer: vi.fn(), aprobar: vi.fn(), cargarDatosEjemplo: vi.fn(),
 } }))
 
 vi.mock('../wai/perfilado', () => ({
-  useMiAcceso: () => ({ yo: { permisos: { 'CAP-3': ['ver', 'aprobar'] } }, error: null, cargando: false, recargar: vi.fn() }),
+  useMiAcceso: () => ({ yo: { permisos: { 'CAP-3': ['ver', 'aprobar'], 'CAP-4': ['crear'] } }, error: null, cargando: false, recargar: vi.fn() }),
 }))
 
 const hoteles = [
