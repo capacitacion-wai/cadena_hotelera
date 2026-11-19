@@ -1,0 +1,4 @@
+- name: wai-shared-rules
+  order: 999
+  required: true
+  version: latest
