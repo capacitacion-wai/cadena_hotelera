@@ -1,0 +1,15 @@
+/**
+ * Route guard — redirects to /login when there is no JWT token.
+ *
+ * Extracted verbatim from wai-app-builder SKILL.md (Frontend auth
+ * — ProtectedRoute.tsx).
+ */
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
+
+export const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  return <>{children}</>;
+};

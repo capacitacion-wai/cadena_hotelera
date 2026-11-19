@@ -1,0 +1,62 @@
+[
+  {
+    "key": "revision-diaria-ocupacion",
+    "label": "Daily occupancy review",
+    "description": "Every day at 08:00, review tonight's occupancy across the five hotels and prepare reasoned proposals if there is overbooking.",
+    "body": {
+      "title": "Review tonight's occupancy",
+      "signal_type": "schedule",
+      "signal_spec": { "cron": "0 8 * * *" },
+      "signal_summary": "Every day at 08:00, Valencia time",
+      "condition_spec": {
+        "mode": "agent",
+        "instructions": "Check the current occupancy of all five hotels. If there is overbooking, review only guests pending relocation and prepare proposals for destinations with enough space. If there is no overbooking and no pending guest, report that no proposal is needed."
+      },
+      "reaction_type": "act",
+      "reaction_spec": {},
+      "reaction_instructions": "## Goal\nReview tonight's occupancy across all five hotels and leave management with a clear result.\n\n## Steps\n1. Read the occupancy summary and hotel list. Distinguish sold rooms, rooms out of service, and free rooms.\n2. If overbooking is detected, review guests pending relocation and existing proposals. Do not duplicate pending proposals.\n3. For each guest, compare only destinations with enough space and explain the balance between distance and fare difference.\n4. If there is no suitable destination or data is missing, explain why without inventing an alternative.\n5. Any proposal you record must remain pending human approval. Never approve or execute moves or change bookings or rates.",
+      "requires_approval": true,
+      "cooldown_sec": 0
+    }
+  },
+  {
+    "key": "revisar-reubicaciones-pendientes",
+    "label": "Review pending relocations",
+    "description": "When management asks, review guests pending relocation and prepare a feasible proposal with its reason for each one.",
+    "body": {
+      "title": "Prepare proposals for pending guests",
+      "signal_type": "manual",
+      "signal_spec": {},
+      "signal_summary": "When started by management",
+      "condition_spec": {
+        "mode": "agent",
+        "instructions": "Check whether any guests are pending relocation. Continue only with pending cases that do not already have a recorded proposal."
+      },
+      "reaction_type": "act",
+      "reaction_spec": {},
+      "reaction_instructions": "## Goal\nPrepare relocation proposals for guests who are still pending.\n\n## Steps\n1. Check relocation options and existing proposals.\n2. For each pending guest without a proposal, compare hotels with enough space using distance and fare difference.\n3. Explain why the destination is reasonable using only returned data.\n4. Record each proposal with the exact identifiers returned by the hotel system; it remains pending human approval. Do not approve moves or change bookings or rates.\n5. If no destination has enough space, explain why and do not record a proposal.",
+      "requires_approval": true,
+      "cooldown_sec": 0
+    }
+  },
+  {
+    "key": "detallar-casos-sin-destino",
+    "label": "Explain cases with no available destination",
+    "description": "When management asks, identify guests for whom no alternative has enough space and explain why.",
+    "body": {
+      "title": "Explain guests with no suitable alternative",
+      "signal_type": "manual",
+      "signal_spec": {},
+      "signal_summary": "When started by management",
+      "condition_spec": {
+        "mode": "agent",
+        "instructions": "Review guests pending relocation and identify only those for whom no hotel has enough space."
+      },
+      "reaction_type": "act",
+      "reaction_spec": {},
+      "reaction_instructions": "## Goal\nGive management a precise explanation for each pending guest for whom no destination with enough space can be found.\n\n## Steps\n1. Check relocation options and current hotel availability.\n2. Include only guests without a feasible alternative.\n3. Explain what is missing or which availability limit prevents a proposal.\n4. Do not record a proposal when capacity is insufficient and do not invent data.",
+      "requires_approval": false,
+      "cooldown_sec": 0
+    }
+  }
+]

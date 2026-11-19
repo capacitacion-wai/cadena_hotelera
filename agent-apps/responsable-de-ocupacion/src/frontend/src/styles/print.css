@@ -1,0 +1,73 @@
+/* color-fijo:inicio — when printing, black ink on white paper whatever the theme. */
+/*
+ * G-9 (P3): print-friendly stylesheet.
+ *
+ * Operators occasionally need to print a Run-detail or Event-detail
+ * page for shared post-mortems. Without this file the print preview
+ * carries the dark sidebar, the AppBar, the wide grid layout, and
+ * any active toasts — making the print look like a screenshot of a
+ * web app instead of an audit document.
+ *
+ * Copy verbatim into every new app at:
+ *   src/frontend/src/styles/print.css
+ * and import once from main.tsx.
+ */
+
+@media print {
+  /* Hide the chrome — it adds noise and bleeds into page margins. */
+  .MuiDrawer-root,
+  .MuiAppBar-root,
+  .no-print,
+  .MuiSnackbar-root,
+  .MuiTooltip-popper {
+    display: none !important;
+  }
+
+  /* Reset the layout to a single column flowing top-to-bottom so
+     print pagination is predictable. */
+  body, html, #root {
+    background: #fff !important;
+    color: #000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Layout.tsx wraps the main area as <Box component="main">, so
+     the bare element selector matches reliably. */
+  main {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Markdown / KPI cards: print-friendly. */
+  .markdown-content {
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+  .MuiCard-root {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+  .MuiTableContainer-root {
+    overflow: visible !important;
+  }
+
+  /* Force links to be visible (URLs printed inline) — operators
+     reviewing a printed incident need to know where they could go
+     online. */
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #555;
+  }
+
+  /* Page break before each major section in RunDetail / EventDetail. */
+  .print-section,
+  h2, h3 {
+    break-before: auto;
+    break-inside: avoid;
+  }
+}
+/* color-fijo:fin */

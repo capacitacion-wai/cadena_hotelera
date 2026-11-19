@@ -1,0 +1,21 @@
+# P4-5: development / test-only dependencies.
+#
+# Production images install requirements.txt only. The regression
+# tests under ``tests/`` need pytest + pytest-asyncio + aiosqlite
+# at the version SQLAlchemy expects. Install in your dev shell:
+#
+#   pip install -r requirements.txt -r requirements-dev.txt
+#   pytest tests/
+#
+# CI is expected to install both files; the verifier
+# ``§9 Test scaffold`` only checks that the test files exist, not
+# that they pass.
+
+-r requirements.txt
+pytest>=8.3.0
+pytest-asyncio>=0.24.0
+aiosqlite>=0.20.0
+# Name-resolution linter for the verifier's Phase 10: compileall does NOT
+# catch an undefined name (three v7.89.0 NameErrors shipped that way), so the
+# gate needs ruff on the host to actually run instead of warn-skipping.
+ruff>=0.6.0

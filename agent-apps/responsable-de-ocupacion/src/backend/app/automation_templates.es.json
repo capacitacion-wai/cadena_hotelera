@@ -1,0 +1,62 @@
+[
+  {
+    "key": "revision-diaria-ocupacion",
+    "label": "Revisión diaria de ocupación",
+    "description": "Cada día a las 08:00 revisa la ocupación de esta noche en los cinco hoteles y prepara propuestas justificadas si hay sobreventa.",
+    "body": {
+      "title": "Revisar la ocupación de esta noche",
+      "signal_type": "schedule",
+      "signal_spec": { "cron": "0 8 * * *" },
+      "signal_summary": "Cada día a las 08:00, hora de Valencia",
+      "condition_spec": {
+        "mode": "agent",
+        "instructions": "Comprueba la ocupación actual de los cinco hoteles. Si hay sobreventa, revisa únicamente los huéspedes pendientes de reubicación y prepara propuestas para los destinos con espacio suficiente. Si no hay sobreventa ni huéspedes pendientes, informa que no se requiere ninguna propuesta."
+      },
+      "reaction_type": "act",
+      "reaction_spec": {},
+      "reaction_instructions": "## Objetivo\nRevisar la ocupación de esta noche en los cinco hoteles y dejar a Dirección un resultado claro.\n\n## Pasos\n1. Consulta el resumen de ocupación y el listado de hoteles. Distingue habitaciones vendidas, fuera de servicio y libres.\n2. Si detectas sobreventa, consulta los huéspedes pendientes de reubicación y las propuestas existentes. No dupliques propuestas pendientes.\n3. Para cada huésped, compara solo destinos con espacio suficiente y explica el equilibrio entre distancia y diferencia de tarifa.\n4. Si no hay destino viable o faltan datos, explica el motivo sin inventar una alternativa.\n5. Si registras propuestas, cada una debe quedar pendiente de aprobación humana. No apruebes ni ejecutes traslados ni cambies reservas o tarifas.",
+      "requires_approval": true,
+      "cooldown_sec": 0
+    }
+  },
+  {
+    "key": "revisar-reubicaciones-pendientes",
+    "label": "Revisar reubicaciones pendientes",
+    "description": "Cuando Dirección lo solicite, revisa los huéspedes pendientes y prepara una propuesta viable para cada uno, con su motivo.",
+    "body": {
+      "title": "Preparar propuestas para huéspedes pendientes",
+      "signal_type": "manual",
+      "signal_spec": {},
+      "signal_summary": "Cuando Dirección la ejecute",
+      "condition_spec": {
+        "mode": "agent",
+        "instructions": "Revisa si hay huéspedes pendientes de reubicación. Continúa solo con los casos pendientes que todavía no tengan una propuesta registrada."
+      },
+      "reaction_type": "act",
+      "reaction_spec": {},
+      "reaction_instructions": "## Objetivo\nPreparar propuestas de reubicación para los huéspedes que aún estén pendientes.\n\n## Pasos\n1. Consulta las opciones de reubicación y las propuestas existentes.\n2. Para cada huésped pendiente sin propuesta, compara hoteles con espacio suficiente según distancia y diferencia de tarifa.\n3. Explica por qué el destino es razonable usando únicamente los datos devueltos.\n4. Registra cada propuesta con los identificadores exactos del gestor; queda pendiente de aprobación humana. No apruebes traslados ni cambies reservas o tarifas.\n5. Si no hay alternativa con espacio suficiente, informa el motivo y no registres una propuesta.",
+      "requires_approval": true,
+      "cooldown_sec": 0
+    }
+  },
+  {
+    "key": "detallar-casos-sin-destino",
+    "label": "Explicar casos sin destino disponible",
+    "description": "Cuando Dirección lo solicite, identifica los huéspedes para quienes no existe una alternativa con espacio suficiente y explica por qué.",
+    "body": {
+      "title": "Explicar huéspedes sin alternativa viable",
+      "signal_type": "manual",
+      "signal_spec": {},
+      "signal_summary": "Cuando Dirección la ejecute",
+      "condition_spec": {
+        "mode": "agent",
+        "instructions": "Revisa los huéspedes pendientes de reubicación e identifica solo aquellos para los que ningún hotel tenga espacio suficiente."
+      },
+      "reaction_type": "act",
+      "reaction_spec": {},
+      "reaction_instructions": "## Objetivo\nDar a Dirección una explicación precisa de cada huésped pendiente para quien no se encuentre un destino con espacio suficiente.\n\n## Pasos\n1. Consulta las opciones de reubicación y la disponibilidad actual de los hoteles.\n2. Incluye solo huéspedes sin una alternativa viable.\n3. Explica qué falta o qué límite de disponibilidad impide proponer un destino.\n4. No registres una propuesta si no hay capacidad suficiente y no inventes datos.",
+      "requires_approval": false,
+      "cooldown_sec": 0
+    }
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "texto": "Vigila cada mañana la ocupación de los cinco hoteles y, si un hotel ha vendido de más, propone a Dirección reubicar a los huéspedes, explicando el motivo.",
+  "apartados": {
+    "que": "Vigila cada mañana la ocupación de los cinco hoteles y, si un hotel ha vendido de más, propone a Dirección reubicar a los huéspedes, explicando el motivo.",
+    "cerebro": "Analista de ocupacion",
+    "tareas": [
+      "Cada día a las 09:00 · Cada día a las 08:00, revisa la ocupación de esta noche y propone las reubicaciones que hagan falta."
+    ]
+  },
+  "documento": "",
+  "cuando": "2026-11-19T15:43:49+00:00",
+  "por": "admin@wai.com",
+  "peticiones": []
+}
