@@ -1,6 +1,10 @@
 import pytest
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
+
+from app.app_database import app_session
+from app.modules.ocupacion.models import Reserva
 
 
 @pytest.mark.asyncio
@@ -13,6 +17,57 @@ async def test_ocupacion_y_listas_muestran_totales_coherentes(client, recepcion_
     assert hotels.status_code == 200
     assert hotels.json()["total"] == 5
     assert len(hotels.json()["items"]) == 2
+
+
+@pytest.mark.asyncio
+async def test_seed_base_devuelve_aliases_de_reservas_y_barrer_respeta_datos_sin_marca(
+    client, recepcion_headers,
+):
+    marca = "prueba-a12v3-1"
+    huespedes = {10001: "Amparo Vidal", 10002: "Jordi Roca", 10003: "Lucía Pérez"}
+
+    async with app_session() as session:
+        originales = (await session.execute(
+            select(Reserva.id, Reserva.huesped)
+            .where(Reserva.huesped.in_(huespedes.values()), Reserva.__table__.c.origen.is_(None))
+        )).all()
+    ids_originales = {huesped: reserva_id for reserva_id, huesped in originales}
+    assert set(ids_originales) == set(huespedes.values())
+
+    sembrado = await client.post(
+        "/api/pruebas/conjuntos/base",
+        headers={**recepcion_headers, "X-WAI-Test-Run": marca},
+    )
+    assert sembrado.status_code == 200, sembrado.text
+    equivalencias = sembrado.json()["equivalencias"]["reservas"]
+    assert set(equivalencias) >= {str(alias) for alias in huespedes}
+    ids_marcados = {int(equivalencias[str(alias)]) for alias in huespedes}
+
+    async with app_session() as session:
+        filas_marcadas = (await session.execute(
+            select(Reserva.id, Reserva.huesped, Reserva.__table__.c.origen)
+            .where(Reserva.id.in_(ids_marcados))
+        )).all()
+    assert {huesped: origen for _, huesped, origen in filas_marcadas} == {
+        huespedes[alias]: marca for alias in huespedes
+    }
+
+    barrido = await client.delete(f"/api/pruebas?origen={marca}", headers=recepcion_headers)
+    assert barrido.status_code == 200, barrido.text
+    assert barrido.json()["borrados"]["reservas"] >= len(ids_marcados)
+
+    async with app_session() as session:
+        ids_restantes = set((await session.scalars(
+            select(Reserva.id).where(Reserva.id.in_(ids_marcados | set(ids_originales.values())))
+        )).all())
+        originales_sin_marca = (await session.execute(
+            select(Reserva.id, Reserva.huesped, Reserva.__table__.c.origen)
+            .where(Reserva.id.in_(ids_originales.values()))
+        )).all()
+    assert ids_restantes == set(ids_originales.values())
+    assert {huesped: origen for _, huesped, origen in originales_sin_marca} == {
+        huesped: None for huesped in huespedes.values()
+    }
 
 
 @pytest.mark.asyncio

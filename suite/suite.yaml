@@ -10,6 +10,7 @@ pieces:
   built_here:
     - {path: apps/gestor-de-ocupacion, role: 'Una aplicación para gestionar la ocupación de nuestra cadena de cinco hoteles en Valencia: Gran Hotel Centro, Hotel', role_checked: 'p:1ad8f4ab0a6d9c4a'}
     - {path: mcp-servers/conector-del-gestor-de-ocupacion, role: 'Ofrece consultas de ocupación y disponibilidad de los hoteles, y registra propuestas de reubicación sin aprobarlas ni modificar reservas.', role_checked: 'p:6bde6eefbcc6ca81'}
+    - {path: agents/analista-de-ocupacion, role: Ayuda a Dirección de la cadena hotelera a detectar cuándo un hotel ha vendido más habitaciones de las que tiene y a decidir a qué hotel reubicar a cada huésped.}
   external: []
 wiring:
   - {from: mcp-servers/conector-del-gestor-de-ocupacion.needs.app, to: apps/gestor-de-ocupacion.offers.api}
