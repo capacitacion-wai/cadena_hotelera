@@ -1,0 +1,10 @@
+{
+  "por": "admin@wai.com",
+  "cuando": "2026-11-19T10:03:47+00:00",
+  "resultado": "20261119T095659Z",
+  "huella_codigo": "sha256:229256c0bf8a293706dfa640",
+  "huella_formula": 5,
+  "nota": "",
+  "pruebas_cambiadas": [],
+  "firma": "hmac-sha256:57842a9c59f118eda388f9382983fc94302d8e390191db7523de61dada695112"
+}

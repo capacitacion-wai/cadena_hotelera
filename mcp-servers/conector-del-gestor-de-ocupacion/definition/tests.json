@@ -1,0 +1,73 @@
+{
+  "escenarios": [
+    {
+      "id": "E-1",
+      "capacidad": "CAP-1",
+      "herramienta": "get_occupancy_summary",
+      "dado": "La aplicación devuelve el resumen actual de ocupación de la cadena.",
+      "cuando": "Se consulta el resumen de ocupación.",
+      "entonces": "Se devuelven los totales de hoteles, habitaciones vendidas, habitaciones fuera de servicio y sobreventa con los tipos indicados por la API.",
+      "prueba": "tests-mcp/test_ocupacion.py::test_get_occupancy_summary"
+    },
+    {
+      "id": "E-2",
+      "capacidad": "CAP-1",
+      "herramienta": "list_hotels",
+      "dado": "La aplicación devuelve una página de hoteles con sus cifras de ocupación y disponibilidad.",
+      "cuando": "Se solicita una página de hoteles.",
+      "entonces": "Se conservan los campos y valores recibidos, junto con la información de paginación.",
+      "prueba": "tests-mcp/test_ocupacion.py::test_list_hotels"
+    },
+    {
+      "id": "E-3",
+      "capacidad": "CAP-2",
+      "herramienta": "get_relocation_options",
+      "dado": "La aplicación devuelve propuestas, historial, huéspedes por reubicar y hoteles de destino.",
+      "cuando": "Se consultan las opciones de reubicación.",
+      "entonces": "Se devuelven las cuatro colecciones con sus datos y páginas correspondientes.",
+      "prueba": "tests-mcp/test_reubicaciones.py::test_get_relocation_options"
+    },
+    {
+      "id": "E-4",
+      "capacidad": "CAP-2",
+      "herramienta": "propose_relocation",
+      "dado": "Hay un huésped pendiente de reubicación y un hotel de destino disponible.",
+      "cuando": "Se registra una propuesta con la reserva, el hotel de destino y el motivo.",
+      "entonces": "La aplicación devuelve el identificador y el estado de la propuesta, y el conector no la aprueba.",
+      "regla": "No se llama a la ruta de aprobación; la propuesta queda pendiente de revisión.",
+      "prueba": "tests-mcp/test_reubicaciones.py::test_propose_relocation"
+    }
+  ],
+  "cobertura": {
+    "CAP-1": {
+      "nivel": "parcial",
+      "cubre": [
+        "E-1",
+        "E-2"
+      ],
+      "fuera": []
+    },
+    "CAP-2": {
+      "nivel": "esencial",
+      "cubre": [
+        "E-3",
+        "E-4"
+      ],
+      "fuera": []
+    }
+  },
+  "sello": "sha256:cadae89d5fb4c9ff08fad3c9",
+  "aprobada": {
+    "por": "admin@wai.com",
+    "cuando": "2026-11-19T09:54:38+00:00",
+    "via": "panel",
+    "cita": "",
+    "sello": "sha256:cadae89d5fb4c9ff08fad3c9",
+    "ficheros_de_prueba": {
+      "tests-mcp/test_ocupacion.py": "fdc0aa2fd54719adabeb0f92eac0d31fe3286176",
+      "tests-mcp/test_reubicaciones.py": "2ff5e4661af39166442ba5fbb21743e75c95d40d"
+    },
+    "firma": "hmac-sha256:072e877d8ae7f88f2c69fbcb648dbebfe6a69f3d8af3445a5d5b864240bbe616",
+    "contenido_blob": "4ad9fdd86351bc45a17b2b4ceccb41357a759db7"
+  }
+}

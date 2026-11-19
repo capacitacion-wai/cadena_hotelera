@@ -1,0 +1,39 @@
+{
+  "lista": [
+    {
+      "id": "CAP-1",
+      "que": "Consultar la ocupación general y la disponibilidad de cada hotel.",
+      "quien": "Empleado de gestión hotelera",
+      "prioridad": "obligatoria",
+      "reglas": []
+    },
+    {
+      "id": "CAP-2",
+      "que": "Consultar alternativas y registrar una propuesta para reubicar a un huésped.",
+      "quien": "Empleado de gestión hotelera",
+      "prioridad": "obligatoria",
+      "reglas": [
+        {
+          "id": "R-1",
+          "dice": "Registrar la propuesta no la aprueba ni la ejecuta; la aprobación queda fuera de este conector."
+        }
+      ]
+    }
+  ],
+  "no_hace": [
+    "Aprobar o ejecutar propuestas de reubicación.",
+    "Crear, modificar o cancelar reservas, hoteles o habitaciones."
+  ],
+  "idioma_principal": "es",
+  "otros_idiomas": [],
+  "sello": "sha256:6bde6eefbcc6ca81137f6d2c",
+  "aprobada": {
+    "por": "admin@wai.com",
+    "cuando": "2026-11-19T09:54:38+00:00",
+    "via": "panel",
+    "cita": "",
+    "sello": "sha256:6bde6eefbcc6ca81137f6d2c",
+    "firma": "hmac-sha256:7a5a20c0d689466f756e67396d5998a343c157372fbb3bff471311f0d895f8c9",
+    "contenido_blob": "42aa875321c9f6c341c4d30707669ccc2305e6df"
+  }
+}
