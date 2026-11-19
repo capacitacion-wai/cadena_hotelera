@@ -97,7 +97,10 @@ criterios:
         contiene:
         - Jordi Roca
         - Hotel Aeropuerto
+        - 'Reserva 10104:'
         - '"estado": "pendiente"'
+        - '"aprobado_por": null'
+        - '"aprobado_en": null'
         - '"distancia_destino_km": 12.0'
         - '"diferencia_tarifa": -60.0'
       herramienta: conector-del-gestor-de-ocupacion_get_relocation_options
@@ -149,7 +152,10 @@ criterios:
         contiene:
         - Lucía Pérez
         - Hotel Aeropuerto
+        - 'Reserva 10105:'
         - '"estado": "pendiente"'
+        - '"aprobado_por": null'
+        - '"aprobado_en": null'
         - '"distancia_destino_km": 12.0'
         - '"diferencia_tarifa": -60.0'
       herramienta: conector-del-gestor-de-ocupacion_get_relocation_options
