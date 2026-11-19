@@ -1,12 +1,12 @@
 {
   "por": "admin@wai.com",
-  "cuando": "2026-11-19T11:56:56+00:00",
-  "resultado": "20261119T115243Z",
-  "huella_codigo": "sha256:89feab01c67ad252532f7572",
+  "cuando": "2026-11-19T12:31:46+00:00",
+  "resultado": "20261119T122410Z",
+  "huella_codigo": "sha256:aa804d415f98f18c1f2c3230",
   "huella_formula": 5,
   "nota": "",
   "pruebas_cambiadas": [
     "tests-e2e/test_ocupacion.py"
   ],
-  "firma": "hmac-sha256:2f2d29b174af88dfa3f7e25f87a40c95b160916daf0057a7ced91bdc0bce35d2"
+  "firma": "hmac-sha256:aad1033e5f547e60f1e8144cb61a34530f532f084c66f4d51c891bfc279baf25"
 }

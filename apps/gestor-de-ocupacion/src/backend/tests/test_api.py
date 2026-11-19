@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 
 from app.app_database import app_session
-from app.modules.ocupacion.models import Reserva
+from app.modules.ocupacion.models import Habitacion, Hotel, Reserva
 
 
 @pytest.mark.asyncio
@@ -27,6 +27,10 @@ async def test_seed_base_devuelve_aliases_de_reservas_y_barrer_respeta_datos_sin
     huespedes = {10001: "Amparo Vidal", 10002: "Jordi Roca", 10003: "Lucía Pérez"}
 
     async with app_session() as session:
+        ids_originales_por_tabla = {
+            modelo.__tablename__: set((await session.scalars(select(modelo.id))).all())
+            for modelo in (Hotel, Habitacion, Reserva)
+        }
         originales = (await session.execute(
             select(Reserva.id, Reserva.huesped)
             .where(Reserva.huesped.in_(huespedes.values()), Reserva.__table__.c.origen.is_(None))
@@ -44,12 +48,42 @@ async def test_seed_base_devuelve_aliases_de_reservas_y_barrer_respeta_datos_sin
     ids_marcados = {int(equivalencias[str(alias)]) for alias in huespedes}
 
     async with app_session() as session:
+        hotel_marcado = await session.scalar(
+            select(Hotel).where(
+                Hotel.nombre == "Gran Hotel Centro",
+                Hotel.__table__.c.origen == marca,
+            )
+        )
+        assert hotel_marcado is not None
+        habitaciones_marcadas = (await session.execute(
+            select(Habitacion.id, Habitacion.numero, Habitacion.estado)
+            .where(
+                Habitacion.hotel_id == hotel_marcado.id,
+                Habitacion.__table__.c.origen == marca,
+            )
+        )).all()
         filas_marcadas = (await session.execute(
             select(Reserva.id, Reserva.huesped, Reserva.__table__.c.origen)
             .where(Reserva.id.in_(ids_marcados))
         )).all()
+    ids_habitaciones_marcadas = {habitacion_id for habitacion_id, _, _ in habitaciones_marcadas}
+    assert {
+        numero for _, numero, estado in habitaciones_marcadas if estado == "fuera_servicio"
+    } == {str(hotel_marcado.id * 100 + 101 + offset) for offset in range(3)}
     assert {huesped: origen for _, huesped, origen in filas_marcadas} == {
         huespedes[alias]: marca for alias in huespedes
+    }
+
+    reubicaciones = await client.get("/api/reubicaciones", headers=recepcion_headers)
+    assert reubicaciones.status_code == 200, reubicaciones.text
+    candidatos_marcados = {
+        (fila["huesped"], fila["reserva_id"])
+        for fila in reubicaciones.json()["huespedes_por_reubicar"]["items"]
+        if fila["reserva_id"] in ids_marcados
+    }
+    assert candidatos_marcados == {
+        (huespedes[10002], int(equivalencias["10002"])),
+        (huespedes[10003], int(equivalencias["10003"])),
     }
 
     barrido = await client.delete(f"/api/pruebas?origen={marca}", headers=recepcion_headers)
@@ -64,7 +98,23 @@ async def test_seed_base_devuelve_aliases_de_reservas_y_barrer_respeta_datos_sin
             select(Reserva.id, Reserva.huesped, Reserva.__table__.c.origen)
             .where(Reserva.id.in_(ids_originales.values()))
         )).all()
+        hotel_marcado_restante = await session.scalar(
+            select(Hotel.id).where(Hotel.id == hotel_marcado.id)
+        )
+        habitaciones_marcadas_restantes = set((await session.scalars(
+            select(Habitacion.id).where(Habitacion.id.in_(ids_habitaciones_marcadas))
+        )).all())
+        ids_restantes_por_tabla = {
+            modelo.__tablename__: set((await session.scalars(select(modelo.id))).all())
+            for modelo in (Hotel, Habitacion, Reserva)
+        }
     assert ids_restantes == set(ids_originales.values())
+    assert hotel_marcado_restante is None
+    assert not habitaciones_marcadas_restantes
+    assert all(
+        ids_restantes_por_tabla[tabla] >= ids_originales
+        for tabla, ids_originales in ids_originales_por_tabla.items()
+    )
     assert {huesped: origen for _, huesped, origen in originales_sin_marca} == {
         huesped: None for huesped in huespedes.values()
     }
