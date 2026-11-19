@@ -39,7 +39,7 @@ export default function OcupacionPage() {
   }
 
   useEffect(() => { cargar() }, [])
-  const puedeCargarEjemplo = !!yo?.permisos['CAP-4']?.includes('crear')
+  const puedeCargarEjemplo = !!yo?.permisos['CAP-4']?.includes('crear') || !!yo?.permisos['*']?.includes('crear')
   const sinDatos = !cargando && ocupacion?.hoteles === 0 && hoteles.length === 0
   const sobrevendidos = hoteles.filter((hotel) => hotel.vendidas > hotel.disponibles)
 
