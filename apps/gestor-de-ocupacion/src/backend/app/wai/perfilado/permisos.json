@@ -35,6 +35,10 @@
     {
       "id": "CAP-4",
       "que": "Cargar desde Ocupación los datos de ejemplo de los cinco hoteles de la cadena cuando la aplicación está vacía."
+    },
+    {
+      "id": "CAP-5",
+      "que": "Gestionar las reservas de los hoteles: crear una estancia, cambiar sus fechas o habitación, y cancelarla conservando su auditoría."
     }
   ],
   "roles": [
@@ -78,6 +82,11 @@
         ],
         "CAP-4": [
           "crear"
+        ],
+        "CAP-5": [
+          "ver",
+          "crear",
+          "editar"
         ]
       },
       "alcances": {}
@@ -98,6 +107,28 @@
           "crear"
         ],
         "CAP-3": [
+          "ver"
+        ],
+        "CAP-5": [
+          "ver",
+          "crear",
+          "editar"
+        ]
+      },
+      "alcances": {}
+    },
+    {
+      "id": "consulta",
+      "nombre": "Consulta",
+      "quien": "Personas que solo necesitan consultar la información",
+      "fijo": false,
+      "administra": false,
+      "alcance": "todo",
+      "permisos": {
+        "CAP-1": [
+          "ver"
+        ],
+        "CAP-5": [
           "ver"
         ]
       },
@@ -121,6 +152,12 @@
       "email": "recepcion@pruebas.wai",
       "roles": [
         "recepcion"
+      ]
+    },
+    {
+      "email": "consulta@pruebas.wai",
+      "roles": [
+        "consulta"
       ]
     }
   ]

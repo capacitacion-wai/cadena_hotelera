@@ -1,16 +1,16 @@
 {
-  "resumen": "Gestión de ocupación y reubicaciones aprobadas para una cadena de hoteles.",
+  "resumen": "Gestión de ocupación, reservas y reubicaciones aprobadas para una cadena de hoteles.",
   "lista": [
     {
       "id": "CAP-1",
       "que": "Consultar la ocupación de esta noche, las habitaciones, las que están fuera de servicio y las reservas de cada hotel, con un aviso claro de sobreventa.",
-      "quien": "Dirección y Recepción",
+      "quien": "Dirección, Recepción y Consulta",
       "prioridad": "obligatoria",
       "de_lo_pedido": [],
       "reglas": [
         {
           "id": "R-2",
-          "dice": "La ocupación disponible se calcula descontando las habitaciones fuera de servicio; si las reservas superan esa disponibilidad, se muestra cuántas habitaciones están sobrevendidas.",
+          "dice": "La ocupación de esta noche cuenta las reservas confirmadas cuyo intervalo incluye la fecha actual de Europe/Madrid; las habitaciones fuera de servicio se descuentan y se muestra cualquier sobreventa. Tras confirmar un cambio de reserva, la siguiente lectura ya refleja el nuevo cálculo.",
           "de_lo_pedido": []
         }
       ]
@@ -70,6 +70,35 @@
           "de_lo_pedido": []
         }
       ]
+    },
+    {
+      "id": "CAP-5",
+      "que": "Gestionar las reservas de los hoteles: crear una estancia, cambiar sus fechas o habitación, y cancelarla conservando su auditoría.",
+      "quien": "Dirección, Recepción y Administrador",
+      "prioridad": "obligatoria",
+      "de_lo_pedido": [],
+      "reglas": [
+        {
+          "id": "R-7",
+          "dice": "Antes de crear o cambiar una reserva, la habitación elegida debe estar operativa y sin otra reserva confirmada en cada noche del intervalo: entrada incluida y salida excluida; la fecha de salida debe ser posterior a la de entrada.",
+          "de_lo_pedido": []
+        },
+        {
+          "id": "R-8",
+          "dice": "Dirección, Recepción y el Administrador fijo de WAI pueden crear, editar y cancelar reservas. El perfil Consulta solo puede leer; la API deniega sus intentos de escritura. El permiso de Administrador para reservas no amplía sus acciones sobre reubicaciones.",
+          "de_lo_pedido": []
+        },
+        {
+          "id": "R-9",
+          "dice": "Cancelar requiere un motivo. La reserva no se borra: conserva estado cancelada, motivo, identidad autenticada de quien canceló y fecha y hora de la cancelación; la identidad procede de la sesión WAI, nunca de un dato enviado por la petición.",
+          "de_lo_pedido": []
+        },
+        {
+          "id": "R-10",
+          "dice": "La ocupación y sobreventa de esta noche se derivan de las reservas confirmadas que incluyen la fecha actual de Europe/Madrid y de las habitaciones operativas. La base SQLite local es la fuente de verdad; no hay sincronización con un PMS externo.",
+          "de_lo_pedido": []
+        }
+      ]
     }
   ],
   "no_hace": [
@@ -78,14 +107,14 @@
   "fuera_de_alcance": [],
   "idioma_principal": "es",
   "otros_idiomas": [],
-  "sello": "sha256:1ad8f4ab0a6d9c4a0a4c222b",
+  "sello": "sha256:7f931079f0b243f9ef7cd97e",
   "aprobada": {
     "por": "admin@wai.com",
-    "cuando": "2026-11-19T07:52:01+00:00",
+    "cuando": "2026-11-27T12:27:20+00:00",
     "via": "panel",
     "cita": "",
-    "sello": "sha256:1ad8f4ab0a6d9c4a0a4c222b",
-    "firma": "hmac-sha256:2b9c82bff40a38199fc72013799a82f969968b7c311e0e7743aefd45f80fa885",
-    "contenido_blob": "bbf1a079fc0375ec6d0f0ed8bceab5efad5587b9"
+    "sello": "sha256:7f931079f0b243f9ef7cd97e",
+    "firma": "hmac-sha256:1f46b4a50a2c01eab3812b37512c70e40c6a2ffbaca43cd52e4afc97a8c347be",
+    "contenido_blob": "95ae4a5b1355f09229a83e13f7ec2616f0a77f66"
   }
 }

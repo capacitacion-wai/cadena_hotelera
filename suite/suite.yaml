@@ -8,10 +8,10 @@ description: Gestionar la ocupación de nuestros cinco hoteles y resolver el ove
 project: {id: 43, name: demo_wai}
 pieces:
   built_here:
-    - {path: apps/gestor-de-ocupacion, role: 'Una aplicación para gestionar la ocupación de nuestra cadena de cinco hoteles en Valencia: Gran Hotel Centro, Hotel', role_checked: 'p:1ad8f4ab0a6d9c4a'}
+    - {path: apps/gestor-de-ocupacion, role: 'Aplicación para gestionar la ocupación y las reservas de los cinco hoteles, con consultas, cambios auditables y reubicaciones aprobadas por Dirección.', role_checked: 'p:7f931079f0b243f9'}
     - {path: mcp-servers/conector-del-gestor-de-ocupacion, role: 'Ofrece consultas de ocupación y disponibilidad de los hoteles, y registra propuestas de reubicación sin aprobarlas ni modificar reservas.', role_checked: 'p:6bde6eefbcc6ca81'}
     - {path: agents/analista-de-ocupacion, role: 'Consulta la ocupación de los cinco hoteles y prepara propuestas de reubicación por huésped, justificadas por disponibilidad, distancia y tarifa, para aprobación de Dirección.', role_checked: 'p:446aba67d3318d79'}
-    - {path: agent-apps/responsable-de-ocupacion, role: 'Vigila cada mañana la ocupación de los cinco hoteles y, si un hotel ha vendido de más, propone a Dirección reubicar a los huéspedes, explicando el motivo.'}
+    - {path: agent-apps/responsable-de-ocupacion, role: 'Revisa cada mañana la ocupación de esta noche en los cinco hoteles y, cuando detecta sobreventa, registra propuestas justificadas de reubicación para que Dirección las apruebe. No aprueba ni ejecuta traslados.', role_checked: 'p:2e9860d173e7204e'}
   external: []
 wiring:
   - {from: mcp-servers/conector-del-gestor-de-ocupacion.needs.app, to: apps/gestor-de-ocupacion.offers.api}

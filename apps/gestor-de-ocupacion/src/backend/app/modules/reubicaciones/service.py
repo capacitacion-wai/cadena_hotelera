@@ -186,10 +186,15 @@ async def aprobar_reubicacion(
     if not (reservation.fecha <= datetime.now(ZoneInfo("Europe/Madrid")).date() < reservation.salida) or reservation.estado != "confirmada":
         raise HTTPException(status_code=409, detail="La estancia ya no está activa esta noche.")
 
+    ocupada_esta_noche = select(Reserva.id).where(
+        Reserva.habitacion_id == Habitacion.id,
+        *_esta_esta_noche(),
+    ).exists()
     room = (await session.execute(
         select(Habitacion).where(
             Habitacion.hotel_id == proposal.hotel_destino_id,
-            Habitacion.estado == "libre",
+            Habitacion.estado != "fuera_servicio",
+            ~ocupada_esta_noche,
         ).order_by(Habitacion.numero).limit(1)
     )).scalars().first()
     if room is None:
@@ -198,7 +203,6 @@ async def aprobar_reubicacion(
     now = datetime.now(timezone.utc)
     reservation.hotel_id = proposal.hotel_destino_id
     reservation.habitacion_id = room.id
-    room.estado = "ocupada"
     proposal.estado = "aprobada"
     proposal.aprobado_por = persona
     proposal.aprobado_en = now

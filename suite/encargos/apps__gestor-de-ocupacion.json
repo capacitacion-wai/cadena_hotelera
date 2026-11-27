@@ -68,6 +68,65 @@
           "propio"
         ]
       }
+    },
+    {
+      "cuando": "2026-11-27T12:16:31+00:00",
+      "por": "admin@wai.com",
+      "texto": "Añadir al perfil Administrador la posibilidad de crear, editar y cancelar reservas, sin ampliar sus permisos sobre las reubicaciones. Mantener Consulta en solo lectura.",
+      "apartados": {
+        "que": "Una aplicación para gestionar la ocupación de cinco hoteles en Valencia: Gran Hotel Centro, Hotel Playa Malvarrosa, Hotel Aeropuerto, Hotel Sierra Calderona y Hotel Congresos. Muestra habitaciones, habitaciones fuera de servicio, reservas y ocupación de esta noche, y avisa cuando se venden más habitaciones de las disponibles. Permite comparar hoteles de la cadena por disponibilidad, distancia desde el centro de Valencia y diferencia de tarifa; proponer la reubicación de un huésped con motivo, que solo ejecuta Dirección al aprobarla. Registra quién propone, quién aprueba y cuándo. Dirección y Recepción usan la aplicación desde ordenador y teléfono; Consulta puede consultar la información. Dirección y Recepción ven todos los datos. Administrador también puede crear reservas, cambiar sus fechas o habitación y cancelarlas con motivo, conservando la auditoría; este permiso no amplía sus acciones sobre reubicaciones. Recepción propone y Dirección aprueba las reubicaciones. Datos de ejemplo: Centro 180 EUR, 0.5 km, 30 habitaciones; Playa Malvarrosa 210 EUR, 4.5 km, 24 habitaciones; Aeropuerto 120 EUR, 12 km, 40 habitaciones; Sierra Calderona 140 EUR, 45 km, 20 habitaciones; Congresos 95 EUR, 18 km, 35 habitaciones. Centro tiene 3 habitaciones fuera de servicio por una fuga y 30 vendidas; Playa está casi llena; Congresos está al 40 %.",
+        "para_quien": [
+          {
+            "nombre": "Dirección",
+            "ve": "todo",
+            "de_fuera": false
+          },
+          {
+            "nombre": "Recepción",
+            "ve": "todo",
+            "de_fuera": false
+          },
+          {
+            "nombre": "Consulta",
+            "ve": "todo",
+            "de_fuera": false
+          },
+          {
+            "nombre": "Administrador",
+            "ve": "todo",
+            "de_fuera": false
+          }
+        ],
+        "lo_que_hace": [
+          "Dirección, Recepción y Consulta consultan la ocupación de esta noche, habitaciones, habitaciones fuera de servicio y reservas de todos los hoteles.",
+          "Dirección y Recepción comparan hoteles por disponibilidad, distancia y tarifa, y proponen reubicaciones con motivo.",
+          "Dirección revisa y aprueba reubicaciones; Recepción consulta sus propuestas e historial.",
+          "Dirección carga los datos de ejemplo cuando la aplicación está vacía.",
+          "Dirección, Recepción y Administrador crean reservas, editan sus fechas o habitación y las cancelan con motivo; Consulta solo las consulta."
+        ],
+        "reglas": [
+          "Una reserva solo puede asignarse a una habitación operativa y libre durante todas las noches de la estancia; la entrada se incluye, la salida se excluye y la fecha de salida debe ser posterior a la de entrada.",
+          "Dirección, Recepción y Administrador pueden crear, editar y cancelar reservas; Consulta solo puede leer y sus intentos de escritura se deniegan.",
+          "Cancelar exige un motivo y conserva la reserva como cancelada, junto con el motivo, la identidad autenticada de quien canceló y la fecha y hora; la identidad procede de la sesión WAI.",
+          "La ocupación de esta noche se calcula con las reservas confirmadas que incluyen la fecha actual de Europe/Madrid y las habitaciones operativas; tras un cambio confirmado, la siguiente lectura refleja el nuevo cálculo.",
+          "Un huésped no se mueve hasta que Dirección aprueba la propuesta de reubicación.",
+          "Toda propuesta de reubicación incluye un motivo."
+        ],
+        "no_hace": [
+          "No gestiona pagos ni modifica los sistemas de reservas externos de los hoteles."
+        ],
+        "donde": [
+          "navegador",
+          "movil"
+        ],
+        "idiomas": [
+          "es"
+        ],
+        "aspecto": [
+          "propio"
+        ],
+        "ejemplo": "Recepción crea una reserva para una habitación libre; Dirección puede cambiar sus fechas o habitación, y Administrador también puede hacerlo. Si cualquiera de los tres cancela, indica el motivo y queda registrada su identidad y cuándo lo hizo. Consulta puede ver la reserva y su auditoría, pero no modificarla."
+      }
     }
   ]
 }

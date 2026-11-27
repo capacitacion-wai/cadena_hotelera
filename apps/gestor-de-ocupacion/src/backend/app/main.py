@@ -1,10 +1,12 @@
 import logging
 import os
+from pathlib import Path
 
 from fastapi import FastAPI
 
 from app.app_database import AppBase, app_engine, app_session
 from app import modules, pruebas_de_serie
+from app.wai import migraciones
 from app.modules.ocupacion.routes import router as ocupacion_router
 from app.modules.reubicaciones.routes import router as reubicaciones_router
 from app.routes.auth_routes import router as auth_router
@@ -33,6 +35,11 @@ if os.getenv("WAI_MODO_PRUEBAS") == "1":
 async def preparar_aplicacion() -> None:
     async with app_engine.begin() as connection:
         await connection.run_sync(AppBase.metadata.create_all)
+    await migraciones.migrar(
+        app_engine,
+        "ocupacion_reservas",
+        Path(__file__).resolve().parent / "modules" / "ocupacion" / "migraciones",
+    )
     if os.getenv("WAI_DATOS_DE_EJEMPLO") == "1":
         from app import datos_de_ejemplo
 
