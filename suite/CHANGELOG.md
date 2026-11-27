@@ -3,6 +3,10 @@
 The suite has no version of its own: its version is the repository's. Every approved
 version (vX.Y.Z) adds its entry here.
 
+## v1.6.1 — 2026-11-27
+
+- apps/gestor-de-ocupacion v0.4.1
+
 ## v1.6.0 — 2026-11-27
 
 - apps/gestor-de-ocupacion v0.4.0

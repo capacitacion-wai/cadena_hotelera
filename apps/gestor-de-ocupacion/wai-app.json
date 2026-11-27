@@ -2,12 +2,12 @@
   "name": "gestor-de-ocupacion",
   "display_name": "Gestor de ocupación",
   "description": "Gestiona la ocupación, las reservas y las reubicaciones aprobadas de cinco hoteles en Valencia.",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "skill": {
     "nombre": "wai-app-builder",
-    "version": "10.2.3"
+    "version": "10.3.1"
   },
-  "skill_version": "10.2.3",
+  "skill_version": "10.3.1",
   "autenticacion": "introspeccion",
   "project": {
     "id": 43,
