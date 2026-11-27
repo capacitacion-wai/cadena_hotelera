@@ -1,12 +1,16 @@
 # Changelog
 
+## 0.4.1
+
+Guardada desde WAI tras pasar sus comprobaciones. 3 fichero(s) cambiado(s) desde la v0.4.0. Lo que hace no cambia.
+
 ## 0.4.0
 
 Guardada desde WAI tras pasar sus comprobaciones. 10 fichero(s) cambiado(s) desde la v0.3.0. Cambia lo que hace en: pruebas.
 
 ## Próxima versión
 
-La propuesta de reubicación explica cuando no hay huéspedes activos elegibles y recuerda que los huéspedes con una propuesta pendiente no se pueden proponer de nuevo. Los conflictos al proponer o aprobar muestran el motivo de la aplicación y actualizan la información; las estancias vencidas siguen sin poder trasladarse.
+En cada hotel se pueden consultar las reservas actuales, futuras, pasadas y canceladas. Dirección, Recepción y Administrador pueden crear, editar y cancelar estancias con validación de disponibilidad, motivo y auditoría; Consulta conserva acceso de solo lectura. La ocupación se recalcula desde las reservas confirmadas de esta noche. En reubicaciones, la pantalla explica cuándo no hay huéspedes activos elegibles, evita propuestas duplicadas y muestra el motivo de los conflictos; las estancias vencidas siguen sin poder trasladarse.
 
 ## 0.3.0
 
