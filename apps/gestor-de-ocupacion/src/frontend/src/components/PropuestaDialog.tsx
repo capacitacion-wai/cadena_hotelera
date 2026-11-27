@@ -55,6 +55,9 @@ export default function PropuestaDialog({ abierto, datos, guardando, cerrar, gua
                 <MenuItem key={guest.reserva_id} value={String(guest.reserva_id)}>{guest.huesped} · {guest.origen}</MenuItem>
               ))}
             </Select>
+            {datos.huespedes_por_reubicar.items.length === 0 && (
+              <FormHelperText>{t('relocations.noEligibleGuests')}</FormHelperText>
+            )}
           </FormControl>
           <FormControl fullWidth required>
             <InputLabel id="hotel-label">{t('relocations.chooseHotel')}</InputLabel>

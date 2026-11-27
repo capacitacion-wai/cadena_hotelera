@@ -88,7 +88,7 @@ Cancelar no borra la reserva. El nombre del huésped, la estancia original y la 
 4. Compara la tarifa, la distancia desde el centro de Valencia y la diferencia de tarifa. La diferencia se calcula restando la tarifa del hotel de origen a la del destino. Un importe negativo indica que el destino cuesta menos; uno positivo, que cuesta más.
 5. Escribe un motivo claro y específico. Por ejemplo, explica qué incidencia impide alojar al huésped en la habitación prevista.
 6. Selecciona **Guardar propuesta**. La propuesta aparece como pendiente de aprobación. La reserva permanece en el hotel de origen y el huésped no se considera trasladado.
-7. Si la propuesta no aparece, revisa que elegiste un huésped con una reserva activa de esta noche y que no tenga ya otra propuesta pendiente.
+7. Si no hay huéspedes disponibles en el selector, no existe una estancia activa y apta para reubicar esta noche. Quien ya tiene una propuesta pendiente aparece en **Pendientes de aprobación** y no se puede proponer otra vez.
 
 Guardar una propuesta no es una aprobación ni una reserva nueva en el hotel de destino. Dirección debe revisar la alternativa y aprobarla expresamente antes de que el traslado ocurra.
 
@@ -146,7 +146,7 @@ La aplicación no añade hoteles ni modifica sus tarifas o la capacidad total de
 
 Si el aviso de sobreventa no coincide con la ocupación real, revisa las reservas confirmadas cuya estancia incluye hoy en Valencia y las habitaciones marcadas fuera de servicio. La ocupación se calcula con esos datos y se actualiza en la siguiente consulta tras cada cambio guardado. Asegúrate también de que una estancia que continúa esta noche tenga fecha de salida posterior a hoy.
 
-Si no aparece un huésped en la lista de reubicación, confirma que su reserva esté activa esta noche, que no tenga habitación asignada y que no exista ya una propuesta pendiente. Si un destino desaparece o deja de ofrecerse, puede que otra persona haya ocupado la última habitación libre; actualiza la pantalla antes de elegir.
+Si el selector de reubicación está vacío, no hay huéspedes con una estancia activa y apta para proponer esta noche. Quienes ya esperan aprobación aparecen en la lista de pendientes y no se pueden proponer de nuevo. Si al aprobar una propuesta la estancia ya venció, la aplicación muestra el motivo y actualiza la información; no reactiva ni traslada una estancia pasada. Si un destino desaparece o deja de ofrecerse, puede que otra persona haya ocupado la última habitación libre; actualiza la pantalla antes de elegir.
 
 Si Recepción no encuentra el botón de aprobación, es el comportamiento esperado. Dirección debe entrar con su propio acceso. Si una aprobación no se refleja en el historial, no repitas el movimiento a ciegas: confirma primero si la reserva ya cambió de hotel y si la propuesta figura entre los movimientos aprobados.
 
