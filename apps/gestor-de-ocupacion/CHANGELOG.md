@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0
+
+Guardada desde WAI tras pasar sus comprobaciones. 10 fichero(s) cambiado(s) desde la v0.3.0. Cambia lo que hace en: pruebas.
+
+## Próxima versión
+
+La propuesta de reubicación explica cuando no hay huéspedes activos elegibles y recuerda que los huéspedes con una propuesta pendiente no se pueden proponer de nuevo. Los conflictos al proponer o aprobar muestran el motivo de la aplicación y actualizan la información; las estancias vencidas siguen sin poder trasladarse.
+
 ## 0.3.0
 
 Guardada desde WAI tras pasar sus comprobaciones. 30 fichero(s) cambiado(s) desde la v0.2.4. Cambia lo que hace en: arquitectura, capacidades, diseno, pruebas.

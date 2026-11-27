@@ -127,6 +127,7 @@ const es = {
   'relocations.error': 'No se pudo completar la acción.',
   'relocations.dialogTitle': 'Proponer una reubicación',
   'relocations.chooseGuest': 'Huésped por reubicar',
+  'relocations.noEligibleGuests': 'No hay huéspedes con una estancia activa y aptos para reubicar esta noche. Quienes ya tienen una propuesta pendiente aparecen en Pendientes de aprobación y no se pueden proponer otra vez.',
   'relocations.chooseHotel': 'Hotel de destino',
   'relocations.chooseHotelHint': 'Elige un hotel con habitaciones libres.',
   'relocations.reasonHint': 'Explica por qué se propone el cambio.',

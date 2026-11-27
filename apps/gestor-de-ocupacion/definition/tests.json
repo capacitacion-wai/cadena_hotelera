@@ -355,6 +355,23 @@
       "tipo": "api",
       "datos": "base",
       "prueba": "tests-e2e/test_reservas.py::test_administrador_puede_gestionar_reservas"
+    },
+    {
+      "id": "E-25",
+      "capacidad": "CAP-2",
+      "regla": "R-3",
+      "titulo": "Explicar huéspedes no elegibles y conflictos de propuestas desactualizadas",
+      "dado": "Hay una propuesta pendiente, pero no quedan huéspedes activos elegibles para proponer esta noche.",
+      "cuando": "Dirección abre el diálogo de propuesta y una aprobación recibe un conflicto porque la estancia ya no está activa.",
+      "entonces": "El diálogo explica el estado vacío y que las propuestas pendientes no se duplican; los conflictos al proponer o aprobar muestran su motivo y actualizan la información.",
+      "tipo": "interfaz",
+      "datos": "base",
+      "perfil": "direccion",
+      "prueba": "tests-e2e/test_reubicaciones.py::test_estado_vacio_y_conflicto_de_estancia_inactiva",
+      "vistas": [
+        "navegador",
+        "movil"
+      ]
     }
   ],
   "cobertura": {
@@ -379,20 +396,20 @@
       "fuera": []
     }
   },
-  "sello": "sha256:4f43745cc8ea40af2e17136b",
+  "sello": "sha256:4ae3ec1afa2837a7ccfd0ec2",
   "aprobada": {
     "por": "admin@wai.com",
-    "cuando": "2026-11-27T12:27:20+00:00",
+    "cuando": "2026-11-27T18:06:58+00:00",
     "via": "panel",
     "cita": "",
-    "sello": "sha256:4f43745cc8ea40af2e17136b",
+    "sello": "sha256:4ae3ec1afa2837a7ccfd0ec2",
     "ficheros_de_prueba": {
       "tests-e2e/test_accesos.py": "9ce2e102af6989bfb5e114b1411eed1154ce3d89",
       "tests-e2e/test_ocupacion.py": "ccd6fe2c8986c2ad6cdb229c4d1e830fd7bda98f",
-      "tests-e2e/test_reservas.py": "8575f018e13757ca3bbace64a701ab40f6f0f99f",
-      "tests-e2e/test_reubicaciones.py": "282bef5c6b7b35026ec1fc4d7ef1c59675a48b0d"
+      "tests-e2e/test_reservas.py": "62609df6689e0d957051a7029c3b325412434dd2",
+      "tests-e2e/test_reubicaciones.py": "ba3670908ebe6d1f99af577fefbc21dab7cf114a"
     },
-    "firma": "hmac-sha256:e67fcd235dad0ec26ee4416ebc8d2dae0bac7e53c463ef5de87445554219f2ce",
-    "contenido_blob": "b3332c178f835b52827a2cefcfbbdcc98c7853a6"
+    "firma": "hmac-sha256:459058973dd05233c5f33e1d9b0222039659e413347f19ec6a1fb80e8e2f8e16",
+    "contenido_blob": "69a4b7c4d033fdc8c431b0a421ba658fe0f26c62"
   }
 }

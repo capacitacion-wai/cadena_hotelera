@@ -11,6 +11,7 @@ import PropuestaDialog from '../components/PropuestaDialog'
 import { useMiAcceso } from '../wai/perfilado'
 import { formatearFechaHora, formatearImporte, formatearNumero } from '../utils/formato'
 import { gestorApi, type DatosReubicaciones, type Pagina, type Propuesta } from '../services/gestor'
+import { ApiError } from '../services/apiClient'
 
 const PAGE_SIZE = 20
 const paginaVacia = <T,>(): Pagina<T> => ({ items: [], total: 0, limit: PAGE_SIZE, offset: 0 })
@@ -26,6 +27,17 @@ function diferenciaTarifa(propuesta: Propuesta) {
   return `${diferencia > 0 ? '+' : ''}${formatearImporte(diferencia)}`
 }
 
+function mensajeDeError(error: unknown, alternativa: string) {
+  if (!(error instanceof ApiError)) return alternativa
+  try {
+    const respuesta = JSON.parse(error.message)
+    if (typeof respuesta.detail === 'string' && respuesta.detail.trim()) return respuesta.detail
+  } catch {
+    // Some API errors are plain text rather than JSON.
+  }
+  return error.message.trim() || alternativa
+}
+
 export default function ReubicacionesPage() {
   const { t } = useTranslation()
   const theme = useTheme()
@@ -35,19 +47,20 @@ export default function ReubicacionesPage() {
   const [guardando, setGuardando] = useState(false)
   const [dialogo, setDialogo] = useState(false)
   const [mensaje, setMensaje] = useState('')
-  const [error, setError] = useState(false)
+  const [error, setError] = useState('')
   const [propuestasOffset, setPropuestasOffset] = useState(0)
   const [historialOffset, setHistorialOffset] = useState(0)
   const puedeAprobar = !!yo?.permisos['CAP-3']?.includes('aprobar')
 
-  const cargar = () => {
+  const cargar = (conservarError = false) => {
     setCargando(true)
+    if (!conservarError) setError('')
     gestorApi.reubicaciones(propuestasOffset, historialOffset, PAGE_SIZE).then((respuesta) => {
       setDatos(respuesta)
-      setError(false)
+      if (!conservarError) setError('')
       setCargando(false)
     }).catch(() => {
-      setError(true)
+      if (!conservarError) setError(t('relocations.error'))
       setCargando(false)
     })
   }
@@ -56,26 +69,33 @@ export default function ReubicacionesPage() {
 
   const guardarPropuesta = (entrada: { reserva_id: number; hotel_destino_id: number; motivo: string }) => {
     setGuardando(true)
+    setError('')
     gestorApi.proponer(entrada).then(() => {
       setDialogo(false)
       setMensaje(t('relocations.proposalSaved'))
       setGuardando(false)
       cargar()
-    }).catch(() => {
-      setError(true)
+    }).catch((cause: unknown) => {
+      setError(mensajeDeError(cause, t('relocations.error')))
       setGuardando(false)
+      if (cause instanceof ApiError && cause.status === 409) {
+        setDialogo(false)
+        cargar(true)
+      }
     })
   }
 
   const aprobar = (propuesta: Propuesta) => {
     setGuardando(true)
+    setError('')
     gestorApi.aprobar(propuesta.id).then(() => {
       setMensaje(t('relocations.approved'))
       setGuardando(false)
       cargar()
-    }).catch(() => {
-      setError(true)
+    }).catch((cause: unknown) => {
+      setError(mensajeDeError(cause, t('relocations.error')))
       setGuardando(false)
+      if (cause instanceof ApiError && cause.status === 409) cargar(true)
     })
   }
 
@@ -87,7 +107,7 @@ export default function ReubicacionesPage() {
         icon={<SwapHorizOutlined />}
         actions={<Button variant="contained" onClick={() => setDialogo(true)}>{t('relocations.new')}</Button>}
       />
-      {error && <Alert severity="error" sx={{ mb: 2 }}>{t('relocations.error')}</Alert>}
+      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
       {!puedeAprobar && <Alert severity="info" sx={{ mb: 2 }}>{t('relocations.cannotApprove')}</Alert>}
       <Grid container spacing={3}>
         <Grid item xs={12} lg={7}>

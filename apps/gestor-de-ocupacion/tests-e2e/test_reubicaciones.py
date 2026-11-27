@@ -53,3 +53,58 @@ def test_historial_auditable(cliente):
     assert movement["aprobado_por"] == "direccion@hoteles.example"
     assert movement["propuesto_en"]
     assert movement["aprobado_en"]
+
+
+def test_estado_vacio_y_conflicto_de_estancia_inactiva(cliente, pagina, paso):
+    datos = cliente.get("/api/reubicaciones?limit=20&offset=0").json()
+    pagina.route(
+        "**/api/reubicaciones/*/aprobar",
+        lambda route: route.fulfill(status=409, json={"detail": "La estancia ya no está activa esta noche."}),
+    )
+    pagina.goto("/reubicaciones")
+
+    pagina.get_by_role("button", name="Proponer reubicación").click()
+    pagina.get_by_role("combobox", name="Huésped por reubicar").click()
+    pagina.get_by_role("option", name="Jordi Roca · Gran Hotel Centro").click()
+    pagina.get_by_role("combobox", name="Hotel de destino").click()
+    pagina.get_by_role("option", name="Hotel Aeropuerto", exact=False).click()
+    pagina.get_by_role("textbox", name="Motivo").fill("La propuesta se actualizó en otra sesión.")
+
+    disponibles = datos["huespedes_por_reubicar"]["items"]
+    destinos = [hotel for hotel in datos["destinos"]["items"] if hotel["libres"] > 0]
+    for index, huesped in enumerate(disponibles):
+        destino = next(hotel for hotel in destinos if hotel["id"] != huesped["origen_id"])
+        response = cliente.post("/api/reubicaciones", json={
+            "reserva_id": huesped["reserva_id"],
+            "hotel_destino_id": destino["id"],
+            "motivo": "Propuesta creada desde otra sesión de prueba.",
+        })
+        assert response.status_code == 201, response.text
+
+    with pagina.expect_request(
+        lambda request: request.method == "GET" and "/api/reubicaciones?" in request.url,
+    ):
+        pagina.get_by_role("button", name="Guardar propuesta").click()
+    expect(pagina.get_by_role("alert")).to_contain_text("Ya hay una propuesta pendiente para este huésped.")
+    expect(pagina.get_by_role("heading", name="Proponer una reubicación")).to_have_count(0)
+    paso("El conflicto al proponer muestra el motivo y actualiza la información")
+
+    pagina.get_by_role("button", name="Proponer reubicación").click()
+    expect(pagina.get_by_text(
+        "No hay huéspedes con una estancia activa y aptos para reubicar esta noche. "
+        "Quienes ya tienen una propuesta pendiente aparecen en Pendientes de aprobación "
+        "y no se pueden proponer otra vez.",
+        exact=True,
+    )).to_be_visible()
+    pagina.get_by_role("combobox", name="Huésped por reubicar").click()
+    expect(pagina.get_by_role("option", name="Amparo Vidal", exact=False)).to_have_count(0)
+    pagina.keyboard.press("Escape")
+    pagina.get_by_role("button", name="Cancelar").click()
+    paso("El selector vacío explica la causa y no repite al huésped con propuesta pendiente")
+
+    with pagina.expect_request(
+        lambda request: request.method == "GET" and "/api/reubicaciones?" in request.url,
+    ):
+        pagina.get_by_role("button", name="Aprobar y mover huésped").first.click()
+    expect(pagina.get_by_role("alert")).to_contain_text("La estancia ya no está activa esta noche.")
+    paso("El conflicto de una estancia inactiva explica el rechazo y actualiza la información")

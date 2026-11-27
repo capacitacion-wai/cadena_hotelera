@@ -187,5 +187,13 @@
       "motivo": "verde_con_codigo_nuevo",
       "firma": "hmac-sha256:a849522b9f008ce69cedec3d60bfdfa9c4ee9566c37b8f984341041d3aece146"
     }
+  },
+  {
+    "id": "e4d91a6b208c",
+    "cuando": "2026-11-27T17:24:34+00:00",
+    "fase": "pruebas",
+    "que": "Aclarar el estado vacío de huéspedes aptos para reubicación y mostrar el motivo recibido cuando una propuesta desactualizada produce un conflicto; actualizar la información tras el conflicto.",
+    "por_que": "Las estancias vencidas deben seguir protegidas por el servidor, pero la pantalla tiene que explicar por qué ya no puede completarse la operación y evitar propuestas duplicadas.",
+    "por": "agente"
   }
 ]
