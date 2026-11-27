@@ -33,3 +33,6 @@ class Reserva(AppBase):
     estado = Column(String(30), nullable=False, default="confirmada", index=True)
     fecha = Column(Date, nullable=False, index=True)
     salida = Column(Date, nullable=False, index=True)
+    motivo_cancelacion = Column(String(500), nullable=True)
+    cancelada_por = Column(String(255), nullable=True)
+    cancelada_en = Column(String(40), nullable=True)

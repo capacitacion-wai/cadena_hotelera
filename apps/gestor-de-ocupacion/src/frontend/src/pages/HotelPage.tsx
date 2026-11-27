@@ -3,29 +3,29 @@ import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   Alert, alpha, Box, Button, Chip, Paper, Skeleton, Tab, Table, TableBody, TableCell, TablePagination,
-  TableContainer, TableHead, TableRow, Tabs, Typography,
+  TableContainer, TableHead, TableRow, Tabs,
   useTheme,
 } from '@mui/material'
 import { ArrowBack, HotelOutlined } from '@mui/icons-material'
 import PageHeader from '../components/PageHeader'
 import SectionTitle from '../components/SectionTitle'
 import KpiCard from '../components/KpiCard'
-import { formatearFecha, formatearImporte, formatearNumero, formatearPorcentaje } from '../utils/formato'
-import { gestorApi, type Habitacion, type Hotel, type Reserva } from '../services/gestor'
+import ReservasPanel from '../components/ReservasPanel'
+import { formatearImporte, formatearNumero, formatearPorcentaje } from '../utils/formato'
+import { gestorApi, type Habitacion, type Hotel } from '../services/gestor'
+import { useMiAcceso } from '../wai/perfilado'
 
 const PAGE_SIZE = 20
 
 export default function HotelPage() {
   const { t } = useTranslation()
+  const { yo } = useMiAcceso()
   const theme = useTheme()
   const { hotelId = '' } = useParams()
   const [hotel, setHotel] = useState<Hotel | null>(null)
   const [habitaciones, setHabitaciones] = useState<Habitacion[]>([])
-  const [reservas, setReservas] = useState<Reserva[]>([])
   const [totalHabitaciones, setTotalHabitaciones] = useState(0)
-  const [totalReservas, setTotalReservas] = useState(0)
   const [habitacionesOffset, setHabitacionesOffset] = useState(0)
-  const [reservasOffset, setReservasOffset] = useState(0)
   const [pestana, setPestana] = useState(0)
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(false)
@@ -35,13 +35,10 @@ export default function HotelPage() {
     Promise.all([
       gestorApi.hotel(hotelId),
       gestorApi.habitaciones(hotelId, habitacionesOffset, PAGE_SIZE),
-      gestorApi.reservas(hotelId, reservasOffset, PAGE_SIZE),
-    ]).then(([detalle, cuartos, estancias]) => {
+    ]).then(([detalle, cuartos]) => {
       setHotel(detalle)
       setHabitaciones(cuartos.items)
       setTotalHabitaciones(cuartos.total)
-      setReservas(estancias.items)
-      setTotalReservas(estancias.total)
       setError(false)
       setCargando(false)
     }).catch(() => {
@@ -50,7 +47,10 @@ export default function HotelPage() {
     })
   }
 
-  useEffect(() => { cargar() }, [hotelId, habitacionesOffset, reservasOffset])
+  useEffect(() => { cargar() }, [hotelId, habitacionesOffset])
+
+  const puedeGestionarReservas = (yo?.roles ?? []).some((role) =>
+    role === 'admin' || role === 'direccion' || role === 'recepcion')
 
   const estadoHabitacion = (room: Habitacion) => {
     if (room.estado === 'fuera_servicio') return <Chip size="small" label={t('hotel.outOfService')} sx={{ bgcolor: alpha(theme.palette.error.main, 0.1), color: theme.palette.error.dark, fontWeight: 700 }} />
@@ -82,7 +82,7 @@ export default function HotelPage() {
       <Paper variant="outlined">
         <Tabs value={pestana} onChange={(_event, value: number) => setPestana(value)} aria-label={t('hotel.status')} variant="fullWidth">
           <Tab label={t('hotel.roomsTab', { count: totalHabitaciones })} />
-          <Tab label={t('hotel.reservationsTab', { count: totalReservas })} />
+          <Tab label={t('hotel.reservationsTab')} />
         </Tabs>
         {pestana === 0 ? (
           <Box sx={{ p: { xs: 1, sm: 2 } }}>
@@ -113,30 +113,7 @@ export default function HotelPage() {
         ) : (
           <Box sx={{ p: { xs: 1, sm: 2 } }}>
             <Box sx={{ px: 1, pt: 1 }}><SectionTitle>{t('hotel.reservationTitle')}</SectionTitle></Box>
-            <TableContainer>
-              <Table size="small" aria-label={t('hotel.reservationTitle')}>
-                <TableHead><TableRow><TableCell>{t('hotel.guest')}</TableCell><TableCell>{t('hotel.room')}</TableCell><TableCell>{t('hotel.stay')}</TableCell><TableCell>{t('hotel.status')}</TableCell></TableRow></TableHead>
-                <TableBody>
-                  {cargando && <TableRow><TableCell colSpan={4}><Skeleton /><Skeleton /><Skeleton /></TableCell></TableRow>}
-                  {!cargando && reservas.map((reservation) => <TableRow key={reservation.id} hover>
-                    <TableCell>{reservation.huesped}</TableCell><TableCell>{reservation.habitacion}</TableCell>
-                    <TableCell>{formatearFecha(reservation.entrada)} – {formatearFecha(reservation.salida)}</TableCell>
-                    <TableCell><Chip size="small" label={reservation.estado} /></TableCell>
-                  </TableRow>)}
-                  {!cargando && reservas.length === 0 && <TableRow><TableCell colSpan={4}>{t('hotel.noReservations')}</TableCell></TableRow>}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              component="div"
-              count={totalReservas}
-              page={Math.floor(reservasOffset / PAGE_SIZE)}
-              onPageChange={(_event, page) => setReservasOffset(page * PAGE_SIZE)}
-              rowsPerPage={PAGE_SIZE}
-              rowsPerPageOptions={[PAGE_SIZE]}
-              labelRowsPerPage={t('pagination.rowsPerPage')}
-              labelDisplayedRows={({ from, to, count }) => t('pagination.displayed', { from, to, count })}
-            />
+            <ReservasPanel hotelId={hotelId} puedeGestionar={puedeGestionarReservas} onCambio={cargar} />
           </Box>
         )}
       </Paper>

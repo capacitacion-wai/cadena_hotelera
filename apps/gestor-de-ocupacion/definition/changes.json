@@ -42,5 +42,150 @@
     "que": "Añadir escenarios de carga, ocultación con datos existentes y denegación a Recepción.",
     "por_que": "Cubren la capacidad nueva y sus condiciones de acceso y disponibilidad.",
     "por": "agente"
+  },
+  {
+    "id": "d0f45a610004",
+    "cuando": "2026-11-27T11:11:47+00:00",
+    "fase": "capacidades",
+    "que": "Añadir gestión de reservas con comprobación de disponibilidad por noche, cancelación con motivo y auditoría, perfil Consulta de solo lectura y ocupación derivada de reservas confirmadas para la fecha de Europe/Madrid.",
+    "por_que": "La cadena necesita mantener las reservas desde la aplicación y conocer de inmediato su efecto en la ocupación, sin borrar cancelaciones ni ampliar el alcance aprobado de las reubicaciones.",
+    "por": "agente",
+    "pendiente_de_aplicar": true,
+    "texto": "Ampliar la gestión de reservas de cada hotel para Dirección y Recepción; quien solo consulta tendrá el perfil Consulta, sin escrituras. Validar la habitación para todas las noches, exigir motivo y auditoría al cancelar, y recalcular ocupación desde SQLite en la siguiente lectura."
+  },
+  {
+    "id": "d0f45a610005",
+    "cuando": "2026-11-27T11:11:47+00:00",
+    "fase": "diseno",
+    "que": "Ampliar el detalle de hotel existente para consultar y gestionar reservas actuales, futuras, pasadas y canceladas, incluidos sus datos de cancelación; no añadir pantalla ni navegación.",
+    "por_que": "La operación se integra en la vista de reservas ya aprobada.",
+    "por": "agente",
+    "pendiente_de_aplicar": true
+  },
+  {
+    "id": "d0f45a610006",
+    "cuando": "2026-11-27T11:11:47+00:00",
+    "fase": "arquitectura",
+    "que": "Declarar CAP-5, las reglas de disponibilidad y auditoría, el perfil Consulta y permisos, las tres rutas de escritura, los campos de cancelación en SQLite y la ocupación derivada de reservas confirmadas en Europe/Madrid.",
+    "por_que": "La arquitectura debe hacer explícitos los controles, persistencia y lecturas afectados antes de implementar.",
+    "por": "agente",
+    "pendiente_de_aplicar": true
+  },
+  {
+    "id": "d0f45a610007",
+    "cuando": "2026-11-27T11:11:47+00:00",
+    "fase": "pruebas",
+    "que": "Añadir pruebas de creación disponible, conflicto de solapamiento, edición con conflicto, motivo y auditoría de cancelación, escrituras de Dirección y Recepción, denegación a Consulta, refresco inmediato de ocupación y consulta de los periodos y cancelaciones.",
+    "por_que": "Cubren el flujo de reserva de extremo a extremo y las reglas de autorización, integridad e información solicitadas.",
+    "por": "agente",
+    "pendiente_de_aplicar": true
+  },
+  {
+    "id": "4b770129d5ac",
+    "cuando": "2026-11-27T12:16:30+00:00",
+    "fase": "capacidades",
+    "que": "¿Qué quieres que haga?: «Una aplicación para gestionar la ocupación de cinco hoteles en Valencia: Gran Hotel Centro, Hotel Playa Malvarrosa, Hotel Aeropuerto, Hotel Sierra Calderona y Hotel Congresos. Muestra habitaciones, habitaciones fuera de servicio, reservas y ocupación de esta noche, y avisa cuando se venden más habitaciones de las disponibles. Permite comparar hoteles de la cadena por disponibilidad, distancia desde el centro de Valencia y diferencia de tarifa; proponer la reubicación de un huésped con motivo, que solo ejecuta Dirección al aprobarla. Registra quién propone, quién aprueba y cuándo. Datos de ejemplo: Centro 180 EUR, 0.5 km, 30 habitaciones; Playa Malvarrosa 210 EUR, 4.5 km, 24 habitaciones; Aeropuerto 120 EUR, 12 km, 40 habitaciones; Sierra Calderona 140 EUR, 45 km, 20 habitaciones; Congresos 95 EUR, 18 km, 35 habitaciones. Centro tiene 3 habitaciones fuera de servicio por una fuga y 30 vendidas; Playa está casi llena; Congresos está al 40 %. Dirección y Recepción",
+    "por_que": "Añadir al perfil Administrador la posibilidad de crear, editar y cancelar reservas, sin ampliar sus permisos sobre las reubicaciones. Mantener Consulta en solo lectura.",
+    "por": "admin@wai.com",
+    "pendiente_de_aplicar": false,
+    "huella_codigo_al_pedir": "sha256:67d840322374973f070d66f0",
+    "detalle": [
+      {
+        "apartado": "que",
+        "nombre": "¿Qué quieres que haga?",
+        "anade": [],
+        "quita": [],
+        "antes": "Una aplicación para gestionar la ocupación de cinco hoteles en Valencia: Gran Hotel Centro, Hotel Playa Malvarrosa, Hotel Aeropuerto, Hotel Sierra Calderona y Hotel Congresos. Muestra habitaciones, habitaciones fuera de servicio, reservas y ocupación de esta noche, y avisa cuando se venden más habitaciones de las disponibles. Permite comparar hoteles de la cadena por disponibilidad, distancia desde el centro de Valencia y diferencia de tarifa; proponer la reubicación de un huésped con motivo, que solo ejecuta Dirección al aprobarla. Registra quién propone, quién aprueba y cuándo. Datos de ejemplo: Centro 180 EUR, 0.5 km, 30 habitaciones; Playa Malvarrosa 210 EUR, 4.5 km, 24 habitaciones; Aeropuerto 120 EUR, 12 km, 40 habitaciones; Sierra Calderona 140 EUR, 45 km, 20 habitaciones; Congresos 95 EUR, 18 km, 35 habitaciones. Centro tiene 3 habitaciones fuera de servicio por una fuga y 30 vendidas; Playa está casi llena; Congresos está al 40 %. Dirección y Recepción usan la aplicación desde ordenador y teléfono. Dirección y Recepción ven todos los datos. Recepción propone y Dirección aprueba las reubicaciones.",
+        "ahora": "Una aplicación para gestionar la ocupación de cinco hoteles en Valencia: Gran Hotel Centro, Hotel Playa Malvarrosa, Hotel Aeropuerto, Hotel Sierra Calderona y Hotel Congresos. Muestra habitaciones, habitaciones fuera de servicio, reservas y ocupación de esta noche, y avisa cuando se venden más habitaciones de las disponibles. Permite comparar hoteles de la cadena por disponibilidad, distancia desde el centro de Valencia y diferencia de tarifa; proponer la reubicación de un huésped con motivo, que solo ejecuta Dirección al aprobarla. Registra quién propone, quién aprueba y cuándo. Dirección y Recepción usan la aplicación desde ordenador y teléfono; Consulta puede consultar la información. Dirección y Recepción ven todos los datos. Administrador también puede crear reservas, cambiar sus fechas o habitación y cancelarlas con motivo, conservando la auditoría; este permiso no amplía sus acciones sobre reubicaciones. Recepción propone y Dirección aprueba las reubicaciones. Datos de ejemplo: Centro 180 EUR, 0.5 km, 30 habitaciones; Playa Malvarrosa 210 EUR, 4.5 km, 24 habitaciones; Aeropuerto 120 EUR, 12 km, 40 habitaciones; Sierra Calderona 140 EUR, 45 km, 20 habitaciones; Congresos 95 EUR, 18 km, 35 habitaciones. Centro tiene 3 habitaciones fuera de servicio por una fuga y 30 vendidas; Playa está casi llena; Congresos está al 40 %."
+      },
+      {
+        "apartado": "para_quien",
+        "nombre": "Quién la usa",
+        "anade": [
+          "Administrador — ve todo"
+        ],
+        "quita": []
+      },
+      {
+        "apartado": "lo_que_hace",
+        "nombre": "Lo que hace",
+        "anade": [
+          "Dirección, Recepción y Consulta consultan la ocupación de esta noche, habitaciones, habitaciones fuera de servicio y reservas de todos los hoteles.",
+          "Dirección y Recepción comparan hoteles por disponibilidad, distancia y tarifa, y proponen reubicaciones con motivo.",
+          "Dirección revisa y aprueba reubicaciones; Recepción consulta sus propuestas e historial.",
+          "Dirección carga los datos de ejemplo cuando la aplicación está vacía.",
+          "Dirección, Recepción y Administrador crean reservas, editan sus fechas o habitación y las cancelan con motivo; Consulta solo las consulta."
+        ],
+        "quita": [
+          "Consultar la ocupación de esta noche, las habitaciones, las que están fuera de servicio y las reservas de cada hotel, con un aviso claro de sobreventa.",
+          "Comparar hoteles de la cadena por habitaciones disponibles, distancia desde el centro de Valencia y diferencia de tarifa, y proponer la reubicación de un huésped indicando el motivo.",
+          "Revisar y aprobar propuestas de reubicación para que el cambio se ejecute, y consultar quién lo propuso, quién lo aprobó y cuándo.",
+          "Cargar desde Ocupación los datos de ejemplo de los cinco hoteles de la cadena cuando la aplicación está vacía.",
+          "Gestionar las reservas de los hoteles: crear una estancia, cambiar sus fechas o habitación, y cancelarla conservando su auditoría."
+        ]
+      },
+      {
+        "apartado": "reglas",
+        "nombre": "Reglas",
+        "anade": [
+          "Una reserva solo puede asignarse a una habitación operativa y libre durante todas las noches de la estancia; la entrada se incluye, la salida se excluye y la fecha de salida debe ser posterior a la de entrada.",
+          "Dirección, Recepción y Administrador pueden crear, editar y cancelar reservas; Consulta solo puede leer y sus intentos de escritura se deniegan.",
+          "Cancelar exige un motivo y conserva la reserva como cancelada, junto con el motivo, la identidad autenticada de quien canceló y la fecha y hora; la identidad procede de la sesión WAI.",
+          "La ocupación de esta noche se calcula con las reservas confirmadas que incluyen la fecha actual de Europe/Madrid y las habitaciones operativas; tras un cambio confirmado, la siguiente lectura refleja el nuevo cálculo.",
+          "Un huésped no se mueve hasta que Dirección aprueba la propuesta de reubicación.",
+          "Toda propuesta de reubicación incluye un motivo."
+        ],
+        "quita": [
+          "La ocupación de esta noche cuenta las reservas confirmadas cuyo intervalo incluye la fecha actual de Europe/Madrid; las habitaciones fuera de servicio se descuentan y se muestra cualquier sobreventa. Tras confirmar un cambio de reserva, la siguiente lectura ya refleja el nuevo cálculo.",
+          "Toda propuesta de reubicación debe incluir un motivo.",
+          "Un huésped no se mueve hasta que Dirección aprueba la propuesta.",
+          "Dirección puede cargar los datos de ejemplo desde Ocupación cuando no hay datos.",
+          "La carga incluye los cinco hoteles, sus habitaciones, las habitaciones fuera de servicio y las reservas de esta noche; el Gran Hotel Centro queda con 30 habitaciones vendidas, 3 fuera de servicio y 3 habitaciones por encima de la disponibilidad.",
+          "La opción de cargar los datos solo aparece cuando no hay datos y solo está disponible para Dirección; Recepción no puede ejecutarla.",
+          "Antes de crear o cambiar una reserva, la habitación elegida debe estar operativa y sin otra reserva confirmada en cada noche del intervalo: entrada incluida y salida excluida; la fecha de salida debe ser posterior a la de entrada.",
+          "Dirección y Recepción pueden crear, editar y cancelar reservas. El perfil Consulta solo puede leer; la API deniega sus intentos de escritura. El administrador fijo de la aplicación conserva únicamente la administración de la plataforma y no se convierte en un perfil operativo de reservas.",
+          "Cancelar requiere un motivo. La reserva no se borra: conserva estado cancelada, motivo, identidad autenticada de quien canceló y fecha y hora de la cancelación; la identidad procede de la sesión WAI, nunca de un dato enviado por la petición.",
+          "La ocupación y sobreventa de esta noche se derivan de las reservas confirmadas que incluyen la fecha actual de Europe/Madrid y de las habitaciones operativas. La base SQLite local es la fuente de verdad; no hay sincronización con un PMS externo."
+        ]
+      }
+    ],
+    "texto": "Añadir al perfil Administrador la posibilidad de crear, editar y cancelar reservas, sin ampliar sus permisos sobre las reubicaciones. Mantener Consulta en solo lectura.",
+    "aplicado": {
+      "por": "plataforma",
+      "cuando": "2026-11-27T12:34:19+00:00",
+      "ejecucion": "20261127T123316Z",
+      "huella_codigo": "sha256:1f9c5d3a297e31c10f49cf78",
+      "motivo": "verde_con_codigo_nuevo",
+      "firma": "hmac-sha256:23636791a75b264de692642d5ab29fbe3550a2332d9baf2740d7e4a0ea0026cd"
+    }
+  },
+  {
+    "id": "2db017d98741",
+    "cuando": "2026-11-27T12:16:30+00:00",
+    "fase": "pruebas",
+    "que": "Un ejemplo: «» → «Recepción crea una reserva para una habitación libre; Dirección puede cambiar sus fechas o habitación, y Administrador también puede hacerlo. Si cualquiera de los tres cancela, indica el motivo y queda registrada su identidad y cuándo lo hizo. Consulta puede ver la reserva y su auditoría, pero no modificarla.»",
+    "por_que": "Añadir al perfil Administrador la posibilidad de crear, editar y cancelar reservas, sin ampliar sus permisos sobre las reubicaciones. Mantener Consulta en solo lectura.",
+    "por": "admin@wai.com",
+    "pendiente_de_aplicar": false,
+    "huella_codigo_al_pedir": "sha256:67d840322374973f070d66f0",
+    "detalle": [
+      {
+        "apartado": "ejemplo",
+        "nombre": "Un ejemplo",
+        "anade": [],
+        "quita": [],
+        "antes": "",
+        "ahora": "Recepción crea una reserva para una habitación libre; Dirección puede cambiar sus fechas o habitación, y Administrador también puede hacerlo. Si cualquiera de los tres cancela, indica el motivo y queda registrada su identidad y cuándo lo hizo. Consulta puede ver la reserva y su auditoría, pero no modificarla."
+      }
+    ],
+    "texto": "Añadir al perfil Administrador la posibilidad de crear, editar y cancelar reservas, sin ampliar sus permisos sobre las reubicaciones. Mantener Consulta en solo lectura.",
+    "aplicado": {
+      "por": "plataforma",
+      "cuando": "2026-11-27T12:34:19+00:00",
+      "ejecucion": "20261127T123316Z",
+      "huella_codigo": "sha256:1f9c5d3a297e31c10f49cf78",
+      "motivo": "verde_con_codigo_nuevo",
+      "firma": "hmac-sha256:a849522b9f008ce69cedec3d60bfdfa9c4ee9566c37b8f984341041d3aece146"
+    }
   }
 ]

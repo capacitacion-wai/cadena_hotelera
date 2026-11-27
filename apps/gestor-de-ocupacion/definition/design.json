@@ -24,7 +24,8 @@
       "ruta_de_ejemplo": "/hoteles/1",
       "sirve_a": [
         "CAP-1",
-        "CAP-2"
+        "CAP-2",
+        "CAP-5"
       ]
     },
     {
@@ -99,16 +100,22 @@
       "que": "P-1 usa ocupaciones de ejemplo del 60 % para Hotel Aeropuerto y del 50 % para Hotel Sierra Calderona, porque no se indicaron porcentajes para esos dos hoteles.",
       "por_que": "Permite mostrar una vista completa de la cadena sin presentar esos porcentajes como datos proporcionados.",
       "origen": "agente"
+    },
+    {
+      "titulo": "Gestión desde el detalle del hotel",
+      "que": "P-2 mantiene la consulta de habitaciones y amplía la lista de reservas con huésped, habitación, entrada, salida y estado. Permite distinguir reservas actuales, futuras, pasadas y canceladas; las canceladas muestran su motivo, quién las canceló y cuándo. Desde la misma pantalla, Dirección y Recepción pueden crear, editar fechas o habitación, y cancelar con motivo.",
+      "por_que": "Extiende la pantalla existente para la operación diaria sin añadir una pantalla ni cambiar la navegación.",
+      "origen": "persona"
     }
   ],
-  "sello": "sha256:a2ca05bf93c4f0cba40df647",
+  "sello": "sha256:630539409ec159faeff22c2f",
   "aprobada": {
     "por": "admin@wai.com",
-    "cuando": "2026-11-19T07:52:01+00:00",
+    "cuando": "2026-11-27T11:15:49+00:00",
     "via": "panel",
     "cita": "",
-    "sello": "sha256:a2ca05bf93c4f0cba40df647",
-    "firma": "hmac-sha256:7ae72b558f526ec3a67769c80a4d6a37743947c7660246fa356c95dbd1c9e8d3",
-    "contenido_blob": "a63b6d2e032a42200fca5c282076a25949553054"
+    "sello": "sha256:630539409ec159faeff22c2f",
+    "firma": "hmac-sha256:43543ecbd8ebf0f748032ab217e6609920d6bfc3d75253baa1ab23cd641b4461",
+    "contenido_blob": "006525bc37c14fb8708729e10c65167994186692"
   }
 }

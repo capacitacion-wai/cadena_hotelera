@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
@@ -13,15 +13,16 @@ import HotelPage from './HotelPage'
 import ReubicacionesPage from './ReubicacionesPage'
 import { gestorApi } from '../services/gestor'
 
-const mockPerfilado = vi.hoisted(() => ({ permisos: {} as Record<string, string[]> }))
+const mockPerfilado = vi.hoisted(() => ({ permisos: {} as Record<string, string[]>, roles: [] as string[] }))
 
 vi.mock('../services/gestor', () => ({ gestorApi: {
   ocupacion: vi.fn(), hoteles: vi.fn(), hotel: vi.fn(), habitaciones: vi.fn(), reservas: vi.fn(), reubicaciones: vi.fn(),
+  crearReserva: vi.fn(), editarReserva: vi.fn(), cancelarReserva: vi.fn(),
   proponer: vi.fn(), aprobar: vi.fn(), cargarDatosEjemplo: vi.fn(),
 } }))
 
 vi.mock('../wai/perfilado', () => ({
-  useMiAcceso: () => ({ yo: { permisos: mockPerfilado.permisos }, error: null, cargando: false, recargar: vi.fn() }),
+  useMiAcceso: () => ({ yo: { permisos: mockPerfilado.permisos, roles: mockPerfilado.roles }, error: null, cargando: false, recargar: vi.fn() }),
 }))
 
 const hoteles = [
@@ -42,6 +43,7 @@ function renderWithApp(node: ReactNode, start = '/') {
 describe('pantallas de ocupación y reubicación', () => {
   beforeEach(() => {
     vi.resetAllMocks()
+    mockPerfilado.roles = []
     mockPerfilado.permisos = { 'CAP-3': ['ver', 'aprobar'], 'CAP-4': ['crear'] }
   })
   afterEach(cleanup)
@@ -85,6 +87,53 @@ describe('pantallas de ocupación y reubicación', () => {
     expect(await screen.findByRole('heading', { name: 'Gran Hotel Centro' })).toBeInTheDocument()
     expect(screen.getAllByText('Fuga de agua').length).toBeGreaterThan(0)
     expect(screen.getByText('Fuera de servicio')).toBeInTheDocument()
+  })
+
+  it('permite a Consulta leer las cancelaciones con su auditoría, sin controles de escritura', async () => {
+    mockPerfilado.roles = ['consulta']
+    vi.mocked(gestorApi.hotel).mockResolvedValue(hoteles[0])
+    vi.mocked(gestorApi.habitaciones).mockResolvedValue({
+      items: [{ id: 1, numero: '201', estado: 'libre' }], total: 30, limit: 20, offset: 0,
+    })
+    vi.mocked(gestorApi.reservas).mockResolvedValue({
+      items: [{
+        id: 7, huesped: 'Amparo Vidal', habitacion_id: 201, habitacion: '201',
+        entrada: '2026-12-01', salida: '2026-12-02', estado: 'cancelada',
+        motivo_cancelacion: 'Cambio de planes', cancelada_por: 'direccion@example.test',
+        cancelada_en: '2026-11-27T10:30:00+00:00',
+      }], total: 1, limit: 20, offset: 0,
+    })
+
+    renderWithApp(
+      <Routes><Route path="/hoteles/:hotelId" element={<HotelPage />} /></Routes>,
+      '/hoteles/1',
+    )
+    await screen.findByRole('heading', { name: 'Gran Hotel Centro' })
+    fireEvent.click(screen.getByRole('tab', { name: 'Reservas' }))
+    fireEvent.click(await screen.findByRole('tab', { name: 'Canceladas' }))
+
+    expect(await screen.findByText('Cambio de planes')).toBeInTheDocument()
+    expect(screen.getByText('Cancelada por direccion@example.test')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Nueva reserva' })).not.toBeInTheDocument()
+  })
+
+  it.each(['admin', 'direccion', 'recepcion'])('%s puede abrir el formulario de reserva desde el hotel', async (role) => {
+    mockPerfilado.roles = [role]
+    vi.mocked(gestorApi.hotel).mockResolvedValue(hoteles[0])
+    vi.mocked(gestorApi.habitaciones).mockResolvedValue({
+      items: [{ id: 1, numero: '201', estado: 'libre' }], total: 30, limit: 20, offset: 0,
+    })
+    vi.mocked(gestorApi.reservas).mockResolvedValue({ items: [], total: 0, limit: 20, offset: 0 })
+
+    renderWithApp(
+      <Routes><Route path="/hoteles/:hotelId" element={<HotelPage />} /></Routes>,
+      '/hoteles/1',
+    )
+    await screen.findByRole('heading', { name: 'Gran Hotel Centro' })
+    fireEvent.click(screen.getByRole('tab', { name: 'Reservas' }))
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Nueva reserva' }))
+    expect(await screen.findByRole('heading', { name: 'Crear una reserva' })).toBeInTheDocument()
   })
 
   it('presenta las propuestas pendientes para que Dirección las revise', async () => {

@@ -14,21 +14,21 @@
         {
           "pieza": "API de la aplicación",
           "tecnologia": "Python + FastAPI",
-          "para_que": "Leer y guardar datos operativos y aplicar las reglas de reubicación."
+          "para_que": "Leer y guardar datos operativos, comprobar disponibilidad de reservas y aplicar las reglas de reubicación."
         }
       ],
       "datos": [
         {
           "pieza": "Datos operativos propios",
           "tecnologia": "SQLite local en volumen persistente",
-          "para_que": "Guardar hoteles, habitaciones, reservas de ejemplo, propuestas y aprobaciones sin escribir en el proyecto demo_wai."
+          "para_que": "Guardar hoteles, habitaciones, reservas y su auditoría, propuestas y aprobaciones en SQLite local sin escribir en el proyecto demo_wai ni sincronizar con un PMS externo."
         }
       ],
       "servicios": [
         {
           "pieza": "Acceso y perfiles",
           "tecnologia": "Sesión WAI y módulo de perfilado",
-          "para_que": "Dar acceso a Dirección y Recepción, permitiendo aprobar solo a Dirección."
+          "para_que": "Dar acceso a Dirección, Recepción y Consulta; limitar la escritura de reservas a Dirección y Recepción y la aprobación de reubicaciones a Dirección."
         }
       ],
       "despliegue": [
@@ -74,6 +74,10 @@
         "para_que": "Ver la ocupación de esta noche, los hoteles y las habitaciones fuera de servicio."
       },
       {
+        "nombre": "Habitaciones y reservas del hotel",
+        "para_que": "Consultar las reservas actuales, futuras, pasadas y canceladas; Dirección y Recepción también pueden crearlas, editar fechas o habitación y cancelarlas con motivo."
+      },
+      {
         "nombre": "Reubicaciones",
         "para_que": "Comparar alternativas, proponer movimientos y consultar su aprobación e historial."
       },
@@ -90,6 +94,14 @@
       {
         "nombre": "Comparación de alternativas",
         "para_que": "Mostrar disponibilidad, distancia desde el centro de Valencia y diferencia entre la tarifa del hotel de origen y la de destino."
+      },
+      {
+        "nombre": "Disponibilidad de reservas",
+        "para_que": "Antes de confirmar una estancia, comprobar que la habitación está operativa y libre todas las noches desde la entrada incluida hasta la salida excluida; al editar se excluye la propia reserva de la comprobación."
+      },
+      {
+        "nombre": "Ocupación de esta noche",
+        "para_que": "Contar reservas confirmadas cuyo intervalo contiene la fecha actual de Europe/Madrid, descontar habitaciones fuera de servicio y recalcular en la siguiente lectura tras cada cambio confirmado."
       }
     ],
     "datos": [
@@ -113,10 +125,11 @@
     {
       "id": "M-1",
       "nombre": "Ocupación hotelera",
-      "para_que": "Revisar habitaciones, reservas, disponibilidad y alertas de sobreventa, y cargar los datos de ejemplo cuando la aplicación está vacía.",
+      "para_que": "Revisar habitaciones, reservas, disponibilidad y alertas de sobreventa, gestionar reservas y cargar los datos de ejemplo cuando la aplicación está vacía.",
       "capacidades": [
         "CAP-1",
-        "CAP-4"
+        "CAP-4",
+        "CAP-5"
       ],
       "pantallas": [
         "P-1",
@@ -126,6 +139,9 @@
         "hoteles",
         "habitaciones",
         "reservas"
+      ],
+      "transversales": [
+        "T-3"
       ]
     },
     {
@@ -174,7 +190,7 @@
         "roles_personalizables": false,
         "alta": "proyecto"
       },
-      "que": "Acceso por perfil para Dirección y Recepción.",
+      "que": "Acceso por perfil para Dirección, Recepción y Consulta; las acciones operativas se limitan a los permisos declarados para cada perfil.",
       "por_que": "Recepción puede proponer una reubicación, pero solo Dirección puede aprobarla.",
       "afecta_a": "todas"
     },
@@ -186,6 +202,15 @@
       "afecta_a": [
         "CAP-2",
         "CAP-3"
+      ]
+    },
+    {
+      "id": "T-3",
+      "tipo": "auditoria",
+      "que": "Cada cancelación conserva el motivo, la identidad autenticada de la persona y la fecha y hora; la reserva permanece consultable y no se elimina.",
+      "por_que": "La cancelación debe poder revisarse después y no puede perderse ni atribuirse a una identidad enviada por el cliente.",
+      "afecta_a": [
+        "CAP-5"
       ]
     }
   ],
@@ -202,6 +227,13 @@
       "id": "recepcion",
       "nombre": "Recepción",
       "quien": "Recepción de los hoteles",
+      "origen": "app",
+      "alcance": "todo"
+    },
+    {
+      "id": "consulta",
+      "nombre": "Consulta",
+      "quien": "Personas que solo necesitan consultar la información",
       "origen": "app",
       "alcance": "todo"
     }
@@ -258,6 +290,38 @@
       "puede": [
         "ver"
       ]
+    },
+    {
+      "perfil": "direccion",
+      "capacidad": "CAP-5",
+      "puede": [
+        "ver",
+        "crear",
+        "editar"
+      ]
+    },
+    {
+      "perfil": "recepcion",
+      "capacidad": "CAP-5",
+      "puede": [
+        "ver",
+        "crear",
+        "editar"
+      ]
+    },
+    {
+      "perfil": "consulta",
+      "capacidad": "CAP-1",
+      "puede": [
+        "ver"
+      ]
+    },
+    {
+      "perfil": "consulta",
+      "capacidad": "CAP-5",
+      "puede": [
+        "ver"
+      ]
     }
   ],
   "agentes": [],
@@ -301,7 +365,11 @@
         "habitacion_id",
         "huesped",
         "estado",
-        "fecha"
+        "fecha",
+        "salida",
+        "motivo_cancelacion",
+        "cancelada_por",
+        "cancelada_en"
       ]
     },
     {
@@ -391,6 +459,30 @@
       "pantalla": "P-2"
     },
     {
+      "metodo": "POST",
+      "ruta": "/api/hoteles/{hotel_id}/reservas",
+      "sirve_a": [
+        "CAP-5"
+      ],
+      "pantalla": "P-2"
+    },
+    {
+      "metodo": "PATCH",
+      "ruta": "/api/reservas/{reserva_id}",
+      "sirve_a": [
+        "CAP-5"
+      ],
+      "pantalla": "P-2"
+    },
+    {
+      "metodo": "POST",
+      "ruta": "/api/reservas/{reserva_id}/cancelar",
+      "sirve_a": [
+        "CAP-5"
+      ],
+      "pantalla": "P-2"
+    },
+    {
       "metodo": "GET",
       "ruta": "/api/reubicaciones",
       "sirve_a": [
@@ -433,16 +525,24 @@
     {
       "que": "Solo Dirección puede cargar los datos de ejemplo y la operación solo se ofrece mientras no hay datos.",
       "por_que": "La carga debe iniciar la aplicación sin sustituir ni duplicar datos operativos existentes."
+    },
+    {
+      "que": "Las reservas se gestionan en el almacenamiento SQLite local de la aplicación; los cambios confirmados se reflejan en la siguiente lectura y no se sincronizan con un PMS.",
+      "por_que": "La arquitectura actual usa la base local como fuente de verdad y el conector existente consulta la misma ocupación de la aplicación."
+    },
+    {
+      "que": "La cancelación es un cambio de estado protegido por el permiso de edición: conserva la reserva y su auditoría, y nunca ejecuta un borrado físico.",
+      "por_que": "El historial de cancelaciones debe seguir disponible para consulta y auditoría."
     }
   ],
-  "sello": "sha256:e142d0c6bb01db757c492156",
+  "sello": "sha256:d3ce84111f724ad61a8584bd",
   "aprobada": {
     "por": "admin@wai.com",
-    "cuando": "2026-11-19T07:52:01+00:00",
+    "cuando": "2026-11-27T11:15:49+00:00",
     "via": "panel",
     "cita": "",
-    "sello": "sha256:e142d0c6bb01db757c492156",
-    "firma": "hmac-sha256:20c9575040876164c49b11dac5db30c7ae8bfe613991c12195f34e87f219e2c0",
-    "contenido_blob": "e4bca45ceb3dc7df523b92eece07f29154c7caa0"
+    "sello": "sha256:d3ce84111f724ad61a8584bd",
+    "firma": "hmac-sha256:f4bee0d9c5b7e35ad9bfedb4188e69d2c7212473e2c2bd88363b28f6b170a40f",
+    "contenido_blob": "54420c85ea82ed5cb3bd92990436bd651c65b303"
   }
 }

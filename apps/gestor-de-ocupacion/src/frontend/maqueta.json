@@ -65,11 +65,12 @@
     "es_dueno": true,
     "nivel": 2,
     "alta": "proyecto",
-    "permisos": {"CAP-1": ["ver"], "CAP-2": ["ver", "crear"], "CAP-3": ["ver", "aprobar"]},
+    "permisos": {"CAP-1": ["ver"], "CAP-2": ["ver", "crear"], "CAP-3": ["ver", "aprobar"], "CAP-5": ["ver", "crear", "editar"]},
     "capacidades": [
       {"id": "CAP-1", "que": "Consultar la ocupación, las habitaciones y las reservas."},
       {"id": "CAP-2", "que": "Comparar alternativas y proponer una reubicación."},
-      {"id": "CAP-3", "que": "Aprobar propuestas y consultar el historial."}
+      {"id": "CAP-3", "que": "Aprobar propuestas y consultar el historial."},
+      {"id": "CAP-5", "que": "Gestionar reservas: crear, editar y cancelar con auditoría."}
     ]
   },
   "GET /api/perfilado/roles": {
@@ -79,12 +80,13 @@
     "capacidades": [
       {"id": "CAP-1", "que": "Consultar la ocupación, las habitaciones y las reservas."},
       {"id": "CAP-2", "que": "Comparar alternativas y proponer una reubicación."},
-      {"id": "CAP-3", "que": "Aprobar propuestas y consultar el historial."}
+      {"id": "CAP-3", "que": "Aprobar propuestas y consultar el historial."},
+      {"id": "CAP-5", "que": "Gestionar reservas: crear, editar y cancelar con auditoría."}
     ],
     "roles": [
       {"id": "direccion", "nombre": "Dirección", "quien": "Dirección de los hoteles", "fijo": false, "administra": false, "permisos": {"CAP-1": ["ver"], "CAP-2": ["ver", "crear"], "CAP-3": ["ver", "aprobar"]}},
       {"id": "recepcion", "nombre": "Recepción", "quien": "Recepción de los hoteles", "fijo": false, "administra": false, "permisos": {"CAP-1": ["ver"], "CAP-2": ["ver", "crear"], "CAP-3": ["ver"]}},
-      {"id": "admin", "nombre": "Administrador", "fijo": true, "administra": true, "permisos": {"CAP-1": ["ver", "crear", "editar", "borrar", "aprobar", "exportar"], "CAP-2": ["ver", "crear", "editar", "borrar", "aprobar", "exportar"], "CAP-3": ["ver", "crear", "editar", "borrar", "aprobar", "exportar"]}}
+      {"id": "admin", "nombre": "Administrador", "fijo": true, "administra": true, "permisos": {"CAP-1": ["ver", "crear", "editar", "borrar", "aprobar", "exportar"], "CAP-2": ["ver", "crear", "editar", "borrar", "aprobar", "exportar"], "CAP-3": ["ver", "crear", "editar", "borrar", "aprobar", "exportar"], "CAP-5": ["ver", "crear", "editar"]}}
     ]
   },
   "GET /api/perfilado/usuarios": {
